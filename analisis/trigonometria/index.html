@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funciones trigonométricas — guía completa</title>
+<style>
+  :root{
+    --paper:#fafbf9;
+    --grid:#e2e8ee;
+    --ink:#1b2733;
+    --muted:#5b6b7a;
+    --accent:#23589c;
+    --card:#ffffff;
+    --line:#d3dbe3;
+    --sin:#c8354f;
+    --cos:#2563b0;
+    --tan:#1f8a5d;
+    --cot:#7c5cb8;
+    --sec:#c77c1f;
+    --csc:#3c8ea3;
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    --mono:ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{
+    margin:0; color:var(--ink); font-family:var(--sans);
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+      var(--paper);
+    background-size:28px 28px, 28px 28px, auto;
+    line-height:1.55;
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 20px}
+
+  header.hero{padding:56px 0 8px}
+  .eyebrow{font-family:var(--mono); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+  h1{font-family:var(--serif); font-size:clamp(2rem,5vw,3.1rem); margin:.2em 0 .25em; text-wrap:balance; line-height:1.12}
+  .lede{max-width:62ch; color:var(--muted); font-size:1.05rem; margin:0}
+
+  nav.toc{position:sticky; top:0; z-index:30; background:rgba(250,251,249,.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line); margin-top:28px}
+  nav.toc .wrap{display:flex; gap:4px; overflow-x:auto; padding:8px 20px}
+  nav.toc a{white-space:nowrap; text-decoration:none; color:var(--muted); font-size:.88rem; padding:6px 12px; border-radius:999px}
+  nav.toc a:hover, nav.toc a:focus-visible{color:var(--accent); background:#eaf1f8; outline:none}
+
+  section{padding:52px 0 12px}
+  h2{font-family:var(--serif); font-size:clamp(1.5rem,3.4vw,2.1rem); margin:0 0 .3em; text-wrap:balance}
+  h2 .num{color:var(--accent); font-family:var(--mono); font-size:.72em; margin-right:.5em}
+  .sub{color:var(--muted); max-width:70ch; margin:0 0 24px}
+  .sub code, p code, li code, td code{font-family:var(--mono); font-size:.92em; background:#eef2f6; padding:.08em .35em; border-radius:4px}
+
+  /* ---------- círculo ---------- */
+  .circle-layout{display:grid; grid-template-columns:minmax(300px,460px) 1fr; gap:26px; align-items:start}
+  @media (max-width:820px){ .circle-layout{grid-template-columns:1fr} }
+  .panel{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(27,39,51,.05)}
+  #circleCanvas{width:100%; height:auto; display:block; touch-action:none; cursor:grab; border-radius:8px}
+  .controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; align-items:center}
+  .controls button, .angle-btns button{
+    font:inherit; font-size:.85rem; border:1px solid var(--line); background:#f4f7fa; color:var(--ink);
+    padding:5px 11px; border-radius:8px; cursor:pointer}
+  .controls button:hover, .angle-btns button:hover{border-color:var(--accent); color:var(--accent)}
+  .controls button:focus-visible, .angle-btns button:focus-visible, .toggle input:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .controls button[aria-pressed="true"]{background:var(--accent); color:#fff; border-color:var(--accent)}
+  .toggle{display:flex; gap:6px; align-items:center; font-size:.85rem; color:var(--muted)}
+  .angle-btns{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+  .readout{font-family:var(--mono); font-variant-numeric:tabular-nums}
+  .theta-big{font-size:1.5rem; margin:2px 0 12px}
+  .theta-big small{color:var(--muted); font-size:.7em}
+  table.vals{width:100%; border-collapse:collapse; font-size:.95rem}
+  table.vals td{padding:7px 6px; border-top:1px solid var(--line)}
+  table.vals td:first-child{font-family:var(--serif); font-style:italic; width:5.5em}
+  table.vals td:nth-child(2){font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right}
+  table.vals td:nth-child(3){color:var(--muted); font-size:.82rem; text-align:right; font-family:var(--mono)}
+  .dot{display:inline-block; width:.65em; height:.65em; border-radius:50%; margin-right:.45em; vertical-align:baseline}
+  .quad{margin-top:10px; font-size:.88rem; color:var(--muted)}
+
+  /* ---------- tarjetas de funciones ---------- */
+  .fn-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:22px}
+  .fn-card{background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+    box-shadow:0 1px 3px rgba(27,39,51,.05); display:flex; flex-direction:column}
+  .fn-card h3{margin:0; padding:14px 18px 4px; font-family:var(--serif); font-size:1.25rem; display:flex; align-items:baseline; gap:10px}
+  .fn-card h3 .def{font-family:var(--mono); font-size:.78rem; color:var(--muted); font-weight:400}
+  .fn-card canvas{width:100%; height:auto; display:block}
+  .props{margin:0; padding:10px 18px 16px; display:grid; grid-template-columns:auto 1fr; gap:5px 14px; font-size:.88rem}
+  .props dt{color:var(--muted)}
+  .props dd{margin:0; font-family:var(--mono); font-size:.85rem; font-variant-numeric:tabular-nums}
+  .restr{margin:0 18px 16px; padding:10px 12px; border-left:3px solid var(--accent); background:#f2f6fb;
+    font-size:.85rem; border-radius:0 8px 8px 0}
+
+  /* ---------- tablas ---------- */
+  .tbl-scroll{overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:12px}
+  table.notable{border-collapse:collapse; width:100%; min-width:640px; font-size:.95rem}
+  table.notable th, table.notable td{padding:10px 14px; text-align:center; border-bottom:1px solid var(--line)}
+  table.notable th{font-family:var(--serif); font-style:italic; font-weight:600; background:#f4f7fa}
+  table.notable td{font-family:var(--mono); font-variant-numeric:tabular-nums}
+  table.notable tr td:first-child, table.notable tr th:first-child{text-align:left; background:#f9fafb; font-weight:600}
+  .und{color:#b23b3b}
+
+  .id-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px}
+  .id-card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px}
+  .id-card h3{margin:0 0 10px; font-family:var(--serif); font-size:1.05rem}
+  .id-card ul{margin:0; padding:0; list-style:none; display:grid; gap:8px}
+  .id-card li{font-family:var(--mono); font-size:.88rem; background:#f4f7fa; padding:7px 10px; border-radius:7px; overflow-x:auto; white-space:nowrap}
+
+  footer{margin-top:60px; padding:26px 0 40px; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem}
+  .legend{display:flex; flex-wrap:wrap; gap:14px; font-size:.82rem; color:var(--muted); margin-top:10px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Análisis matemático · Trigonometría</p>
+    <h1>Funciones trigonométricas</h1>
+    <p class="lede">Las seis funciones directas y sus seis inversas: definición en el círculo unitario, gráfico, dominio, imagen, período, paridad, asíntotas y las restricciones necesarias para invertirlas. Arrastrá el punto del círculo para ver todo en movimiento.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Secciones">
+  <div class="wrap">
+    <a href="#circulo">Círculo trigonométrico</a>
+    <a href="#directas">Funciones directas</a>
+    <a href="#inversas">Funciones inversas</a>
+    <a href="#tabla">Valores notables</a>
+    <a href="#identidades">Identidades</a>
+  </div>
+</nav>
+
+<section id="circulo">
+  <div class="wrap">
+    <h2><span class="num">01</span>El círculo trigonométrico</h2>
+    <p class="sub">Sobre la circunferencia de radio 1 centrada en el origen, un ángulo <code>θ</code> (medido desde el semieje positivo x, en sentido antihorario) determina un punto <code>P = (cos θ, sen θ)</code>. De ahí salen las seis funciones: <code>tan θ = sen θ / cos θ</code> se lee sobre la recta tangente vertical <code>x = 1</code>, y <code>cot θ</code> sobre la tangente horizontal <code>y = 1</code>. Las recíprocas son <code>sec θ = 1/cos θ</code> y <code>csc θ = 1/sen θ</code>.</p>
+
+    <div class="circle-layout">
+      <div class="panel">
+        <canvas id="circleCanvas" width="460" height="460" aria-label="Círculo trigonométrico interactivo: arrastrá para cambiar el ángulo"></canvas>
+        <div class="controls">
+          <button id="btnAnim" aria-pressed="false">▶ Animar</button>
+          <label class="toggle"><input type="checkbox" id="chkSnap" checked> ajustar a 15°</label>
+          <label class="toggle"><input type="checkbox" id="chkDeg"> mostrar en grados</label>
+        </div>
+        <div class="angle-btns" id="angleBtns" aria-label="Ángulos notables"></div>
+      </div>
+
+      <div class="panel">
+        <p class="eyebrow" style="margin:0">Ángulo actual</p>
+        <p class="theta-big readout"><span id="thetaOut">θ = π/4</span> <small id="thetaAlt">= 45°</small></p>
+        <table class="vals" id="valsTable">
+          <tbody>
+            <tr><td><span class="dot" style="background:var(--sin)"></span>sen θ</td><td id="vsin"></td><td id="esin"></td></tr>
+            <tr><td><span class="dot" style="background:var(--cos)"></span>cos θ</td><td id="vcos"></td><td id="ecos"></td></tr>
+            <tr><td><span class="dot" style="background:var(--tan)"></span>tan θ</td><td id="vtan"></td><td id="etan"></td></tr>
+            <tr><td><span class="dot" style="background:var(--cot)"></span>cot θ</td><td id="vcot"></td><td id="ecot"></td></tr>
+            <tr><td><span class="dot" style="background:var(--sec)"></span>sec θ</td><td id="vsec"></td><td id="esec"></td></tr>
+            <tr><td><span class="dot" style="background:var(--csc)"></span>csc θ</td><td id="vcsc"></td><td id="ecsc"></td></tr>
+          </tbody>
+        </table>
+        <p class="quad" id="quadOut"></p>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--sin)"></span>segmento vertical = sen</span>
+          <span><span class="dot" style="background:var(--cos)"></span>segmento horizontal = cos</span>
+          <span><span class="dot" style="background:var(--tan)"></span>sobre x=1 → tan</span>
+          <span><span class="dot" style="background:var(--cot)"></span>sobre y=1 → cot</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="directas">
+  <div class="wrap">
+    <h2><span class="num">02</span>Las seis funciones directas</h2>
+    <p class="sub">Cada gráfico muestra dos períodos completos en <code>[−2π, 2π]</code>. Las líneas punteadas rojas son asíntotas verticales: puntos excluidos del dominio donde la función se dispara a ±∞. <code>k ∈ ℤ</code> significa «para todo entero k».</p>
+    <div class="fn-grid" id="directGrid"></div>
+  </div>
+</section>
+
+<section id="inversas">
+  <div class="wrap">
+    <h2><span class="num">03</span>Funciones inversas (arco)</h2>
+    <p class="sub">Ninguna función trigonométrica es inyectiva en todo su dominio (son periódicas: cada valor se repite infinitas veces), así que <strong>no tienen inversa global</strong>. Para invertirlas se <strong>restringe el dominio</strong> a un intervalo donde la función sea biyectiva — esa restricción es la que define la <em>rama principal</em> de cada arco. En cada tarjeta: la franja gris del gráfico marca la imagen de la inversa (= dominio restringido de la directa).</p>
+    <div class="fn-grid" id="inverseGrid"></div>
+  </div>
+</section>
+
+<section id="tabla">
+  <div class="wrap">
+    <h2><span class="num">04</span>Valores notables</h2>
+    <p class="sub">Los valores exactos del primer cuadrante más los ejes. Para otros cuadrantes: mismo valor absoluto que el ángulo de referencia, con el signo del cuadrante (regla <em>«todos, sen, tan, cos»</em>: en el cuadrante I son todas positivas; en II solo sen y csc; en III solo tan y cot; en IV solo cos y sec).</p>
+    <div class="tbl-scroll">
+      <table class="notable">
+        <thead>
+          <tr><th>θ</th><th>0</th><th>π/6 (30°)</th><th>π/4 (45°)</th><th>π/3 (60°)</th><th>π/2 (90°)</th><th>π (180°)</th><th>3π/2 (270°)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>sen θ</td><td>0</td><td>1/2</td><td>√2/2</td><td>√3/2</td><td>1</td><td>0</td><td>−1</td></tr>
+          <tr><td>cos θ</td><td>1</td><td>√3/2</td><td>√2/2</td><td>1/2</td><td>0</td><td>−1</td><td>0</td></tr>
+          <tr><td>tan θ</td><td>0</td><td>√3/3</td><td>1</td><td>√3</td><td class="und">∄</td><td>0</td><td class="und">∄</td></tr>
+          <tr><td>cot θ</td><td class="und">∄</td><td>√3</td><td>1</td><td>√3/3</td><td>0</td><td class="und">∄</td><td>0</td></tr>
+          <tr><td>sec θ</td><td>1</td><td>2√3/3</td><td>√2</td><td>2</td><td class="und">∄</td><td>−1</td><td class="und">∄</td></tr>
+          <tr><td>csc θ</td><td class="und">∄</td><td>2</td><td>√2</td><td>2√3/3</td><td>1</td><td class="und">∄</td><td>−1</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="identidades">
+  <div class="wrap">
+    <h2><span class="num">05</span>Identidades fundamentales</h2>
+    <p class="sub">Las herramientas de trabajo para simplificar expresiones, resolver ecuaciones y calcular límites y derivadas.</p>
+    <div class="id-grid">
+      <div class="id-card">
+        <h3>Pitagóricas</h3>
+        <ul>
+          <li>sen²θ + cos²θ = 1</li>
+          <li>1 + tan²θ = sec²θ</li>
+          <li>1 + cot²θ = csc²θ</li>
+        </ul>
+      </div>
+      <div class="id-card">
+        <h3>Cocientes y recíprocas</h3>
+        <ul>
+          <li>tan θ = sen θ / cos θ</li>
+          <li>cot θ = cos θ / sen θ = 1/tan θ</li>
+          <li>sec θ = 1/cos θ &nbsp;·&nbsp; csc θ = 1/sen θ</li>
+        </ul>
+      </div>
+      <div class="id-card">
+        <h3>Paridad</h3>
+        <ul>
+          <li>sen(−θ) = −sen θ &nbsp;(impar)</li>
+          <li>cos(−θ) = cos θ &nbsp;(par)</li>
+          <li>tan(−θ) = −tan θ &nbsp;(impar)</li>
+        </ul>
+      </div>
+      <div class="id-card">
+        <h3>Suma y resta</h3>
+        <ul>
+          <li>sen(a±b) = sen a·cos b ± cos a·sen b</li>
+          <li>cos(a±b) = cos a·cos b ∓ sen a·sen b</li>
+          <li>tan(a±b) = (tan a ± tan b)/(1 ∓ tan a·tan b)</li>
+        </ul>
+      </div>
+      <div class="id-card">
+        <h3>Ángulo doble</h3>
+        <ul>
+          <li>sen 2θ = 2·sen θ·cos θ</li>
+          <li>cos 2θ = cos²θ − sen²θ = 2cos²θ − 1</li>
+          <li>tan 2θ = 2·tan θ / (1 − tan²θ)</li>
+        </ul>
+      </div>
+      <div class="id-card">
+        <h3>Ángulo mitad</h3>
+        <ul>
+          <li>sen²θ = (1 − cos 2θ)/2</li>
+          <li>cos²θ = (1 + cos 2θ)/2</li>
+          <li>|sen(θ/2)| = √((1−cos θ)/2)</li>
+        </ul>
+      </div>
+      <div class="id-card">
+        <h3>Cofunción (complementarios)</h3>
+        <ul>
+          <li>sen(π/2 − θ) = cos θ</li>
+          <li>cos(π/2 − θ) = sen θ</li>
+          <li>tan(π/2 − θ) = cot θ</li>
+        </ul>
+      </div>
+      <div class="id-card">
+        <h3>Inversas útiles</h3>
+        <ul>
+          <li>arcsen x + arccos x = π/2</li>
+          <li>arctan x + arccot x = π/2</li>
+          <li>sen(arccos x) = √(1−x²)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Guía interactiva de funciones trigonométricas · los gráficos se renderizan en vivo con canvas · ángulos en radianes salvo indicación.
+  </div>
+</footer>
+
+<script>
+(() => {
+'use strict';
+const PI = Math.PI, TAU = 2*PI;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const C = { sin:css('--sin'), cos:css('--cos'), tan:css('--tan'), cot:css('--cot'), sec:css('--sec'), csc:css('--csc'),
+            ink:css('--ink'), grid:'#e6ebf0', axis:'#9aa8b5', asym:'#c85a5a', muted:css('--muted') };
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- utilidades de formato ---------- */
+const FRACS = [ [0,'0'],[PI/6,'π/6'],[PI/4,'π/4'],[PI/3,'π/3'],[PI/2,'π/2'],[2*PI/3,'2π/3'],[3*PI/4,'3π/4'],
+  [5*PI/6,'5π/6'],[PI,'π'],[7*PI/6,'7π/6'],[5*PI/4,'5π/4'],[4*PI/3,'4π/3'],[3*PI/2,'3π/2'],
+  [5*PI/3,'5π/3'],[7*PI/4,'7π/4'],[11*PI/6,'11π/6'],[TAU,'2π'],[PI/12,'π/12'],[5*PI/12,'5π/12'],
+  [7*PI/12,'7π/12'],[11*PI/12,'11π/12'],[13*PI/12,'13π/12'],[17*PI/12,'17π/12'],[19*PI/12,'19π/12'],[23*PI/12,'23π/12'] ];
+function piName(x){
+  for(const [v,n] of FRACS) if(Math.abs(x-v) < 1e-9) return n;
+  return null;
+}
+const fmt = (x,d=4) => (Math.abs(x)<5e-13?0:x).toFixed(d).replace('-','−');
+const EXACT = new Map([
+  ['0','0'],['0.5','1/2'],['-0.5','−1/2'],['1','1'],['-1','−1'],
+  [(Math.SQRT2/2).toFixed(6),'√2/2'],[(-Math.SQRT2/2).toFixed(6),'−√2/2'],
+  [(Math.sqrt(3)/2).toFixed(6),'√3/2'],[(-Math.sqrt(3)/2).toFixed(6),'−√3/2'],
+  [Math.sqrt(3).toFixed(6),'√3'],[(-Math.sqrt(3)).toFixed(6),'−√3'],
+  [(Math.sqrt(3)/3).toFixed(6),'√3/3'],[(-Math.sqrt(3)/3).toFixed(6),'−√3/3'],
+  ['2','2'],['-2','−2'],[Math.SQRT2.toFixed(6),'√2'],[(-Math.SQRT2).toFixed(6),'−√2'],
+  [(2/Math.sqrt(3)).toFixed(6),'2√3/3'],[(-2/Math.sqrt(3)).toFixed(6),'−2√3/3'],
+]);
+const exactName = x => { const k = (Math.abs(x)<5e-13?0:x).toFixed(6).replace('-0.000000','0.000000');
+  return EXACT.get(parseFloat(k).toString()) ?? EXACT.get(k) ?? ''; };
+
+/* ---------- plotter genérico ---------- */
+function setupCanvas(cv, wCss, hCss){
+  const dpr = Math.min(devicePixelRatio || 1, 2.5);
+  cv.width = Math.round(wCss*dpr); cv.height = Math.round(hCss*dpr);
+  const ctx = cv.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return ctx;
+}
+function drawGraph(cv, cfg){
+  const W = cv.clientWidth || 340, H = Math.round(W*0.62);
+  cv.style.height = H+'px';
+  const ctx = setupCanvas(cv, W, H);
+  const {fn, xmin, xmax, ymin, ymax, color, asym=[], xticksPi=true, yticksPi=false, band=null, hAsym=[]} = cfg;
+  const X = x => (x-xmin)/(xmax-xmin)*W;
+  const Y = y => H - (y-ymin)/(ymax-ymin)*H;
+  ctx.clearRect(0,0,W,H);
+
+  // banda de restricción (para inversas: imagen = dominio restringido)
+  if(band){
+    ctx.fillStyle = 'rgba(35,88,156,.07)';
+    ctx.fillRect(0, Y(band[1]), W, Y(band[0])-Y(band[1]));
+  }
+  // grilla
+  ctx.lineWidth = 1; ctx.strokeStyle = C.grid; ctx.beginPath();
+  const xstep = xticksPi ? PI/2 : 1, ystep = yticksPi ? PI/2 : 1;
+  for(let x=Math.ceil(xmin/xstep)*xstep; x<=xmax+1e-9; x+=xstep){ ctx.moveTo(X(x),0); ctx.lineTo(X(x),H); }
+  for(let y=Math.ceil(ymin/ystep)*ystep; y<=ymax+1e-9; y+=ystep){ ctx.moveTo(0,Y(y)); ctx.lineTo(W,Y(y)); }
+  ctx.stroke();
+  // ejes
+  ctx.strokeStyle = C.axis; ctx.lineWidth = 1.4; ctx.beginPath();
+  if(ymin<0 && ymax>0){ ctx.moveTo(0,Y(0)); ctx.lineTo(W,Y(0)); }
+  if(xmin<0 && xmax>0){ ctx.moveTo(X(0),0); ctx.lineTo(X(0),H); }
+  ctx.stroke();
+  // etiquetas de ticks
+  ctx.fillStyle = C.muted; ctx.font = '11px '+getComputedStyle(document.body).fontFamily;
+  ctx.textAlign='center'; ctx.textBaseline='top';
+  for(let x=Math.ceil(xmin/xstep)*xstep; x<=xmax+1e-9; x+=xstep){
+    if(Math.abs(x)<1e-9) continue;
+    const lbl = xticksPi ? piTick(x) : String(Math.round(x));
+    if(lbl) ctx.fillText(lbl, X(x), Math.min(H-14, Y(0)+4));
+  }
+  ctx.textAlign='left';
+  for(let y=Math.ceil(ymin/ystep)*ystep; y<=ymax+1e-9; y+=ystep){
+    if(Math.abs(y)<1e-9) continue;
+    const lbl = yticksPi ? piTick(y) : String(Math.round(y));
+    if(lbl) ctx.fillText(lbl, Math.min(W-30, X(0)+5), Y(y)-13+9);
+  }
+  // asíntotas verticales
+  ctx.strokeStyle = C.asym; ctx.setLineDash([5,4]); ctx.lineWidth = 1.2; ctx.beginPath();
+  for(const a of asym){ if(a>xmin && a<xmax){ ctx.moveTo(X(a),0); ctx.lineTo(X(a),H); } }
+  ctx.stroke();
+  // asíntotas horizontales
+  ctx.beginPath();
+  for(const a of hAsym){ if(a>ymin && a<ymax){ ctx.moveTo(0,Y(a)); ctx.lineTo(W,Y(a)); } }
+  ctx.stroke();
+  ctx.setLineDash([]);
+  // curva
+  ctx.strokeStyle = color; ctx.lineWidth = 2.2; ctx.lineJoin='round';
+  const N = Math.max(600, W*2), jump = (ymax-ymin)*1.2;
+  let prev = null;
+  ctx.beginPath();
+  for(let i=0;i<=N;i++){
+    const x = xmin + (xmax-xmin)*i/N;
+    let y = fn(x);
+    if(!isFinite(y)){ prev=null; continue; }
+    const yc = Math.max(ymin-1, Math.min(ymax+1, y));
+    if(prev===null || Math.abs(y-prev) > jump) ctx.moveTo(X(x),Y(yc));
+    else ctx.lineTo(X(x),Y(yc));
+    prev = y;
+  }
+  ctx.stroke();
+}
+function piTick(x){
+  const s = x<0?'−':'', a = Math.abs(x);
+  const n = Math.round(a/(PI/2));
+  if(Math.abs(a - n*PI/2) > 1e-6 || n===0) return null;
+  const names = {1:'π/2',2:'π',3:'3π/2',4:'2π',5:'5π/2',6:'3π',7:'7π/2',8:'4π'};
+  return s+(names[n]??null);
+}
+
+/* ---------- definiciones de funciones ---------- */
+const K = 'k ∈ ℤ';
+const DIRECT = [
+  { id:'sen', name:'sen x', def:'ordenada de P', color:C.sin, fn:Math.sin,
+    props:{ 'Dominio':'ℝ', 'Imagen':'[−1, 1]', 'Período':'2π', 'Paridad':'impar · sen(−x) = −sen x',
+      'Ceros':`x = kπ, ${K}`, 'Máximos':'1 en x = π/2 + 2kπ', 'Mínimos':'−1 en x = −π/2 + 2kπ',
+      'Asíntotas':'ninguna (continua y acotada)' },
+    cfg:{ ymin:-1.6, ymax:1.6 } },
+  { id:'cos', name:'cos x', def:'abscisa de P', color:C.cos, fn:Math.cos,
+    props:{ 'Dominio':'ℝ', 'Imagen':'[−1, 1]', 'Período':'2π', 'Paridad':'par · cos(−x) = cos x',
+      'Ceros':`x = π/2 + kπ, ${K}`, 'Máximos':'1 en x = 2kπ', 'Mínimos':'−1 en x = π + 2kπ',
+      'Asíntotas':'ninguna (continua y acotada)' },
+    cfg:{ ymin:-1.6, ymax:1.6 },
+    note:'Es sen x desplazada π/2 a la izquierda: cos x = sen(x + π/2).' },
+  { id:'tan', name:'tan x', def:'sen x / cos x', color:C.tan, fn:Math.tan,
+    props:{ 'Dominio':`ℝ ∖ { π/2 + kπ }, ${K}`, 'Imagen':'ℝ (no acotada)', 'Período':'π', 'Paridad':'impar',
+      'Ceros':`x = kπ, ${K}`, 'Asíntotas':'verticales en x = π/2 + kπ', 'Monotonía':'creciente en cada rama (−π/2+kπ, π/2+kπ)' },
+    cfg:{ ymin:-4, ymax:4, asym:[-3*PI/2,-PI/2,PI/2,3*PI/2] },
+    note:'Se excluyen los x donde cos x = 0: ahí la división no existe y aparece la asíntota.' },
+  { id:'cot', name:'cot x', def:'cos x / sen x', color:C.cot, fn:x=>1/Math.tan(x),
+    props:{ 'Dominio':`ℝ ∖ { kπ }, ${K}`, 'Imagen':'ℝ (no acotada)', 'Período':'π', 'Paridad':'impar',
+      'Ceros':`x = π/2 + kπ, ${K}`, 'Asíntotas':'verticales en x = kπ', 'Monotonía':'decreciente en cada rama (kπ, π+kπ)' },
+    cfg:{ ymin:-4, ymax:4, asym:[-TAU,-PI,0,PI,TAU] },
+    note:'Se excluyen los x donde sen x = 0.' },
+  { id:'sec', name:'sec x', def:'1 / cos x', color:C.sec, fn:x=>1/Math.cos(x),
+    props:{ 'Dominio':`ℝ ∖ { π/2 + kπ }, ${K}`, 'Imagen':'(−∞, −1] ∪ [1, +∞)', 'Período':'2π', 'Paridad':'par',
+      'Ceros':'no tiene (|sec x| ≥ 1)', 'Asíntotas':'verticales en x = π/2 + kπ', 'Extremos locales':'mín 1 en 2kπ · máx −1 en π+2kπ' },
+    cfg:{ ymin:-4, ymax:4, asym:[-3*PI/2,-PI/2,PI/2,3*PI/2] },
+    note:'Nunca toma valores en (−1, 1): es la recíproca de un número de módulo ≤ 1.' },
+  { id:'csc', name:'csc x', def:'1 / sen x', color:C.csc, fn:x=>1/Math.sin(x),
+    props:{ 'Dominio':`ℝ ∖ { kπ }, ${K}`, 'Imagen':'(−∞, −1] ∪ [1, +∞)', 'Período':'2π', 'Paridad':'impar',
+      'Ceros':'no tiene (|csc x| ≥ 1)', 'Asíntotas':'verticales en x = kπ', 'Extremos locales':'mín 1 en π/2+2kπ · máx −1 en −π/2+2kπ' },
+    cfg:{ ymin:-4, ymax:4, asym:[-TAU,-PI,0,PI,TAU] },
+    note:'Nunca toma valores en (−1, 1).' },
+];
+const INVERSE = [
+  { id:'arcsen', name:'arcsen x', def:'inversa de sen', color:C.sin, fn:Math.asin,
+    props:{ 'Dominio':'[−1, 1]', 'Imagen':'[−π/2, π/2]', 'Paridad':'impar', 'Monotonía':'creciente',
+      'Valores clave':'arcsen(−1)=−π/2 · arcsen 0=0 · arcsen 1=π/2' },
+    cfg:{ xmin:-2.5, xmax:2.5, ymin:-2, ymax:2, xticksPi:false, yticksPi:true, band:[-PI/2,PI/2] },
+    restr:'Restricción: sen se invierte en [−π/2, π/2], donde es creciente y biyectiva sobre [−1,1]. Identidad: sen(arcsen x) = x en [−1,1], pero arcsen(sen x) = x solo si x ∈ [−π/2, π/2].' },
+  { id:'arccos', name:'arccos x', def:'inversa de cos', color:C.cos, fn:Math.acos,
+    props:{ 'Dominio':'[−1, 1]', 'Imagen':'[0, π]', 'Paridad':'ninguna · arccos(−x) = π − arccos x', 'Monotonía':'decreciente',
+      'Valores clave':'arccos(−1)=π · arccos 0=π/2 · arccos 1=0' },
+    cfg:{ xmin:-2.5, xmax:2.5, ymin:-0.7, ymax:3.6, xticksPi:false, yticksPi:true, band:[0,PI] },
+    restr:'Restricción: cos se invierte en [0, π], donde es decreciente y biyectiva sobre [−1,1]. Ojo: no sirve [−π/2, π/2] porque ahí cos no es inyectiva (cos(−x)=cos x).' },
+  { id:'arctan', name:'arctan x', def:'inversa de tan', color:C.tan, fn:Math.atan,
+    props:{ 'Dominio':'ℝ', 'Imagen':'(−π/2, π/2) — abierto', 'Paridad':'impar', 'Monotonía':'creciente',
+      'Asíntotas':'horizontales: y = ±π/2', 'Límites':'x→+∞ ⇒ π/2 · x→−∞ ⇒ −π/2' },
+    cfg:{ xmin:-6, xmax:6, ymin:-2, ymax:2, xticksPi:false, yticksPi:true, band:[-PI/2,PI/2], hAsym:[-PI/2,PI/2] },
+    restr:'Restricción: tan se invierte en (−π/2, π/2). El intervalo es abierto — tan no está definida en los extremos — por eso arctan nunca alcanza ±π/2: son asíntotas horizontales.' },
+  { id:'arccot', name:'arccot x', def:'inversa de cot', color:C.cot, fn:x=>Math.atan2(1,x),
+    props:{ 'Dominio':'ℝ', 'Imagen':'(0, π) — abierto', 'Paridad':'ninguna · arccot(−x) = π − arccot x', 'Monotonía':'decreciente',
+      'Asíntotas':'horizontales: y = 0 e y = π', 'Límites':'x→+∞ ⇒ 0 · x→−∞ ⇒ π' },
+    cfg:{ xmin:-6, xmax:6, ymin:-0.7, ymax:3.6, xticksPi:false, yticksPi:true, band:[0,PI], hAsym:[0,PI] },
+    restr:'Restricción: cot se invierte en (0, π) (rama principal usual). Vale arccot x = π/2 − arctan x.' },
+  { id:'arcsec', name:'arcsec x', def:'inversa de sec', color:C.sec, fn:x=>Math.abs(x)>=1?Math.acos(1/x):NaN,
+    props:{ 'Dominio':'(−∞, −1] ∪ [1, +∞)', 'Imagen':'[0, π] ∖ {π/2}', 'Monotonía':'creciente en cada rama',
+      'Asíntota':'horizontal y = π/2 (x→±∞)', 'Valores clave':'arcsec 1 = 0 · arcsec(−1) = π' },
+    cfg:{ xmin:-6, xmax:6, ymin:-0.7, ymax:3.6, xticksPi:false, yticksPi:true, band:[0,PI], hAsym:[PI/2] },
+    restr:'Restricción: sec se invierte en [0, π] ∖ {π/2}. El dominio hereda el hueco (−1, 1): sec nunca cae ahí. Se calcula como arcsec x = arccos(1/x).' },
+  { id:'arccsc', name:'arccsc x', def:'inversa de csc', color:C.csc, fn:x=>Math.abs(x)>=1?Math.asin(1/x):NaN,
+    props:{ 'Dominio':'(−∞, −1] ∪ [1, +∞)', 'Imagen':'[−π/2, π/2] ∖ {0}', 'Paridad':'impar', 'Monotonía':'decreciente en cada rama',
+      'Asíntota':'horizontal y = 0 (x→±∞)', 'Valores clave':'arccsc 1 = π/2 · arccsc(−1) = −π/2' },
+    cfg:{ xmin:-6, xmax:6, ymin:-2, ymax:2, xticksPi:false, yticksPi:true, band:[-PI/2,PI/2], hAsym:[0] },
+    restr:'Restricción: csc se invierte en [−π/2, π/2] ∖ {0}. Se calcula como arccsc x = arcsen(1/x).' },
+];
+
+/* ---------- construir tarjetas ---------- */
+function buildCards(list, mountId){
+  const mount = document.getElementById(mountId);
+  for(const f of list){
+    const card = document.createElement('article');
+    card.className = 'fn-card'; card.id = 'fn-'+f.id;
+    const h = document.createElement('h3');
+    h.innerHTML = `<span style="color:${f.color}">${f.name}</span> <span class="def">${f.def}</span>`;
+    const cv = document.createElement('canvas');
+    cv.setAttribute('role','img');
+    cv.setAttribute('aria-label','Gráfico de '+f.name);
+    const dl = document.createElement('dl'); dl.className = 'props';
+    for(const [k,v] of Object.entries(f.props)){
+      const dt = document.createElement('dt'); dt.textContent = k;
+      const dd = document.createElement('dd'); dd.textContent = v;
+      dl.append(dt,dd);
+    }
+    card.append(h, cv, dl);
+    const noteTxt = f.restr || f.note;
+    if(noteTxt){ const p = document.createElement('p'); p.className='restr'; p.textContent = noteTxt; card.append(p); }
+    mount.append(card);
+    f.canvas = cv;
+  }
+}
+function drawAll(){
+  for(const f of [...DIRECT, ...INVERSE]){
+    const cfg = Object.assign({ xmin:-TAU, xmax:TAU, xticksPi:true, yticksPi:false }, f.cfg,
+                              { fn:f.fn, color:f.color });
+    drawGraph(f.canvas, cfg);
+  }
+}
+buildCards(DIRECT,'directGrid');
+buildCards(INVERSE,'inverseGrid');
+
+/* ---------- círculo interactivo ---------- */
+const ccv = document.getElementById('circleCanvas');
+let theta = PI/4;
+const chkSnap = document.getElementById('chkSnap');
+const chkDeg = document.getElementById('chkDeg');
+const btnAnim = document.getElementById('btnAnim');
+let animating = false, rafId = null, lastT = null;
+
+function drawCircle(){
+  const W = ccv.clientWidth || 420, H = W;
+  ccv.style.height = H+'px';
+  const ctx = setupCanvas(ccv, W, H);
+  const cx = W/2, cy = H/2, R = W*0.335;
+  const px = x => cx + x*R, py = y => cy - y*R;
+  ctx.clearRect(0,0,W,H);
+
+  // grilla fina
+  ctx.strokeStyle = C.grid; ctx.lineWidth = 1; ctx.beginPath();
+  for(let v=-1.4; v<=1.4; v+=0.5){ ctx.moveTo(px(v),0); ctx.lineTo(px(v),H); ctx.moveTo(0,py(v)); ctx.lineTo(W,py(v)); }
+  ctx.stroke();
+  // ejes
+  ctx.strokeStyle = C.axis; ctx.lineWidth = 1.4; ctx.beginPath();
+  ctx.moveTo(0,cy); ctx.lineTo(W,cy); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke();
+  // rectas tangentes x=1 e y=1
+  ctx.strokeStyle = '#c4cdd6'; ctx.setLineDash([4,4]); ctx.beginPath();
+  ctx.moveTo(px(1),0); ctx.lineTo(px(1),H); ctx.moveTo(0,py(1)); ctx.lineTo(W,py(1)); ctx.stroke();
+  ctx.setLineDash([]);
+  // circunferencia
+  ctx.strokeStyle = C.ink; ctx.lineWidth = 2; ctx.beginPath();
+  ctx.arc(cx,cy,R,0,TAU); ctx.stroke();
+
+  const ct = Math.cos(theta), st = Math.sin(theta);
+  const tanOK = Math.abs(ct) > 1e-4, cotOK = Math.abs(st) > 1e-4;
+  const tn = tanOK ? st/ct : NaN, cn = cotOK ? ct/st : NaN;
+
+  // arco del ángulo
+  ctx.strokeStyle = C.muted; ctx.lineWidth = 1.6; ctx.beginPath();
+  ctx.arc(cx,cy,R*0.22,0,-theta,theta>0); ctx.stroke();
+  // radio
+  ctx.strokeStyle = C.ink; ctx.lineWidth = 1.6; ctx.beginPath();
+  ctx.moveTo(cx,cy); ctx.lineTo(px(ct),py(st)); ctx.stroke();
+  // cos: segmento sobre eje x
+  ctx.strokeStyle = C.cos; ctx.lineWidth = 4; ctx.lineCap='round'; ctx.beginPath();
+  ctx.moveTo(cx,cy); ctx.lineTo(px(ct),cy); ctx.stroke();
+  // sen: vertical desde eje x hasta P
+  ctx.strokeStyle = C.sin; ctx.beginPath();
+  ctx.moveTo(px(ct),cy); ctx.lineTo(px(ct),py(st)); ctx.stroke();
+  // tan: sobre la recta x=1 (prolongación del radio)
+  if(tanOK && Math.abs(tn) <= 1.55/0.335){
+    ctx.strokeStyle = 'rgba(160,170,180,.8)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]); ctx.beginPath();
+    ctx.moveTo(cx,cy); ctx.lineTo(px(1),py(tn)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = C.tan; ctx.lineWidth = 4; ctx.beginPath();
+    ctx.moveTo(px(1),cy); ctx.lineTo(px(1),py(tn)); ctx.stroke();
+  }
+  // cot: sobre la recta y=1
+  if(cotOK && Math.abs(cn) <= 1.55/0.335){
+    ctx.strokeStyle = 'rgba(160,170,180,.8)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]); ctx.beginPath();
+    ctx.moveTo(cx,cy); ctx.lineTo(px(cn),py(1)); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = C.cot; ctx.lineWidth = 4; ctx.beginPath();
+    ctx.moveTo(cx,py(1)); ctx.lineTo(px(cn),py(1)); ctx.stroke();
+  }
+  // punto P
+  ctx.fillStyle = C.ink; ctx.beginPath();
+  ctx.arc(px(ct),py(st),6,0,TAU); ctx.fill();
+  ctx.fillStyle = '#fff'; ctx.beginPath();
+  ctx.arc(px(ct),py(st),2.6,0,TAU); ctx.fill();
+  // etiqueta P
+  ctx.fillStyle = C.ink; ctx.font = '600 13px '+getComputedStyle(document.body).fontFamily;
+  const lx = px(ct) + (ct>=0? 10 : -10), align = ct>=0?'left':'right';
+  ctx.textAlign = align; ctx.textBaseline = 'middle';
+  ctx.fillText('P(cos θ, sen θ)', lx, py(st) - 14);
+  // marcas 1 y −1
+  ctx.fillStyle = C.muted; ctx.font = '11px '+getComputedStyle(document.body).fontFamily;
+  ctx.textAlign='center'; ctx.textBaseline='top';
+  ctx.fillText('1', px(1), cy+6); ctx.fillText('−1', px(-1), cy+6);
+  ctx.textAlign='left'; ctx.textBaseline='middle';
+  ctx.fillText('1', cx+6, py(1)); ctx.fillText('−1', cx+6, py(-1));
+}
+
+function updateReadout(){
+  const t = ((theta % TAU) + TAU) % TAU;
+  const name = piName(t);
+  const deg = t*180/PI;
+  const thetaOut = document.getElementById('thetaOut');
+  const thetaAlt = document.getElementById('thetaAlt');
+  if(chkDeg.checked){
+    thetaOut.textContent = `θ = ${fmt(deg, Math.abs(deg-Math.round(deg))<1e-6?0:1)}°`;
+    thetaAlt.textContent = name ? `= ${name} rad` : `= ${fmt(t,4)} rad`;
+  } else {
+    thetaOut.textContent = name ? `θ = ${name}` : `θ = ${fmt(t,4)}`;
+    thetaAlt.textContent = `= ${fmt(deg, Math.abs(deg-Math.round(deg))<1e-6?0:1)}°`;
+  }
+  const st = Math.sin(t), ct = Math.cos(t);
+  const vals = {
+    sin:[st,true], cos:[ct,true],
+    tan:[Math.abs(ct)>1e-9 ? st/ct : NaN, Math.abs(ct)>1e-9],
+    cot:[Math.abs(st)>1e-9 ? ct/st : NaN, Math.abs(st)>1e-9],
+    sec:[Math.abs(ct)>1e-9 ? 1/ct : NaN, Math.abs(ct)>1e-9],
+    csc:[Math.abs(st)>1e-9 ? 1/st : NaN, Math.abs(st)>1e-9],
+  };
+  for(const [k,[v,ok]] of Object.entries(vals)){
+    const cell = document.getElementById('v'+k), ex = document.getElementById('e'+k);
+    if(!ok){ cell.innerHTML = '<span class="und">∄ no existe</span>'; ex.textContent=''; }
+    else { cell.textContent = fmt(v,4); ex.textContent = exactName(v); }
+  }
+  const q = t===0||t===PI/2||t===PI||t===3*PI/2 ? null : Math.floor(t/(PI/2));
+  const qn = ['I','II','III','IV'];
+  document.getElementById('quadOut').textContent =
+    q===null ? 'θ sobre un eje: punto límite entre cuadrantes.'
+             : `Cuadrante ${qn[q]} — signos: sen ${st>=0?'+':'−'} · cos ${ct>=0?'+':'−'} · tan ${(st/ct)>=0?'+':'−'}`;
+}
+function render(){ drawCircle(); updateReadout(); }
+
+function setThetaFromPointer(e){
+  const r = ccv.getBoundingClientRect();
+  const x = e.clientX - r.left - r.width/2;
+  const y = r.height/2 - (e.clientY - r.top);
+  let t = Math.atan2(y,x);
+  if(t<0) t += TAU;
+  if(chkSnap.checked){ t = Math.round(t/(PI/12))*(PI/12); }
+  theta = t % TAU; render();
+}
+let dragging = false;
+ccv.addEventListener('pointerdown', e => { dragging = true; stopAnim(); ccv.setPointerCapture(e.pointerId); setThetaFromPointer(e); });
+ccv.addEventListener('pointermove', e => { if(dragging) setThetaFromPointer(e); });
+ccv.addEventListener('pointerup', () => dragging = false);
+ccv.addEventListener('pointercancel', () => dragging = false);
+
+const NOTABLE = [0,30,45,60,90,120,135,150,180,210,225,240,270,300,315,330];
+const btnWrap = document.getElementById('angleBtns');
+for(const d of NOTABLE){
+  const b = document.createElement('button');
+  b.textContent = d+'°';
+  b.addEventListener('click', () => { stopAnim(); theta = d*PI/180; render(); });
+  btnWrap.append(b);
+}
+
+function stopAnim(){
+  animating = false; btnAnim.setAttribute('aria-pressed','false'); btnAnim.textContent = '▶ Animar';
+  if(rafId) cancelAnimationFrame(rafId); rafId = null; lastT = null;
+}
+btnAnim.addEventListener('click', () => {
+  if(animating){ stopAnim(); return; }
+  animating = true; btnAnim.setAttribute('aria-pressed','true'); btnAnim.textContent = '⏸ Pausar';
+  const step = ts => {
+    if(!animating) return;
+    if(lastT !== null){ theta = (theta + (ts-lastT)/1000 * (reduceMotion ? 0.15 : 0.6)) % TAU; render(); }
+    lastT = ts; rafId = requestAnimationFrame(step);
+  };
+  rafId = requestAnimationFrame(step);
+});
+chkDeg.addEventListener('change', updateReadout);
+
+/* ---------- resize ---------- */
+let rzTimer = null;
+addEventListener('resize', () => {
+  clearTimeout(rzTimer);
+  rzTimer = setTimeout(() => { drawAll(); render(); }, 120);
+});
+requestAnimationFrame(() => { drawAll(); render(); });
+})();
+</script>
+
+</body>
+</html>
