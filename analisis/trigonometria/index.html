@@ -55,8 +55,8 @@
   .sub code, p code, li code, td code{font-family:var(--mono); font-size:.92em; background:#eef2f6; padding:.08em .35em; border-radius:4px}
 
   /* ---------- círculo ---------- */
-  .circle-layout{display:grid; grid-template-columns:minmax(300px,460px) 1fr; gap:26px; align-items:start}
-  @media (max-width:820px){ .circle-layout{grid-template-columns:1fr} }
+  .circle-layout{display:grid; grid-template-columns:minmax(340px,620px) 1fr; gap:26px; align-items:start}
+  @media (max-width:900px){ .circle-layout{grid-template-columns:1fr} }
   .panel{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; box-shadow:0 1px 3px rgba(27,39,51,.05)}
   #circleCanvas{width:100%; height:auto; display:block; touch-action:none; cursor:grab; border-radius:8px}
   .controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; align-items:center}
@@ -85,7 +85,22 @@
     box-shadow:0 1px 3px rgba(27,39,51,.05); display:flex; flex-direction:column}
   .fn-card h3{margin:0; padding:14px 18px 4px; font-family:var(--serif); font-size:1.25rem; display:flex; align-items:baseline; gap:10px}
   .fn-card h3 .def{font-family:var(--mono); font-size:.78rem; color:var(--muted); font-weight:400}
-  .fn-card canvas{width:100%; height:auto; display:block}
+  .fn-card canvas{width:100%; height:auto; display:block; cursor:zoom-in}
+  .fn-card canvas:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+
+  /* ---------- lightbox ---------- */
+  dialog.lightbox{border:none; border-radius:14px; padding:0 0 10px; width:min(940px,94vw);
+    background:var(--card); box-shadow:0 18px 50px rgba(27,39,51,.35)}
+  dialog.lightbox::backdrop{background:rgba(27,39,51,.55)}
+  .lb-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:14px 20px 4px}
+  .lb-head h3{margin:0; font-family:var(--serif); font-size:1.4rem}
+  .lb-head .def{font-family:var(--mono); font-size:.85rem; color:var(--muted); margin-right:auto}
+  .lb-head button{font:inherit; font-size:1rem; line-height:1; border:1px solid var(--line); background:#f4f7fa;
+    color:var(--ink); width:34px; height:34px; border-radius:50%; cursor:pointer; flex-shrink:0}
+  .lb-head button:hover{border-color:var(--accent); color:var(--accent)}
+  .lb-head button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  dialog.lightbox canvas{width:100%; height:auto; display:block}
+  .lb-hint{margin:6px 20px 4px; font-size:.8rem; color:var(--muted)}
   .props{margin:0; padding:10px 18px 16px; display:grid; grid-template-columns:auto 1fr; gap:5px 14px; font-size:.88rem}
   .props dt{color:var(--muted)}
   .props dd{margin:0; font-family:var(--mono); font-size:.85rem; font-variant-numeric:tabular-nums}
@@ -134,11 +149,11 @@
 <section id="circulo">
   <div class="wrap">
     <h2><span class="num">01</span>El círculo trigonométrico</h2>
-    <p class="sub">Sobre la circunferencia de radio 1 centrada en el origen, un ángulo <code>θ</code> (medido desde el semieje positivo x, en sentido antihorario) determina un punto <code>P = (cos θ, sen θ)</code>. De ahí salen las seis funciones: <code>tan θ = sen θ / cos θ</code> se lee sobre la recta tangente vertical <code>x = 1</code>, y <code>cot θ</code> sobre la tangente horizontal <code>y = 1</code>. Las recíprocas son <code>sec θ = 1/cos θ</code> y <code>csc θ = 1/sen θ</code>.</p>
+    <p class="sub">Sobre la circunferencia de radio 1 centrada en el origen, un ángulo <code>θ</code> (medido desde el semieje positivo x, en sentido antihorario) determina un punto <code>P = (cos θ, sen θ)</code>. De ahí salen las seis funciones: <code>tan θ = sen θ / cos θ</code> se lee sobre la recta tangente vertical <code>x = 1</code>, y <code>cot θ</code> sobre la tangente horizontal <code>y = 1</code>. Las recíprocas son <code>sec θ = 1/cos θ</code> y <code>csc θ = 1/sen θ</code>: se leen donde la recta tangente a la circunferencia en P corta al eje x y al eje y respectivamente.</p>
 
     <div class="circle-layout">
       <div class="panel">
-        <canvas id="circleCanvas" width="460" height="460" aria-label="Círculo trigonométrico interactivo: arrastrá para cambiar el ángulo"></canvas>
+        <canvas id="circleCanvas" width="620" height="620" aria-label="Círculo trigonométrico interactivo: arrastrá para cambiar el ángulo"></canvas>
         <div class="controls">
           <button id="btnAnim" aria-pressed="false">▶ Animar</button>
           <label class="toggle"><input type="checkbox" id="chkSnap" checked> ajustar a 15°</label>
@@ -166,6 +181,8 @@
           <span><span class="dot" style="background:var(--cos)"></span>segmento horizontal = cos</span>
           <span><span class="dot" style="background:var(--tan)"></span>sobre x=1 → tan</span>
           <span><span class="dot" style="background:var(--cot)"></span>sobre y=1 → cot</span>
+          <span><span class="dot" style="background:var(--sec)"></span>sobre eje x → sec</span>
+          <span><span class="dot" style="background:var(--csc)"></span>sobre eje y → csc</span>
         </div>
       </div>
     </div>
@@ -477,8 +494,11 @@ function buildCards(list, mountId){
     const h = document.createElement('h3');
     h.innerHTML = `<span style="color:${f.color}">${f.name}</span> <span class="def">${f.def}</span>`;
     const cv = document.createElement('canvas');
-    cv.setAttribute('role','img');
-    cv.setAttribute('aria-label','Gráfico de '+f.name);
+    cv.setAttribute('role','button');
+    cv.setAttribute('tabindex','0');
+    cv.setAttribute('aria-label','Gráfico de '+f.name+' — clic para agrandar');
+    cv.addEventListener('click', () => openLightbox(f));
+    cv.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openLightbox(f); } });
     const dl = document.createElement('dl'); dl.className = 'props';
     for(const [k,v] of Object.entries(f.props)){
       const dt = document.createElement('dt'); dt.textContent = k;
@@ -492,15 +512,36 @@ function buildCards(list, mountId){
     f.canvas = cv;
   }
 }
+const cfgFor = f => Object.assign({ xmin:-TAU, xmax:TAU, xticksPi:true, yticksPi:false }, f.cfg,
+                                  { fn:f.fn, color:f.color });
 function drawAll(){
-  for(const f of [...DIRECT, ...INVERSE]){
-    const cfg = Object.assign({ xmin:-TAU, xmax:TAU, xticksPi:true, yticksPi:false }, f.cfg,
-                              { fn:f.fn, color:f.color });
-    drawGraph(f.canvas, cfg);
-  }
+  for(const f of [...DIRECT, ...INVERSE]) drawGraph(f.canvas, cfgFor(f));
 }
 buildCards(DIRECT,'directGrid');
 buildCards(INVERSE,'inverseGrid');
+
+/* ---------- lightbox para agrandar gráficos ---------- */
+const lb = document.createElement('dialog');
+lb.className = 'lightbox';
+lb.innerHTML = '<div class="lb-head"><h3 id="lbTitle"></h3><span class="def" id="lbDef"></span>' +
+  '<button id="lbClose" aria-label="Cerrar">✕</button></div>' +
+  '<canvas id="lbCanvas" role="img"></canvas>' +
+  '<p class="lb-hint">Esc o clic afuera para cerrar.</p>';
+document.body.append(lb);
+const lbCanvas = lb.querySelector('#lbCanvas');
+let lbCurrent = null;
+function openLightbox(f){
+  lbCurrent = f;
+  lb.querySelector('#lbTitle').textContent = f.name;
+  lb.querySelector('#lbTitle').style.color = f.color;
+  lb.querySelector('#lbDef').textContent = f.def;
+  lbCanvas.setAttribute('aria-label','Gráfico ampliado de '+f.name);
+  lb.showModal();
+  requestAnimationFrame(() => drawGraph(lbCanvas, cfgFor(f)));
+}
+lb.querySelector('#lbClose').addEventListener('click', () => lb.close());
+lb.addEventListener('click', e => { if(e.target === lb) lb.close(); });
+lb.addEventListener('close', () => { lbCurrent = null; });
 
 /* ---------- círculo interactivo ---------- */
 const ccv = document.getElementById('circleCanvas');
@@ -514,13 +555,14 @@ function drawCircle(){
   const W = ccv.clientWidth || 420, H = W;
   ccv.style.height = H+'px';
   const ctx = setupCanvas(ccv, W, H);
-  const cx = W/2, cy = H/2, R = W*0.335;
+  const cx = W/2, cy = H/2, R = W*0.29;
   const px = x => cx + x*R, py = y => cy - y*R;
+  const LIM = 0.5/0.29 - 0.06; // coordenada máxima visible en unidades del círculo
   ctx.clearRect(0,0,W,H);
 
   // grilla fina
   ctx.strokeStyle = C.grid; ctx.lineWidth = 1; ctx.beginPath();
-  for(let v=-1.4; v<=1.4; v+=0.5){ ctx.moveTo(px(v),0); ctx.lineTo(px(v),H); ctx.moveTo(0,py(v)); ctx.lineTo(W,py(v)); }
+  for(let v=-1.5; v<=1.5; v+=0.5){ ctx.moveTo(px(v),0); ctx.lineTo(px(v),H); ctx.moveTo(0,py(v)); ctx.lineTo(W,py(v)); }
   ctx.stroke();
   // ejes
   ctx.strokeStyle = C.axis; ctx.lineWidth = 1.4; ctx.beginPath();
@@ -536,6 +578,28 @@ function drawCircle(){
   const ct = Math.cos(theta), st = Math.sin(theta);
   const tanOK = Math.abs(ct) > 1e-4, cotOK = Math.abs(st) > 1e-4;
   const tn = tanOK ? st/ct : NaN, cn = cotOK ? ct/st : NaN;
+  const sc = tanOK ? 1/ct : NaN, cs = cotOK ? 1/st : NaN;
+  const fontLbl = '600 12px '+getComputedStyle(document.body).fontFamily;
+
+  // recta tangente a la circunferencia en P (corta eje x en sec θ, eje y en csc θ)
+  ctx.strokeStyle = 'rgba(160,170,180,.9)'; ctx.lineWidth = 1; ctx.setLineDash([4,4]); ctx.beginPath();
+  ctx.moveTo(px(ct - 3*(-st)), py(st - 3*ct));
+  ctx.lineTo(px(ct + 3*(-st)), py(st + 3*ct));
+  ctx.stroke(); ctx.setLineDash([]);
+  // sec: sobre el eje x, desde el origen hasta donde la tangente corta al eje
+  if(tanOK && Math.abs(sc) <= LIM){
+    ctx.strokeStyle = C.sec; ctx.lineWidth = 5; ctx.lineCap='round'; ctx.beginPath();
+    ctx.moveTo(cx, cy+7); ctx.lineTo(px(sc), cy+7); ctx.stroke();
+    ctx.fillStyle = C.sec; ctx.font = fontLbl; ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.fillText('sec θ', px(sc/2), cy+12);
+  }
+  // csc: sobre el eje y, desde el origen hasta donde la tangente corta al eje
+  if(cotOK && Math.abs(cs) <= LIM){
+    ctx.strokeStyle = C.csc; ctx.lineWidth = 5; ctx.lineCap='round'; ctx.beginPath();
+    ctx.moveTo(cx-7, cy); ctx.lineTo(cx-7, py(cs)); ctx.stroke();
+    ctx.fillStyle = C.csc; ctx.font = fontLbl; ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.fillText('csc θ', cx-13, py(cs/2));
+  }
 
   // arco del ángulo
   ctx.strokeStyle = C.muted; ctx.lineWidth = 1.6; ctx.beginPath();
@@ -550,18 +614,22 @@ function drawCircle(){
   ctx.strokeStyle = C.sin; ctx.beginPath();
   ctx.moveTo(px(ct),cy); ctx.lineTo(px(ct),py(st)); ctx.stroke();
   // tan: sobre la recta x=1 (prolongación del radio)
-  if(tanOK && Math.abs(tn) <= 1.55/0.335){
+  if(tanOK && Math.abs(tn) <= LIM){
     ctx.strokeStyle = 'rgba(160,170,180,.8)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]); ctx.beginPath();
     ctx.moveTo(cx,cy); ctx.lineTo(px(1),py(tn)); ctx.stroke(); ctx.setLineDash([]);
-    ctx.strokeStyle = C.tan; ctx.lineWidth = 4; ctx.beginPath();
+    ctx.strokeStyle = C.tan; ctx.lineWidth = 4; ctx.lineCap='round'; ctx.beginPath();
     ctx.moveTo(px(1),cy); ctx.lineTo(px(1),py(tn)); ctx.stroke();
+    ctx.fillStyle = C.tan; ctx.font = fontLbl; ctx.textAlign='left'; ctx.textBaseline='middle';
+    ctx.fillText('tan θ', px(1)+7, py(tn/2));
   }
   // cot: sobre la recta y=1
-  if(cotOK && Math.abs(cn) <= 1.55/0.335){
+  if(cotOK && Math.abs(cn) <= LIM){
     ctx.strokeStyle = 'rgba(160,170,180,.8)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]); ctx.beginPath();
     ctx.moveTo(cx,cy); ctx.lineTo(px(cn),py(1)); ctx.stroke(); ctx.setLineDash([]);
-    ctx.strokeStyle = C.cot; ctx.lineWidth = 4; ctx.beginPath();
+    ctx.strokeStyle = C.cot; ctx.lineWidth = 4; ctx.lineCap='round'; ctx.beginPath();
     ctx.moveTo(cx,py(1)); ctx.lineTo(px(cn),py(1)); ctx.stroke();
+    ctx.fillStyle = C.cot; ctx.font = fontLbl; ctx.textAlign='center'; ctx.textBaseline='bottom';
+    ctx.fillText('cot θ', px(cn/2), py(1)-6);
   }
   // punto P
   ctx.fillStyle = C.ink; ctx.beginPath();
@@ -659,7 +727,7 @@ chkDeg.addEventListener('change', updateReadout);
 let rzTimer = null;
 addEventListener('resize', () => {
   clearTimeout(rzTimer);
-  rzTimer = setTimeout(() => { drawAll(); render(); }, 120);
+  rzTimer = setTimeout(() => { drawAll(); render(); if(lb.open && lbCurrent) drawGraph(lbCanvas, cfgFor(lbCurrent)); }, 120);
 });
 requestAnimationFrame(() => { drawAll(); render(); });
 })();
