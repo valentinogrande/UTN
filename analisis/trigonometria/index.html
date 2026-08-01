@@ -158,6 +158,7 @@
           <button id="btnAnim" aria-pressed="false">▶ Animar</button>
           <label class="toggle"><input type="checkbox" id="chkSnap" checked> ajustar a 15°</label>
           <label class="toggle"><input type="checkbox" id="chkDeg"> mostrar en grados</label>
+          <label class="toggle"><input type="checkbox" id="chkHyp" checked> sec/csc sobre la hipotenusa</label>
         </div>
         <div class="angle-btns" id="angleBtns" aria-label="Ángulos notables"></div>
       </div>
@@ -181,8 +182,8 @@
           <span><span class="dot" style="background:var(--cos)"></span>segmento horizontal = cos</span>
           <span><span class="dot" style="background:var(--tan)"></span>sobre x=1 → tan</span>
           <span><span class="dot" style="background:var(--cot)"></span>sobre y=1 → cot</span>
-          <span><span class="dot" style="background:var(--sec)"></span>sobre eje x → sec</span>
-          <span><span class="dot" style="background:var(--csc)"></span>sobre eje y → csc</span>
+          <span><span class="dot" style="background:var(--sec)"></span>sec: radio prolongado hasta x=1 (o eje x)</span>
+          <span><span class="dot" style="background:var(--csc)"></span>csc: radio prolongado hasta y=1 (o eje y)</span>
         </div>
       </div>
     </div>
@@ -555,9 +556,9 @@ function drawCircle(){
   const W = ccv.clientWidth || 420, H = W;
   ccv.style.height = H+'px';
   const ctx = setupCanvas(ccv, W, H);
-  const cx = W/2, cy = H/2, R = W*0.29;
+  const cx = W/2, cy = H/2, R = W*0.27;
   const px = x => cx + x*R, py = y => cy - y*R;
-  const LIM = 0.5/0.29 - 0.06; // coordenada máxima visible en unidades del círculo
+  const LIM = 0.5/0.27 - 0.06; // coordenada máxima visible (≈1.79: entra sec 60° = 2 recortada, tan 60° = √3 completa)
   ctx.clearRect(0,0,W,H);
 
   // grilla fina
@@ -580,25 +581,55 @@ function drawCircle(){
   const tn = tanOK ? st/ct : NaN, cn = cotOK ? ct/st : NaN;
   const sc = tanOK ? 1/ct : NaN, cs = cotOK ? 1/st : NaN;
   const fontLbl = '600 12px '+getComputedStyle(document.body).fontFamily;
+  const clamp = v => Math.max(-LIM, Math.min(LIM, v));
+  // punta de flecha: marca que el segmento continúa fuera del área visible
+  const arrowHead = (x, y, ux, uy, color) => {
+    ctx.fillStyle = color; ctx.beginPath();
+    ctx.moveTo(x + ux*10, y + uy*10);
+    ctx.lineTo(x - uy*5.5, y + ux*5.5);
+    ctx.lineTo(x + uy*5.5, y - ux*5.5);
+    ctx.closePath(); ctx.fill();
+  };
 
-  // recta tangente a la circunferencia en P (corta eje x en sec θ, eje y en csc θ)
-  ctx.strokeStyle = 'rgba(160,170,180,.9)'; ctx.lineWidth = 1; ctx.setLineDash([4,4]); ctx.beginPath();
-  ctx.moveTo(px(ct - 3*(-st)), py(st - 3*ct));
-  ctx.lineTo(px(ct + 3*(-st)), py(st + 3*ct));
-  ctx.stroke(); ctx.setLineDash([]);
-  // sec: sobre el eje x, desde el origen hasta donde la tangente corta al eje
-  if(tanOK && Math.abs(sc) <= LIM){
-    ctx.strokeStyle = C.sec; ctx.lineWidth = 5; ctx.lineCap='round'; ctx.beginPath();
-    ctx.moveTo(cx, cy+7); ctx.lineTo(px(sc), cy+7); ctx.stroke();
-    ctx.fillStyle = C.sec; ctx.font = fontLbl; ctx.textAlign='center'; ctx.textBaseline='top';
-    ctx.fillText('sec θ', px(sc/2), cy+12);
-  }
-  // csc: sobre el eje y, desde el origen hasta donde la tangente corta al eje
-  if(cotOK && Math.abs(cs) <= LIM){
-    ctx.strokeStyle = C.csc; ctx.lineWidth = 5; ctx.lineCap='round'; ctx.beginPath();
-    ctx.moveTo(cx-7, cy); ctx.lineTo(cx-7, py(cs)); ctx.stroke();
-    ctx.fillStyle = C.csc; ctx.font = fontLbl; ctx.textAlign='right'; ctx.textBaseline='middle';
-    ctx.fillText('csc θ', cx-13, py(cs/2));
+  if(document.getElementById('chkHyp').checked){
+    // sec y csc medidos sobre la hipotenusa: el radio prolongado hasta x=1 mide |sec θ|
+    // (termina en (1, tan θ)) y hasta y=1 mide |csc θ| (termina en (cot θ, 1)).
+    const segHyp = (x2, y2, color, off, label) => {
+      const m = Math.max(Math.abs(x2), Math.abs(y2));
+      const s = m > LIM ? LIM/m : 1, cut = s < 1;
+      const bx = px(x2*s), by = py(y2*s);
+      let dx = bx-cx, dy = by-cy; const L = Math.hypot(dx,dy)||1; dx/=L; dy/=L;
+      const ox = -dy*off, oy = dx*off;
+      ctx.strokeStyle = color; ctx.lineWidth = 5; ctx.lineCap='round'; ctx.beginPath();
+      ctx.moveTo(cx+ox, cy+oy); ctx.lineTo(bx+ox, by+oy); ctx.stroke();
+      if(cut) arrowHead(bx+ox, by+oy, dx, dy, color);
+      ctx.fillStyle = color; ctx.font = fontLbl; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(label, (cx+bx)/2 + ox*4, (cy+by)/2 + oy*4);
+    };
+    if(tanOK) segHyp(1, tn, C.sec, 4.5, 'sec θ');
+    if(cotOK) segHyp(cn, 1, C.csc, -4.5, 'csc θ');
+  } else {
+    // alternativa: recta tangente en P — corta eje x en (sec θ, 0) y eje y en (0, csc θ)
+    ctx.strokeStyle = 'rgba(160,170,180,.9)'; ctx.lineWidth = 1; ctx.setLineDash([4,4]); ctx.beginPath();
+    ctx.moveTo(px(ct - 3*(-st)), py(st - 3*ct));
+    ctx.lineTo(px(ct + 3*(-st)), py(st + 3*ct));
+    ctx.stroke(); ctx.setLineDash([]);
+    if(tanOK){
+      const scC = clamp(sc), cut = Math.abs(sc) > LIM;
+      ctx.strokeStyle = C.sec; ctx.lineWidth = 5; ctx.lineCap='round'; ctx.beginPath();
+      ctx.moveTo(cx, cy+7); ctx.lineTo(px(scC), cy+7); ctx.stroke();
+      if(cut) arrowHead(px(scC), cy+7, Math.sign(sc), 0, C.sec);
+      ctx.fillStyle = C.sec; ctx.font = fontLbl; ctx.textAlign='center'; ctx.textBaseline='top';
+      ctx.fillText('sec θ', px(scC/2), cy+12);
+    }
+    if(cotOK){
+      const csC = clamp(cs), cut = Math.abs(cs) > LIM;
+      ctx.strokeStyle = C.csc; ctx.lineWidth = 5; ctx.lineCap='round'; ctx.beginPath();
+      ctx.moveTo(cx-7, cy); ctx.lineTo(cx-7, py(csC)); ctx.stroke();
+      if(cut) arrowHead(cx-7, py(csC), 0, -Math.sign(cs), C.csc);
+      ctx.fillStyle = C.csc; ctx.font = fontLbl; ctx.textAlign='right'; ctx.textBaseline='middle';
+      ctx.fillText('csc θ', cx-13, py(csC/2));
+    }
   }
 
   // arco del ángulo
@@ -614,22 +645,26 @@ function drawCircle(){
   ctx.strokeStyle = C.sin; ctx.beginPath();
   ctx.moveTo(px(ct),cy); ctx.lineTo(px(ct),py(st)); ctx.stroke();
   // tan: sobre la recta x=1 (prolongación del radio)
-  if(tanOK && Math.abs(tn) <= LIM){
+  if(tanOK){
+    const tnC = clamp(tn), cut = Math.abs(tn) > LIM;
     ctx.strokeStyle = 'rgba(160,170,180,.8)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]); ctx.beginPath();
     ctx.moveTo(cx,cy); ctx.lineTo(px(1),py(tn)); ctx.stroke(); ctx.setLineDash([]);
     ctx.strokeStyle = C.tan; ctx.lineWidth = 4; ctx.lineCap='round'; ctx.beginPath();
-    ctx.moveTo(px(1),cy); ctx.lineTo(px(1),py(tn)); ctx.stroke();
+    ctx.moveTo(px(1),cy); ctx.lineTo(px(1),py(tnC)); ctx.stroke();
+    if(cut) arrowHead(px(1), py(tnC), 0, -Math.sign(tn), C.tan);
     ctx.fillStyle = C.tan; ctx.font = fontLbl; ctx.textAlign='left'; ctx.textBaseline='middle';
-    ctx.fillText('tan θ', px(1)+7, py(tn/2));
+    ctx.fillText('tan θ', px(1)+7, py(tnC/2));
   }
   // cot: sobre la recta y=1
-  if(cotOK && Math.abs(cn) <= LIM){
+  if(cotOK){
+    const cnC = clamp(cn), cut = Math.abs(cn) > LIM;
     ctx.strokeStyle = 'rgba(160,170,180,.8)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]); ctx.beginPath();
     ctx.moveTo(cx,cy); ctx.lineTo(px(cn),py(1)); ctx.stroke(); ctx.setLineDash([]);
     ctx.strokeStyle = C.cot; ctx.lineWidth = 4; ctx.lineCap='round'; ctx.beginPath();
-    ctx.moveTo(cx,py(1)); ctx.lineTo(px(cn),py(1)); ctx.stroke();
+    ctx.moveTo(cx,py(1)); ctx.lineTo(px(cnC),py(1)); ctx.stroke();
+    if(cut) arrowHead(px(cnC), py(1), Math.sign(cn), 0, C.cot);
     ctx.fillStyle = C.cot; ctx.font = fontLbl; ctx.textAlign='center'; ctx.textBaseline='bottom';
-    ctx.fillText('cot θ', px(cn/2), py(1)-6);
+    ctx.fillText('cot θ', px(cnC/2), py(1)-6);
   }
   // punto P
   ctx.fillStyle = C.ink; ctx.beginPath();
@@ -722,6 +757,7 @@ btnAnim.addEventListener('click', () => {
   rafId = requestAnimationFrame(step);
 });
 chkDeg.addEventListener('change', updateReadout);
+document.getElementById('chkHyp').addEventListener('change', render);
 
 /* ---------- resize ---------- */
 let rzTimer = null;
