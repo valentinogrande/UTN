@@ -15,7 +15,10 @@
     - [OBJETIVOS](#objetivos)
     - [PAUTAS PARA LOS DIAGRAMAS DE CONTEXTO](#pautas-para-los-diagramas-de-contexto)
     - [PAUTAS OBLIGATORIAS](#pautas-obligatorias)
+    - [REGLAS DE NEGOCIO](#reglas-de-negocio)
   - [DICCIONARIO DE DATOS](#diccionario-de-datos)
+    - [ELEMENTOS Y ESTRUCTURA](#elementos-y-estructura)
+    - [PLANTILLA](#plantilla)
 
 <!--toc:end-->
 
@@ -28,7 +31,8 @@ Minuta = id + fecha + tema + versión + 1{participantes}n + contenido
 
 ## CURSOGRAMA
 
-Se utilizan para graficar los procesos, representando la secuencia de acciones a seguir para determinado pro. Muestran los sectores, traslados de información, y un detalle de cada operación.
+> [!IMPORTANT]
+> Se utilizan para graficar los procesos, representando la secuencia de acciones a seguir para determinado pro. Muestran los sectores, traslados de información, y un detalle de cada operación.
 
 Los procedimientos se pueden representar de dos maneras:
 
@@ -47,7 +51,7 @@ Los bursogramas permiten ver:
 - localizar pasos innecesarios
 - comparar organizaciones
 
-Información básica del bursograma:
+Información básica del cursograma:
 
 - Áreas de responsabilidad
 - operaciones básicas: representadas mediante símbolos
@@ -109,7 +113,8 @@ Muestran como un sistema interactúa con el ambiente, definiendo sus límites, y
 
 ### OBJETIVOS
 
-Es lo que los actores buscan a la hora de interactuar con el sistema
+> [!IMPORTANT]
+> Es lo que los actores buscan a la hora de interactuar con el sistema
 
 Pasos a seguir:
 
@@ -130,4 +135,43 @@ Pasos a seguir:
 - el actor principal es el dueño del objetivo
 - saber siempre quien tiene la pelota (quien tiene la posta/información)
 
+### REGLAS DE NEGOCIO
+
+Son declaraciones de una política o una condición que debe de cumplirse. Deben de ser **explícitas** para no dar lugar a múltiples interpretaciones.
+
+Clasificación:
+
+1. HECHOS: son condiciones que deben de ser verdaderas
+2. RESTRICCIONES: acciones prohibidas
+3. ACCIONES DISPARADORES: disparan una acción cuando $N$ variables se cumplen
+4. CÁLCULOS: calculan un valor a partir de un conjunto de otros valores.
+5. INFERENCIAS: bosquejan una conclusión cuando $N$ condiciones se hacen verdaderas.
+
 ## DICCIONARIO DE DATOS
+
+> [!IMPORTANT]
+> Es una herramienta que permite describir el significado de los componentes. Contempla determina notación y reglas.
+
+Nos permiten especificar:
+
+1.  Significado y contenido del flujo de datos.
+2.  Significado y contenido de las entidades de datos.
+3.  Valores y unidades relevantes de los elementos de datos o datos elementales.
+
+### ELEMENTOS Y ESTRUCTURA
+
+- Dato elemental: es la unidad de información más pequeña.
+- Estructura de dato: Está formado por $>= 2$ datos elementales interconectados entre sí.
+
+| Notación | significada   |
+| -------- | ------------- |
+| =        | equivalente a |
+| +        | y             |
+| \[ \| \] | o uno u otro  |
+| { }      | iteración     |
+| ()       | opcional      |
+| $_e$     | estructura    |
+
+### PLANTILLA
+
+![Plantilla](3.png)
