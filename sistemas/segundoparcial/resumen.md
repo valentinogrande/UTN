@@ -55,8 +55,8 @@ Información básica del bursograma:
 
 ### SIMBOLOGÍA
 
-![Imagen 1](/home/drtino/Projects/utn/sistemas/segundoparcial/1.png)
-![imagen 2](/home/drtino/Projects/utn/sistemas/segundoparcial/2.png)
+![Imagen 1](1.png)
+![imagen 2](2.png)
 
 ### TÉCNICA BÁSICA
 
@@ -131,5 +131,3 @@ Pasos a seguir:
 - saber siempre quien tiene la pelota (quien tiene la posta/información)
 
 ## DICCIONARIO DE DATOS
-
-
