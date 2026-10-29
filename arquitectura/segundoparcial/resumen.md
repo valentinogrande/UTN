@@ -25,7 +25,14 @@
   - [MMX](#mmx)
   - [CHIPSET](#chipset)
   - [SMP (Symmetric Multiprocessing)](#smp-symmetric-multiprocessing)
-  - [Multi Threading](#multi-threading)
+  - [Multi Threading / Hyper Threading](#multi-threading-hyper-threading)
+  - [MEMORIA AUXILIAR](#memoria-auxiliar)
+    - [HDD](#hdd)
+      - [ELEMENTOS DEL HDD](#elementos-del-hdd)
+      - [Access time](#access-time)
+      - [INTERCALADO](#intercalado)
+      - [COMO ACCEDER AL HDD](#como-acceder-al-hdd)
+      - [DVD](#dvd)
 
 <!--toc:end-->
 
@@ -252,6 +259,67 @@ Son sistemas que utilizan múltiples procesadores para ejecutar tareas de manera
 
 Si bien el performance es mucho mejor, el costo, no solo económico, sino el costo en complejidad. Estos sistemas comparten la memoria por lo que pueden surgir problemas de sincronización. Incluso si cada procesador tiene su propia caché. La temperatura también es mayor.
 
-## Multi Threading
+## Multi Threading / Hyper Threading
 
 Trabaja con hilos, que son como CPU virtuales. Cada hilo tiene su PC y sus registros, comparten la ALU y la CU. Cuando un hilo está esperando por I/O, otro hilo puede ejecutar instrucciones. Esto permite que un solo procesador pueda ejecutar múltiples tareas de manera concurrente, mejorando la eficiencia y el rendimiento del sistema.
+
+## MEMORIA AUXILIAR
+
+Es la memoria no volátil, que tiende a ser a mayor escala y más lenta.
+
+| Componente / operación          | Tiempo de lectura | Tiempo de escritura |
+| ------------------------------- | ----------------: | ------------------: |
+| Registro de CPU                 |          0,2–1 ns |            0,2–1 ns |
+| Caché L1                        |        0,5–1,5 ns |               ~1 ns |
+| Caché L2                        |            2–5 ns |             3–10 ns |
+| Caché L3                        |           5–20 ns |            10–30 ns |
+| RAM                             |         50–100 ns |           50–100 ns |
+| SSD NVMe                        |         10–100 µs |           10–100 µs |
+| SSD SATA                        |         50–200 µs |           50–200 µs |
+| HDD mecánico (acceso aleatorio) |           5–15 ms |             5–15 ms |
+| Red local (LAN)                 |    0,1–1 ms (RTT) |      0,1–1 ms (RTT) |
+| TCP (LAN, conexión establecida) |    0,1–1 ms (RTT) |      0,1–1 ms (RTT) |
+| UDP (LAN)                       |    0,1–1 ms (RTT) |      0,1–1 ms (RTT) |
+| Internet (servidor cercano)     |     5–30 ms (RTT) |       5–30 ms (RTT) |
+| Internet (servidor lejano)      |  50–200+ ms (RTT) |    50–200+ ms (RTT) |
+
+### HDD
+
+Son los discos duros mecánicos. Son los más lentos y baratos.
+![Disco Duro](2.png)
+
+#### ELEMENTOS DEL HDD
+
+- Platos: Son discos circulares de metal o vidrio recubiertos de material magnético. Cada plato tiene dos caras, y cada cara puede almacenar datos.
+- Cabezas de lectura/escritura: Son dispositivos electromagnéticos que se encargan de leer y escribir datos en los platos. Cada plato tiene una cabeza de lectura/escritura para cada cara. Las cabezas se encuentran montadas en un brazo que se mueve sobre los platos para acceder a diferentes pistas.
+- Pista: son círculos de radio variable dependiendo de su zona, que almacenan datos.
+- Sector: es la unidad mínima de almacenamiento en un disco duro. Cada pista se divide en sectores, que suelen tener un tamaño de 512 bytes o 4096 bytes.
+- Cilindro: es un conjunto de pistas que se encuentran en el mismo radio en todos los platos. Cada cilindro tiene el mismo número de pistas y sectores, lo que permite acceder a los datos de manera más eficiente.
+- Motor: gira a todos los platos al mismo tiempo.
+
+#### Access time
+
+Es el tiempo que tarda el disco en localizar y leer un sector.
+
+- Seek time: es el tiempo que tarda la cabeza de lectura/escritura en moverse a la pista correcta.
+- Tiempo de estabilización: es el tiempo que tarda la cabeza de lectura/escritura en estabilizarse sobre la pista correcta.
+- Latencia rotacional: es el tiempo que tarda el plato en girar hasta que el sector deseado se encuentra bajo la cabeza de lectura/escritura.
+- Tiempo al buffer: es el tiempo que tarda el disco en transferir los datos desde el sector leído al buffer del disco.
+- Tiempo al host: es el tiempo que tarda el disco en transferir los datos desde el buffer del disco al host (computadora).
+
+#### INTERCALADO
+
+Supóngase una secuencia de sectores del 0 a los 7 $S = \[0,1,2,3,4,5,6,7]$. Si el disco almacena el contenido de S secuencialmente, se va a obtener $S_0$ y cuando se busque $S_1$, el disco ya habrá girado y se habrá pasado de $S_1$ teniendo que esperar a que de la vuelta completa (Esto depende de la velocidad del disco). Entonces lo que se hace es separar $S_n$ y $S_{n+1}$ de modo tal que $\Delta S$ sea mayor que en la cantidad de sectores que se pasa el disco.
+
+#### COMO ACCEDER AL HDD
+
+- CHS: El OS indica esto. Ejemplo: (C, H, S) = (10, 2, 7)
+  - C — Cylinder (cilindro): conjunto de pistas que están a la misma distancia del centro en todas las superficies de los platos.
+  - H — Head (cabeza): identifica qué cabeza lectora/escritora y, por lo tanto, qué superficie se utiliza.
+  - S — Sector: identifica el sector dentro de la pista seleccionada.
+
+- LBA: El driver del HDD traduce la dirección. Ejemplo, el disco tiene 4 platos, y dos caras, por cada cara 64 sectores. Entonces si el OS solicita el sector 120 el driver lo traduce a la cara número 2. $120 // 64$ para identificar la cara.
+
+#### DVD
+
+El DVD a diferencia del HDD tiene un solo track espiralado. Entonces para acceder a un sector, se tiene que recorrer todo el track hasta encontrar ese sector. Es por eso que es bastante más lento.
