@@ -23,6 +23,9 @@
   - [PLL (Phase-Locked Loop)](#pll-phase-locked-loop)
   - [CACHE](#cache)
   - [MMX](#mmx)
+  - [CHIPSET](#chipset)
+  - [SMP (Symmetric Multiprocessing)](#smp-symmetric-multiprocessing)
+  - [Multi Threading](#multi-threading)
 
 <!--toc:end-->
 
@@ -221,7 +224,7 @@ Es la unidad de punto flotante del procesador. Es el componente encargado de rea
 > [!TIP]
 > Recordemos que mientras más cerca este el dato del procesador más rápido será su acceso.
 
-La caché es una memoria de **alta velocidad** que se encuentra entre la memoria principal y el procesador. Su función es almacenar **temporalmente** los datos e instrucciones que se utilizan con mayor frecuencia, para que el procesador pueda acceder a ellos más rápidamente. Es **muy cara**.
+La caché es una memoria de **alta velocidad** (SRAM) que se encuentra entre la memoria principal y el procesador. Su función es almacenar **temporalmente** los datos e instrucciones que se utilizan con mayor frecuencia, para que el procesador pueda acceder a ellos más rápidamente. Es **muy cara**.
 
 La caché se clasifica en $N$ niveles(puede tener más):
 
@@ -234,3 +237,21 @@ Por lo general, Cada CPU tiene su propia caché L1, pero comparte la caché L2. 
 ## MMX
 
 El **MMX** que es el acrónimo de Multimedia extensión, está pensado para mejorar el manejo de gráficos en pantalla, para ello debe trabajar con números de coma flotante.
+
+## CHIPSET
+
+La CPU no se conecta directamente de cualquier manera con todos los componentes. El chipset organiza y gestiona esas comunicaciones.
+Un chipset es un conjunto de circuitos integrados que se encuentran en la placa base de una computadora y que se encargan de controlar la comunicación entre la CPU, la memoria, los dispositivos de entrada/salida y otros componentes del sistema. El chipset actúa como un intermediario entre la CPU y los demás componentes, asegurando que los datos se transfieran de manera eficiente y coordinada.
+
+- Northbridge: Es el componente del chipset que se encarga de controlar la comunicación entre la CPU, la memoria RAM y la tarjeta gráfica. Se encuentra cerca de la CPU y tiene una conexión directa con ella.
+- Southbridge: Es el componente del chipset que se encarga de controlar la comunicación entre la CPU y los dispositivos de entrada/salida, como discos duros, puertos USB, tarjetas de sonido y red. Se encuentra más alejado de la CPU y se comunica con ella a través del Northbridge.
+
+## SMP (Symmetric Multiprocessing)
+
+Son sistemas que utilizan múltiples procesadores para ejecutar tareas de manera simultánea. En un sistema SMP, todos los procesadores tienen acceso a la misma memoria y pueden ejecutar cualquier tarea asignada por el sistema operativo. Esto permite mejorar el rendimiento y la capacidad de procesamiento del sistema, ya que las tareas se pueden distribuir entre los procesadores disponibles.
+
+Si bien el performance es mucho mejor, el costo, no solo económico, sino el costo en complejidad. Estos sistemas comparten la memoria por lo que pueden surgir problemas de sincronización. Incluso si cada procesador tiene su propia caché. La temperatura también es mayor.
+
+## Multi Threading
+
+Trabaja con hilos, que son como CPU virtuales. Cada hilo tiene su PC y sus registros, comparten la ALU y la CU. Cuando un hilo está esperando por I/O, otro hilo puede ejecutar instrucciones. Esto permite que un solo procesador pueda ejecutar múltiples tareas de manera concurrente, mejorando la eficiencia y el rendimiento del sistema.
