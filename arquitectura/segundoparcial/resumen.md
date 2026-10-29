@@ -19,6 +19,10 @@
       - [Tabla de estado de dispositivos](#tabla-de-estado-de-dispositivos)
   - [PIPELINE](#pipeline)
   - [FPU (Floating-Point Unit)](#fpu-floating-point-unit)
+  - [TIPOS DE COMPUTADORA](#tipos-de-computadora)
+  - [PLL (Phase-Locked Loop)](#pll-phase-locked-loop)
+  - [CACHE](#cache)
+  - [MMX](#mmx)
 
 <!--toc:end-->
 
@@ -188,9 +192,45 @@ Los principales problemas son:
 
 ## FPU (Floating-Point Unit)
 
-Es la unidad de punto flotante del procesador. Es el componente encargado de realizar operaciones aritméticas con números que tienen parte fraccionaria, como decimales.
+Es la unidad de punto flotante del procesador. Es el componente encargado de realizar operaciones aritméticas con números que tienen parte fraccionaria, como decimales. Ahora se incorpora directamente en el procesador, pero antes era un coprocesador que se encargaba de realizar estas operaciones.
 
 | ALU                                                 | FPU                                                                   |
 | --------------------------------------------------- | --------------------------------------------------------------------- |
 | Realiza operaciones enteras y lógicas, entre otras. | Realiza operaciones con números en punto flotante. (Números con coma) |
-| $\5 + 3 = 8$                                        | $\5{,}25 + 3{,}5 = 8{,}75$                                            |
+| $5 + 3 = 8$                                         | $5{,}25 + 3{,}5 = 8{,}75$                                             |
+
+## TIPOS DE COMPUTADORA
+
+- Supercomputadoras (supercomputer): Son computadoras de alto rendimiento diseñadas para realizar cálculos complejos a gran velocidad. Se utilizan en investigación científica, simulaciones y modelado de fenómenos naturales.
+- Computadora (mainframe): Son computadoras de gran tamaño y capacidad, utilizadas principalmente por grandes organizaciones para procesar grandes cantidades de datos y ejecutar aplicaciones críticas.
+- Minicomputadora (minicomputer): Son computadoras de tamaño mediano, más pequeñas que el mainframe pero más grandes que las microcomputadoras. Se utilizan en entornos empresariales y científicos para tareas específicas.
+- Microcomputadora (microcomputer): Son computadoras de tamaño pequeño, diseñadas para uso personal o en pequeñas empresas. Incluyen computadoras de escritorio, portátiles y dispositivos móviles. Surgen con los microprocesadores.
+  - Estación de trabajo: es una microcomputadora de gran potencia que se
+    utiliza para trabajos de ingeniería o similares y permite la conexión a través de una red con una
+    computadora de mayor potencia.
+  - Computadora personal: es una microcomputadora fácil de usar y con grandes prestaciones.
+    - Pocket-PC: es una microcomputadora de tamaño reducido que se puede llevar en el bolsillo y que permite realizar tareas básicas como enviar correos electrónicos, navegar por internet y utilizar aplicaciones.
+
+## PLL (Phase-Locked Loop)
+
+> [!TIP]
+> Genera una frecuencia interna mayor a la frecuencia del reloj externo. Esto permite que el procesador funcione a una velocidad mayor que la del reloj externo, aumentando el rendimiento del sistema.
+
+## CACHE
+
+> [!TIP]
+> Recordemos que mientras más cerca este el dato del procesador más rápido será su acceso.
+
+La caché es una memoria de **alta velocidad** que se encuentra entre la memoria principal y el procesador. Su función es almacenar **temporalmente** los datos e instrucciones que se utilizan con mayor frecuencia, para que el procesador pueda acceder a ellos más rápidamente. Es **muy cara**.
+
+La caché se clasifica en $N$ niveles(puede tener más):
+
+- L1: Es la caché más cercana al procesador y tiene la menor capacidad. Se encuentra dentro del procesador y se puede divide en dos partes: una para instrucciones y otra para datos. Su tamaño suele ser de 16 kB a 128KB.
+- L2: Es la caché intermedia y tiene una capacidad mayor que la L1.
+- L3: Es la caché más lejana al procesador y tiene la mayor capacidad. Se encuentra fuera del procesador y suele ser compartida por varios núcleos de un procesador. Su tamaño suele ser de 2 MB a 32 MB.
+
+Por lo general, Cada CPU tiene su propia caché L1, pero comparte la caché L2. La L3 es compartida por todos los núcleos del procesador. Esto permite que los núcleos puedan acceder a los datos e instrucciones almacenados en la caché de manera más rápida y eficiente.
+
+## MMX
+
+El **MMX** que es el acrónimo de Multimedia extensión, está pensado para mejorar el manejo de gráficos en pantalla, para ello debe trabajar con números de coma flotante.
