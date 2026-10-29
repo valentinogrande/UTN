@@ -1,0 +1,1577 @@
+<meta charset="utf-8">
+<title>Física I en Movimiento</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Física I (UTN FRRo): rotación de cuerpos rígidos, cantidad de movimiento, choques y centro de masa, con simulaciones interactivas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="styles.css?v=7">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    svg: { fontCache: 'global' },
+    options: { enableMenu: false }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+
+<div class="progress"></div>
+
+<nav class="topbar" aria-label="Unidades">
+  <a href="#inicio" data-view="inicio"><i style="--k:var(--rot)"></i>Inicio</a>
+  <a href="#u2" data-view="u2"><i style="--k:var(--muted)"></i>Unidad 2</a>
+  <a href="#u4" data-view="u4"><i style="--k:var(--force)"></i>Unidad 4</a>
+  <a href="#u5" data-view="u5"><i style="--k:var(--rot)"></i>Unidad 5</a>
+  <a href="#u6" data-view="u6"><i style="--k:var(--en)"></i>Unidad 6</a>
+  <a href="#u8" data-view="u8"><i style="--k:var(--lin)"></i>Unidad 8</a>
+  <a href="#cm" data-view="cm"><i style="--k:var(--alt)"></i>Centro de masa</a>
+  <a href="#u9" data-view="u9"><i style="--k:var(--rot)"></i>Unidad 9</a>
+  <a href="#u10" data-view="u10"><i style="--k:var(--force)"></i>Unidad 10</a>
+  <a href="#u11" data-view="u11"><i style="--k:var(--en)"></i>Unidad 11</a>
+  <a href="#analogia" data-view="analogia"><i style="--k:var(--en)"></i>Lineal ↔ Rotación</a>
+  <a href="#formulario" data-view="formulario"><i style="--k:var(--ink)"></i>Formulario</a>
+  <a href="#quiz" data-view="quiz"><i style="--k:var(--en)"></i>Autoevaluación</a>
+</nav>
+
+<div class="layout">
+  <aside class="side">
+    <a class="brand" href="#inicio">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12" fill="none" stroke="var(--rot)" stroke-width="2.5" stroke-dasharray="58 18"/><circle cx="15" cy="15" r="3" fill="var(--ink)"/><circle cx="25.5" cy="9" r="3" fill="var(--lin)"/></svg>
+      Física I
+    </a>
+    <nav aria-label="Unidades">
+      <a class="unit home" href="#inicio">Inicio</a>
+      <div class="grp" data-view="u2" style="--k:var(--muted)">
+        <a class="unit" href="#u2"><i></i><span><small>Unidad 2</small>Movimiento en una dirección</span></a>
+        <div class="sub">
+          <a href="#cinematica">Cinemática en una dirección</a>
+          <a href="#ej-u2">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="u4" style="--k:var(--force)">
+        <a class="unit" href="#u4"><i></i><span><small>Unidad 4</small>Leyes del movimiento de Newton</span></a>
+        <div class="sub">
+          <a href="#newton">Leyes de Newton y aplicaciones</a>
+          <a href="#ej-u4">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="u5" style="--k:var(--rot)">
+        <a class="unit" href="#u5"><i></i><span><small>Unidad 5</small>Aplicaciones de las leyes de Newton</span></a>
+        <div class="sub">
+          <a href="#circular">Movimiento circular</a>
+          <a href="#ej-u5">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="u6" style="--k:var(--en)">
+        <a class="unit" href="#u6"><i></i><span><small>Unidad 6</small>Trabajo y energía</span></a>
+        <div class="sub">
+          <a href="#trabajo">Trabajo y potencia</a>
+          <a href="#energia">Energía mecánica y su conservación</a>
+          <a href="#ej-u6">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="u8" style="--k:var(--lin)">
+        <a class="unit" href="#u8"><i></i><span><small>Unidad 8</small>Cantidad de movimiento, impulso y choques</span></a>
+        <div class="sub">
+          <a href="#momento">Segunda ley con cantidad de movimiento</a>
+          <a href="#impulso">Teorema del impulso y la cantidad de movimiento</a>
+          <a href="#conservacion">Conservación de la cantidad de movimiento</a>
+          <a href="#choques">Choques en una dimensión</a>
+          <a href="#pendulo">Péndulo balístico</a>
+          <a href="#choque2d">Choques en dos dimensiones</a>
+          <a href="#ej-u8">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="cm" style="--k:var(--alt)">
+        <a class="unit" href="#cm"><i></i><span><small>Unidad 8</small>Centro de masa</span></a>
+        <div class="sub">
+          <a href="#cm-def">Definición: promedio ponderado por la masa</a>
+          <a href="#cm-figuras">Centro de masa de figuras geométricas</a>
+          <a href="#cm-mov">Movimiento del centro de masa</a>
+          <a href="#cm-explosion">Explosión: ¿dónde cae el otro pedazo?</a>
+          <a href="#cm-ext">Fuerzas externas y movimiento del centro de masa</a>
+          <a href="#cm-colgar">Encontrar el CM colgando el cuerpo</a>
+          <a href="#ej-cm">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="u9" style="--k:var(--rot)">
+        <a class="unit" href="#u9"><i></i><span><small>Unidad 9</small>Rotación de cuerpos rígidos</span></a>
+        <div class="sub">
+          <a href="#cinrot">Cinemática rotacional: la misma película, otras letras</a>
+          <a href="#ecrot">Energía en el movimiento rotacional</a>
+          <a href="#inercia">Momento de inercia: la masa de la rotación</a>
+          <a href="#continuo">Cuerpos continuos: de la suma a la integral</a>
+          <a href="#tabla-i">Momentos de inercia de cuerpos comunes</a>
+          <a href="#steiner">Teorema de Steiner (ejes paralelos)</a>
+          <a href="#masa-vs-i">Masa vs. momento de inercia</a>
+          <a href="#rodadura">Rodadura: traslación + rotación</a>
+          <a href="#ej-u9">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="u10" style="--k:var(--force)">
+        <a class="unit" href="#u10"><i></i><span><small>Unidad 10</small>Dinámica del movimiento rotacional</span></a>
+        <div class="sub">
+          <a href="#torque">Torque o momento de una fuerza</a>
+          <a href="#polea">Energía y τ = I·α en una polea con masa</a>
+          <a href="#angular">Momento angular y su conservación</a>
+          <a href="#ej-u10">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <div class="grp" data-view="u11" style="--k:var(--en)">
+        <a class="unit" href="#u11"><i></i><span><small>Unidad 11</small>Equilibrio y elasticidad</span></a>
+        <div class="sub">
+          <a href="#equilibrio">Equilibrio del cuerpo rígido</a>
+          <a href="#elasticidad">Elasticidad</a>
+          <a href="#ej-u11">Ejercicios resueltos</a>
+        </div>
+      </div>
+      <span class="side-sep">Repaso final</span>
+      <div class="grp" data-view="analogia" style="--k:var(--en)"><a class="unit" href="#analogia"><i></i><span>Lineal ↔ Rotación</span></a></div>
+      <div class="grp" data-view="formulario" style="--k:var(--ink)"><a class="unit" href="#formulario"><i></i><span>Formulario</span></a></div>
+      <div class="grp" data-view="quiz" style="--k:var(--en)"><a class="unit" href="#quiz"><i></i><span>Autoevaluación</span></a></div>
+    </nav>
+    <button class="theme-btn" type="button">Tema: sistema</button>
+  </aside>
+
+  <main>
+    <section class="view hero wrap" id="inicio">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Física I · UTN FRRo · Sears–Zemansky</p>
+          <h1>Todo lo que<br>gira, <span class="rot">choca</span><br>y se equilibra</h1>
+          <p class="lead">Cada unidad tiene su propia página, con teoría, deducciones y simulaciones. Unidad 8, Unidad 9 y centro de masa están a fondo; las demás, con lo necesario para repasar. Elegí una unidad abajo o en el índice.</p>
+          <div class="legend" aria-label="Código de colores">
+            <span style="--k:var(--lin)"><b></b>lineal (x, v, p, F)</span>
+            <span style="--k:var(--rot)"><b></b>rotacional (θ, ω, τ, L, I)</span>
+            <span style="--k:var(--en)"><b></b>energía potencial</span>
+            <span style="--k:var(--force)"><b></b>fuerzas y pérdidas</span>
+            <span style="--k:var(--alt)"><b></b>centro de masa</span>
+          </div>
+        </div>
+        <figure class="sim drag" id="s-rotor" data-aspect=".86" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Rotor visto desde arriba con dos masas que se pueden acercar al eje"></canvas></div>
+          <dl class="hud">
+            <div><dt>I</dt><dd data-o="I">—</dd></div>
+            <div><dt>ω</dt><dd data-o="w">—</dd></div>
+            <div><dt>Ec rot</dt><dd data-o="E">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Radio de las masas r</span><input id="rotor-r" type="range" data-k="r" min="0.2" max="1.2" step="0.01" value="1" data-d="2" data-u="m"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">L = I·ω se conserva</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+        </figure>
+      </div>
+      <div class="route">
+        <a href="#u2" class="" style="--k:var(--muted)"><span class="eyebrow">Unidad 2</span><b>Movimiento en una dirección</b><small>1 tema</small></a>
+        <a href="#u4" class="" style="--k:var(--force)"><span class="eyebrow">Unidad 4</span><b>Leyes del movimiento de Newton</b><small>1 tema</small></a>
+        <a href="#u5" class="" style="--k:var(--rot)"><span class="eyebrow">Unidad 5</span><b>Aplicaciones de las leyes de Newton</b><small>1 tema</small></a>
+        <a href="#u6" class="" style="--k:var(--en)"><span class="eyebrow">Unidad 6</span><b>Trabajo y energía</b><small>2 temas</small></a>
+        <a href="#u8" class="key" style="--k:var(--lin)"><span class="eyebrow">Unidad 8</span><b>Cantidad de movimiento, impulso y choques</b><small>6 temas</small></a>
+        <a href="#cm" class="key" style="--k:var(--alt)"><span class="eyebrow">Unidad 8</span><b>Centro de masa</b><small>4 temas</small></a>
+        <a href="#u9" class="key" style="--k:var(--rot)"><span class="eyebrow">Unidad 9</span><b>Rotación de cuerpos rígidos</b><small>8 temas</small></a>
+        <a href="#u10" class="" style="--k:var(--force)"><span class="eyebrow">Unidad 10</span><b>Dinámica del movimiento rotacional</b><small>3 temas</small></a>
+        <a href="#u11" class="" style="--k:var(--en)"><span class="eyebrow">Unidad 11</span><b>Equilibrio y elasticidad</b><small>2 temas</small></a>
+        <a href="#analogia" style="--k:var(--en)"><span class="eyebrow">Repaso final</span><b>Lineal ↔ Rotación</b><small>&nbsp;</small></a>
+        <a href="#formulario" style="--k:var(--ink)"><span class="eyebrow">Para el parcial</span><b>Formulario</b><small>&nbsp;</small></a>
+        <a href="#quiz" style="--k:var(--en)"><span class="eyebrow">Autoevaluación</span><b>Autoevaluación</b><small>&nbsp;</small></a>
+      </div>
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <span></span>
+        <a class="next" href="#u2"><small>Siguiente →</small>Unidad 2 · Movimiento en una dirección</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u2" style="--k:var(--muted)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 2 · Cap. 2 S.Z.F.Y.</span>
+        <h2>Movimiento en una dirección</h2>
+        <p class="lead">Posición, velocidad y aceleración sobre una recta. La velocidad es la pendiente de x(t) y el desplazamiento es el área bajo v(t).</p>
+      </div>
+      <article class="topic" id="cinematica">
+        <h3>Cinemática en una dirección <span class="src">Cap. 2</span></h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Imaginá que filmás un auto desde arriba. La <b>posición</b> dice dónde está, la <b>velocidad</b> cuánto cambia la posición por segundo y la <b>aceleración</b> cuánto cambia la velocidad por segundo. Si el velocímetro sube 2 km/h cada segundo, eso es aceleración. Con aceleración constante alcanzan tres fórmulas, y en cada problema elegís la que no tiene el dato que te falta.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>x</dt><dd>posición</dd><dd class="u">m</dd></div><div><dt>v</dt><dd>velocidad</dd><dd class="u">m/s</dd></div><div><dt>a</dt><dd>aceleración</dd><dd class="u">m/s²</dd></div><div><dt>t</dt><dd>tiempo</dd><dd class="u">s</dd></div><div><dt>x₀, v₀</dt><dd>valores al empezar (t = 0)</dd><dd class="u"></dd></div></dl></div>
+        <p>La velocidad es la pendiente de x(t) y la aceleración es la pendiente de v(t). Con aceleración constante (MRUV) todo sale de tres ecuaciones.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Definiciones</span><div class="val">\[ v=\frac{dx}{dt}\qquad a=\frac{dv}{dt} \]</div></div>
+          <div class="eq"><span class="cap">Posición</span><div class="val">\[ x = x_0 + v_0\,t + \tfrac12 a\,t^2 \]</div></div>
+          <div class="eq"><span class="cap">Velocidad</span><div class="val">\[ v = v_0 + a\,t \]</div></div>
+          <div class="eq"><span class="cap">Sin el tiempo</span><div class="val">\[ v^2 = v_0^2 + 2a\,\Delta x \]</div></div>
+        </div>
+        <figure class="sim" id="s-mruv" data-aspect=".56" data-aspect-m=".95" style="--k:var(--lin)">
+          <div class="sim-stage"><canvas aria-label="Auto en MRUV con gráficos de posición y velocidad"></canvas></div>
+          <dl class="hud">
+            <div><dt>t</dt><dd data-o="t">—</dd></div>
+            <div><dt>x</dt><dd data-o="x">—</dd></div>
+            <div><dt>v</dt><dd data-o="v">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Velocidad inicial v₀</span><input id="mruv-v0" type="range" data-k="v0" min="-4" max="6" step="0.5" value="2" data-d="1" data-u="m/s"><output></output></label>
+            <label class="ctl"><span>Aceleración a</span><input id="mruv-a" type="range" data-k="a" min="-1.5" max="1.5" step="0.1" value="0.8" data-d="1" data-u="m/s²"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">MRUV</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺ Reiniciar</button></div></div>
+          <figcaption>La recta naranja sobre x(t) es la tangente: su pendiente es la velocidad instantánea en ese momento. Las ruedas giran con ω = v/r, la primera pista de que lo lineal y lo rotacional van atados.</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-u2">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Velocidad media con la tabla del apunte</b></div>
+          <p class="ex-q">Un auto pasa por A (t = 0 s, x = 30 m), B (t = 10 s, x = 50 m), E (t = 40 s, x = −40 m) y F (t = 50 s, x = −50 m). Calculá la velocidad media entre A y B y entre E y F.</p>
+          <p class="ex-data"><span>Datos</span> x<sub>A</sub> = 30 m, x<sub>B</sub> = 50 m, x<sub>E</sub> = −40 m, x<sub>F</sub> = −50 m</p>
+          <ol class="ex-steps">
+            <li>Velocidad media es desplazamiento dividido tiempo, siempre <b>final menos inicial</b>: \( v_m=\dfrac{x_2-x_1}{t_2-t_1} \)</li>
+            <li>Entre A y B: \( v_m=\dfrac{50\,\text{m}-30\,\text{m}}{10\,\text{s}-0} = 2{,}0\,\text{m/s} \). Positiva: se mueve hacia +x.</li>
+            <li>Entre E y F: \( v_m=\dfrac{-50\,\text{m}-(-40\,\text{m})}{50\,\text{s}-40\,\text{s}}=-1{,}0\,\text{m/s} \). Negativa: se mueve hacia −x.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> v<sub>AB</sub> = 2,0 m/s · v<sub>EF</sub> = −1,0 m/s</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>Arranca y frena</b></div>
+          <p class="ex-q">Un auto parte del reposo con a = 2 m/s² durante 5 s. Después frena con a = −4 m/s² hasta pararse. ¿Qué velocidad alcanza y cuántos metros recorre en total?</p>
+          <p class="ex-data"><span>Datos</span> v₀ = 0, a₁ = 2 m/s², t₁ = 5 s, a₂ = −4 m/s²</p>
+          <ol class="ex-steps">
+            <li>Primera etapa, velocidad final: \( v=v_0+a\,t=0+2\cdot5=10\,\text{m/s} \)</li>
+            <li>Distancia de la primera etapa: \( x=v_0t+\tfrac12at^2=0+\tfrac12\cdot2\cdot25=25\,\text{m} \)</li>
+            <li>Segunda etapa: no conocemos el tiempo, así que usamos la fórmula sin t: \( v^2=v_0^2+2a\,\Delta x \Rightarrow 0=10^2+2(-4)\Delta x \)</li>
+            <li>\( \Delta x=\dfrac{100}{8}=12{,}5\,\text{m} \). En total: 25 + 12,5 = 37,5 m.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> v máx = 10 m/s · distancia total = 37,5 m</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#inicio"><small>← Anterior</small>Inicio</a>
+        <a class="next" href="#u4"><small>Siguiente →</small>Unidad 4 · Leyes del movimiento de Newton</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u4" style="--k:var(--force)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 4 · Cap. 4 S.Z.F.Y.</span>
+        <h2>Leyes del movimiento de Newton</h2>
+        <p class="lead">Las causas del movimiento. Antes de cualquier cuenta: diagrama de cuerpo libre, ejes y ΣF = m·a por componentes.</p>
+      </div>
+      <article class="topic" id="newton">
+        <h3>Leyes de Newton y aplicaciones <span class="src">Cap. 4 y 5</span></h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Las cosas no "se cansan" ni "se frenan solas": si nadie las empuja ni las frena, siguen igual (1.ª ley). Si sumás todas las fuerzas y no da cero, el cuerpo acelera, y cuanto más masa tenga, menos acelera (2.ª ley). Y si vos empujás una pared, la pared te empuja a vos con la misma fuerza (3.ª ley). El truco para resolver: <b>dibujar todas las fuerzas sobre el cuerpo</b> (diagrama de cuerpo libre) antes de escribir nada.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>F</dt><dd>fuerza</dd><dd class="u">N = kg·m/s²</dd></div><div><dt>m</dt><dd>masa</dd><dd class="u">kg</dd></div><div><dt>N</dt><dd>normal: fuerza de la superficie, perpendicular</dd><dd class="u">N</dd></div><div><dt>μ_s, μ_k</dt><dd>coeficientes de rozamiento estático y cinético</dd><dd class="u">sin unidad</dd></div><div><dt>P = m·g</dt><dd>peso</dd><dd class="u">N</dd></div></dl></div>
+        <div class="eqs">
+          <div class="eq"><span class="cap">1.ª Inercia</span><div class="val">\[ \sum\vec F=0 \iff \vec v=\text{cte} \]</div></div>
+          <div class="eq"><span class="cap">2.ª Masa</span><div class="val">\[ \sum\vec F=m\,\vec a \]</div></div>
+          <div class="eq"><span class="cap">3.ª Acción y reacción</span><div class="val">\[ \vec F_{A\,\text{sobre}\,B}=-\vec F_{B\,\text{sobre}\,A} \]</div></div>
+          <div class="eq"><span class="cap">Rozamiento</span><div class="val">\[ f_s\le\mu_s N\qquad f_k=\mu_k N \]</div></div>
+        </div>
+        <figure class="sim" id="s-plano" data-aspect=".52" data-aspect-m=".85" style="--k:var(--force)">
+          <div class="sim-stage"><canvas aria-label="Bloque sobre un plano inclinado con diagrama de cuerpo libre"></canvas></div>
+          <dl class="hud">
+            <div><dt>P∥ = mg·senθ</dt><dd data-o="pp">—</dd></div>
+            <div><dt>N = mg·cosθ</dt><dd data-o="n">—</dd></div>
+            <div><dt>Rozamiento</dt><dd data-o="f">—</dd></div>
+            <div><dt>a</dt><dd data-o="a">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Ángulo θ</span><input id="plano-th" type="range" data-k="th" min="0" max="60" step="1" value="32" data-d="0" data-u="°"><output></output></label>
+            <label class="ctl"><span>μ estático (μk = 0,75·μs)</span><input id="plano-mu" type="range" data-k="mu" min="0" max="1" step="0.01" value="0.4" data-d="2"><output></output></label>
+            <label class="ctl"><span>Masa m</span><input id="plano-m" type="range" data-k="m" min="1" max="10" step="0.5" value="2" data-d="1" data-u="kg"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Plano inclinado</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+          <figcaption>El bloque arranca solo si <b>tan θ &gt; μs</b>. Una vez que desliza, a = g(sen θ − μk cos θ). Cambiá la masa: la aceleración no cambia, porque m aparece en la fuerza y en la inercia.</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-u4">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Caja tirada con una soga inclinada</b></div>
+          <p class="ex-q">Se tira de una caja de 20 kg con una fuerza de 50 N que forma 30° con la horizontal. El rozamiento vale 19,6 N (la décima parte del peso, como en el apunte). ¿Con qué aceleración se mueve?</p>
+          <p class="ex-data"><span>Datos</span> m = 20 kg, F = 50 N, θ = 30°, f = 19,6 N</p>
+          <ol class="ex-steps">
+            <li>Diagrama de cuerpo libre: F inclinada, peso hacia abajo, normal hacia arriba y rozamiento hacia atrás. Eje x horizontal.</li>
+            <li>Sólo la componente horizontal de F empuja hacia adelante: \( F_x=F\cos30^\circ=50\cdot0{,}866=43{,}3\,\text{N} \)</li>
+            <li>Segunda ley en x: \( \sum F_x=m\,a \Rightarrow 43{,}3-19{,}6=20\,a \)</li>
+            <li>\( a=\dfrac{23{,}7}{20}=1{,}19\,\text{m/s}^2 \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> a ≈ 1,19 m/s²</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>Bloque que baja por un plano inclinado</b></div>
+          <p class="ex-q">Un bloque de 2 kg baja por un plano inclinado 30° con μk = 0,2. ¿Cuánto valen la normal y la aceleración?</p>
+          <p class="ex-data"><span>Datos</span> m = 2 kg, θ = 30°, μk = 0,2, g = 9,8 m/s²</p>
+          <ol class="ex-steps">
+            <li>Conviene usar ejes inclinados: x a lo largo del plano (hacia abajo) e y perpendicular al plano.</li>
+            <li>En y no hay movimiento: \( N=m\,g\cos\theta=2\cdot9{,}8\cdot0{,}866=16{,}97\,\text{N} \)</li>
+            <li>Rozamiento cinético: \( f_k=\mu_kN=0{,}2\cdot16{,}97=3{,}39\,\text{N} \), hacia arriba del plano.</li>
+            <li>En x: \( m\,g\sin\theta-f_k=m\,a\Rightarrow 9{,}8-3{,}39=2\,a \Rightarrow a=3{,}20\,\text{m/s}^2 \)</li>
+            <li>Atajo: \( a=g(\sin\theta-\mu_k\cos\theta) \). La masa se cancela.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> N ≈ 17,0 N · a ≈ 3,20 m/s²</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u2"><small>← Anterior</small>Unidad 2 · Movimiento en una dirección</a>
+        <a class="next" href="#u5"><small>Siguiente →</small>Unidad 5 · Aplicaciones de las leyes de Newton</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u5" style="--k:var(--rot)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 5 · Cap. 5 S.Z.F.Y.</span>
+        <h2>Aplicaciones de las leyes de Newton</h2>
+        <p class="lead">La dinámica del movimiento circular: siempre hace falta una fuerza neta hacia el centro, la centrípeta, que la aporta la tensión, el rozamiento, la normal o el peso.</p>
+      </div>
+      <article class="topic" id="circular">
+        <h3>Movimiento circular <span class="src">Cap. 3 y 5</span></h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Atá una piedra a un hilo y hacela girar. Aunque vaya siempre igual de rápido, <b>cambia de dirección todo el tiempo</b>, y cambiar de dirección también es acelerar. Esa aceleración apunta al centro. El hilo es el que tira hacia adentro; si se corta, la piedra sale derecho, en la dirección que llevaba en ese instante.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>R</dt><dd>radio de la circunferencia</dd><dd class="u">m</dd></div><div><dt>ω</dt><dd>velocidad angular (qué tan rápido gira)</dd><dd class="u">rad/s</dd></div><div><dt>T</dt><dd>período: tiempo de una vuelta</dd><dd class="u">s</dd></div><div><dt>f</dt><dd>frecuencia: vueltas por segundo</dd><dd class="u">Hz = 1/s</dd></div><div><dt>a_c</dt><dd>aceleración centrípeta, hacia el centro</dd><dd class="u">m/s²</dd></div></dl></div>
+        <p>Aunque la rapidez sea constante, la velocidad cambia de dirección todo el tiempo, así que hay aceleración. Apunta al centro y se llama <strong>centrípeta</strong> (o radial). Si además la rapidez cambia aparece una aceleración <strong>tangencial</strong>.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Período y frecuencia</span><div class="val">\[ T=\frac{2\pi}{\omega}\qquad f=\frac1T \]</div></div>
+          <div class="eq"><span class="cap">Lineal ↔ angular</span><div class="val">\[ v = \omega\,R \qquad a_t=\alpha\,R \]</div></div>
+          <div class="eq"><span class="cap">Centrípeta</span><div class="val">\[ a_c=\frac{v^2}{R}=\omega^2R=\frac{4\pi^2R}{T^2} \]</div></div>
+          <div class="eq"><span class="cap">Dinámica (Cap. 5)</span><div class="val">\[ \sum F_{rad} = m\,\frac{v^2}{R} \]</div></div>
+        </div>
+        <figure class="sim" id="s-circ" data-aspect=".56" data-aspect-m=".9" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Partícula en movimiento circular con vectores velocidad y aceleración"></canvas></div>
+          <dl class="hud">
+            <div><dt>v = ωR</dt><dd data-o="v">—</dd></div>
+            <div><dt>a_c = ω²R</dt><dd data-o="ac">—</dd></div>
+            <div><dt>T</dt><dd data-o="T">—</dd></div>
+            <div><dt>rpm</dt><dd data-o="rpm">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Radio R</span><input id="circ-R" type="range" data-k="R" min="0.5" max="2" step="0.1" value="1.5" data-d="1" data-u="m"><output></output></label>
+            <label class="ctl"><span>Velocidad angular ω</span><input id="circ-w" type="range" data-k="w" min="0.4" max="4" step="0.1" value="1.6" data-d="1" data-u="rad/s"><output></output></label>
+            <label class="ctl"><span>Aceleración angular α</span><input id="circ-al" type="range" data-k="al" min="-0.6" max="0.6" step="0.05" value="0" data-d="2" data-u="rad/s²"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">MCU / MCUV</span><div class="btns"><button class="btn pri" data-act="cut">✂ Cortar el hilo</button><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+          <figcaption><b>Cortá el hilo:</b> sin fuerza centrípeta la partícula sigue en línea recta, tangente a la circunferencia (primera ley de Newton). No sale "despedida hacia afuera". Con α ≠ 0 aparece la componente tangencial a<sub>t</sub> = αR.</figcaption>
+        </figure>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Curva plana (rozamiento)</span><div class="val">\[ v_{max}=\sqrt{\mu_s\,g\,R} \]</div></div>
+          <div class="eq"><span class="cap">Curva peraltada sin roce</span><div class="val">\[ \tan\beta=\frac{v^2}{g\,R} \]</div></div>
+          <div class="eq"><span class="cap">Rulo vertical, punto más alto</span><div class="val">\[ v_{min}=\sqrt{g\,R} \]</div></div>
+          <div class="eq"><span class="cap">Péndulo cónico</span><div class="val">\[ \tan\theta=\frac{v^2}{g\,R} \]</div></div>
+        </div>
+      </article>
+            <article class="topic" id="ej-u5">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Piedra atada a un hilo</b></div>
+          <p class="ex-q">Una piedra de 0,2 kg gira en un círculo horizontal de 0,8 m de radio sobre una mesa sin rozamiento, dando 2 vueltas por segundo. Calculá ω, v, la aceleración centrípeta y la tensión del hilo.</p>
+          <p class="ex-data"><span>Datos</span> m = 0,2 kg, R = 0,8 m, f = 2 vueltas/s</p>
+          <ol class="ex-steps">
+            <li>Una vuelta son 2π rad: \( \omega=2\pi f=2\pi\cdot2=12{,}57\,\text{rad/s} \)</li>
+            <li>\( v=\omega R=12{,}57\cdot0{,}8=10{,}05\,\text{m/s} \)</li>
+            <li>\( a_c=\omega^2R=12{,}57^2\cdot0{,}8=126{,}3\,\text{m/s}^2 \)</li>
+            <li>La única fuerza horizontal es la tensión y apunta al centro: \( T=m\,a_c=0{,}2\cdot126{,}3=25{,}3\,\text{N} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> ω ≈ 12,6 rad/s · v ≈ 10,1 m/s · a<sub>c</sub> ≈ 126 m/s² · T ≈ 25,3 N</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>Curva plana</b></div>
+          <p class="ex-q">Un auto toma una curva plana de 50 m de radio. El coeficiente de rozamiento estático entre las cubiertas y el asfalto es 0,5. ¿A qué velocidad máxima puede tomarla sin derrapar?</p>
+          <p class="ex-data"><span>Datos</span> R = 50 m, μs = 0,5</p>
+          <ol class="ex-steps">
+            <li>La fuerza hacia el centro la hace el rozamiento estático: \( f_s=m\dfrac{v^2}{R} \)</li>
+            <li>Como máximo vale \( \mu_sN=\mu_s\,m\,g \). Igualando: \( \mu_s\,m\,g=m\dfrac{v^2}{R} \). La masa se cancela.</li>
+            <li>\( v_{max}=\sqrt{\mu_s\,g\,R}=\sqrt{0{,}5\cdot9{,}8\cdot50}=\sqrt{245}=15{,}65\,\text{m/s} \)</li>
+            <li>En km/h: 15,65 · 3,6 ≈ 56 km/h.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> v<sub>máx</sub> ≈ 15,7 m/s ≈ 56 km/h</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u4"><small>← Anterior</small>Unidad 4 · Leyes del movimiento de Newton</a>
+        <a class="next" href="#u6"><small>Siguiente →</small>Unidad 6 · Trabajo y energía</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u6" style="--k:var(--en)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 6 · Cap. 6 S.Z.F.Y.</span>
+        <h2>Trabajo y energía</h2>
+        <p class="lead">Otra forma de resolver problemas de movimiento sin mirar los detalles intermedios: alcanza con comparar el estado inicial y el final.</p>
+      </div>
+      <article class="topic" id="trabajo">
+        <h3>Trabajo y potencia <span class="src">Cap. 6</span></h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>En física "trabajo" no es cansarse: es <b>empujar algo mientras se mueve</b>. Si empujás una caja en la misma dirección en que avanza, hacés trabajo positivo (le das energía). Si la empujás en contra (como el rozamiento), es negativo (le sacás energía). Si la fuerza es perpendicular al movimiento, como cuando llevás una mochila caminando por un piso plano, el trabajo es cero.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>W</dt><dd>trabajo</dd><dd class="u">J = N·m</dd></div><div><dt>θ</dt><dd>ángulo entre la fuerza y el desplazamiento</dd><dd class="u">°</dd></div><div><dt>P</dt><dd>potencia: trabajo por segundo</dd><dd class="u">W = J/s</dd></div><div><dt>k</dt><dd>constante del resorte (qué tan duro es)</dd><dd class="u">N/m</dd></div></dl></div>
+        <p>Trabajo es la componente de la fuerza en la dirección del desplazamiento multiplicada por el desplazamiento. Es un escalar y su signo depende sólo del ángulo.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Fuerza constante</span><div class="val">\[ W=\vec F\cdot\Delta\vec r=F\,\Delta r\cos\theta \]</div></div>
+          <div class="eq"><span class="cap">Fuerza variable</span><div class="val">\[ W=\int_{r_i}^{r_f}\vec F\cdot d\vec r \]</div></div>
+          <div class="eq"><span class="cap">Resorte (Hooke)</span><div class="val">\[ W_{res}=\tfrac12kx_i^2-\tfrac12kx_f^2 \]</div></div>
+          <div class="eq"><span class="cap">Potencia</span><div class="val">\[ P=\frac{dW}{dt}=\vec F\cdot\vec v \]</div><p>1 hp = 746 W · 1 kWh = 3,6·10⁶ J</p></div>
+        </div>
+        <figure class="sim" id="s-trabajo" data-aspect=".42" data-aspect-m=".75" style="--k:var(--en)">
+          <div class="sim-stage"><canvas aria-label="Caja arrastrada por una fuerza con ángulo variable y su trabajo acumulado"></canvas></div>
+          <dl class="hud">
+            <div><dt>F·cosθ</dt><dd data-o="fx">—</dd></div>
+            <div><dt>Δx</dt><dd data-o="dx">—</dd></div>
+            <div><dt>W = F·Δx·cosθ</dt><dd data-o="W">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Ángulo entre F y Δx</span><input id="tr-th" type="range" data-k="th" min="0" max="180" step="1" value="30" data-d="0" data-u="°"><output></output></label>
+            <label class="ctl"><span>Fuerza F</span><input id="tr-F" type="range" data-k="F" min="10" max="80" step="1" value="50" data-d="0" data-u="N"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">W = F·d·cosθ</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+          <figcaption>Con θ &lt; 90° el trabajo es positivo, con θ = 90° es nulo (como la normal o el peso en un piso horizontal) y con θ &gt; 90° es negativo (como el rozamiento, θ = 180°).</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="energia">
+        <h3>Energía mecánica y su conservación <span class="src">Cap. 6</span></h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>La energía es como plata que pasa de un bolsillo a otro. Arriba de un tobogán tenés energía "guardada" por la altura (potencial). Al bajar se convierte en velocidad (cinética). Sin rozamiento, la suma no cambia nunca. Con rozamiento, una parte se va en calor: no desaparece, pero ya no la podés usar para moverte.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>E_c</dt><dd>energía cinética (por moverse)</dd><dd class="u">J</dd></div><div><dt>E_p</dt><dd>energía potencial (por altura o resorte estirado)</dd><dd class="u">J</dd></div><div><dt>E_m</dt><dd>energía mecánica = E_c + E_p</dd><dd class="u">J</dd></div><div><dt>W_nc</dt><dd>trabajo de fuerzas no conservativas (rozamiento)</dd><dd class="u">J</dd></div></dl></div>
+        <div class="eqs">
+          <div class="eq boxed" style="--k:var(--lin)"><span class="cap">Teorema trabajo–energía</span><div class="val">\[ W_{tot}=\Delta E_c \]</div></div>
+          <div class="eq"><span class="cap">Energías</span><div class="val">\[ E_c=\tfrac12mv^2\quad E_{pg}=mgy\quad E_{pe}=\tfrac12kx^2 \]</div></div>
+          <div class="eq"><span class="cap">Sólo fuerzas conservativas</span><div class="val">\[ E_c+E_p=\text{cte} \]</div></div>
+          <div class="eq boxed" style="--k:var(--force)"><span class="cap">Con rozamiento</span><div class="val">\[ W_{no\,cons}=\Delta E_m \]</div></div>
+        </div>
+        <figure class="sim" id="s-skate" data-aspect=".5" data-aspect-m=".9" style="--k:var(--en)">
+          <div class="sim-stage"><canvas aria-label="Partícula en una pista con forma de U y barras de energía"></canvas></div>
+          <dl class="hud">
+            <div><dt>Ec</dt><dd data-o="ec" class="lin">—</dd></div>
+            <div><dt>Ep</dt><dd data-o="ep" class="en">—</dd></div>
+            <div><dt>Disipada</dt><dd data-o="q" class="frc">—</dd></div>
+            <div><dt>Ec + Ep + Q</dt><dd data-o="tot">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Altura inicial</span><input id="sk-h" type="range" data-k="h" min="1" max="4" step="0.1" value="3.5" data-d="1" data-u="m"><output></output></label>
+            <label class="ctl"><span>Coeficiente de roce μk</span><input id="sk-mu" type="range" data-k="mu" min="0" max="0.12" step="0.005" value="0.02" data-d="3"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Conservación de la energía (m = 50 kg)</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺ Soltar de nuevo</button></div></div>
+          <figcaption>Con μ = 0 la partícula vuelve siempre a la misma altura y Ec + Ep no cambia. Con rozamiento, la barra roja crece: es el trabajo de una fuerza no conservativa, que es exactamente lo que pierde la energía mecánica.</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-u6">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Trabajo de cada fuerza (ejemplo del apunte)</b></div>
+          <p class="ex-q">Se tira de un cuerpo de 20 kg con F = 50 N a 30° sobre la horizontal a lo largo de 5 m. El rozamiento es la décima parte del peso. Calculá el trabajo de cada fuerza y, si partió del reposo, su velocidad final.</p>
+          <p class="ex-data"><span>Datos</span> m = 20 kg, F = 50 N, θ = 30°, d = 5 m, f = 19,6 N</p>
+          <ol class="ex-steps">
+            <li>Fuerza F: \( W_F=F\,d\cos30^\circ=50\cdot5\cdot0{,}866=217\,\text{J} \)</li>
+            <li>Rozamiento (180° con el desplazamiento): \( W_f=19{,}6\cdot5\cdot(-1)=-98\,\text{J} \)</li>
+            <li>Peso y normal son perpendiculares al desplazamiento: \( W_P=W_N=0 \)</li>
+            <li>Trabajo total: \( W_{tot}=217-98=119\,\text{J} \)</li>
+            <li>Teorema trabajo–energía: \( 119=\tfrac12\cdot20\,v^2\Rightarrow v=\sqrt{11{,}9}=3{,}45\,\text{m/s} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> W<sub>F</sub> = 217 J · W<sub>f</sub> = −98 J · W<sub>tot</sub> = 119 J · v ≈ 3,45 m/s</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>La lata del pintor (Ejemplo 9 del apunte)</b></div>
+          <p class="ex-q">Un pintor deja caer desde el reposo una lata de 1,5 kg desde 6 m. Calculá la energía mecánica inicial, la velocidad al llegar al suelo y la altura a la que va a 6,26 m/s.</p>
+          <p class="ex-data"><span>Datos</span> m = 1,5 kg, h = 6 m, v₀ = 0</p>
+          <ol class="ex-steps">
+            <li>Arriba sólo hay energía potencial: \( E=m\,g\,h=1{,}5\cdot9{,}8\cdot6=88{,}2\,\text{J} \)</li>
+            <li>Abajo toda es cinética: \( m\,g\,h=\tfrac12mv^2\Rightarrow v=\sqrt{2gh}=\sqrt{2\cdot9{,}8\cdot6}=10{,}84\,\text{m/s} \)</li>
+            <li>A 6,26 m/s: \( g\,h_0=g\,h+\tfrac12v^2\Rightarrow h=6-\dfrac{6{,}26^2}{2\cdot9{,}8}=6-2{,}0=4{,}0\,\text{m} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> E = 88,2 J · v = 10,8 m/s · h = 4,0 m</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 3</span><b>Potencia de un motor (Ejemplo 8 del apunte)</b></div>
+          <p class="ex-q">Un motor eleva una carga de 800 N a 10 m de altura en 20 s a velocidad constante. ¿Qué potencia mínima entrega?</p>
+          <p class="ex-data"><span>Datos</span> F = 800 N, h = 10 m, t = 20 s</p>
+          <ol class="ex-steps">
+            <li>A velocidad constante la fuerza del motor iguala al peso: F = 800 N.</li>
+            <li>Velocidad: \( v=\dfrac{10\,\text{m}}{20\,\text{s}}=0{,}5\,\text{m/s} \)</li>
+            <li>\( P=F\,v=800\cdot0{,}5=400\,\text{W} \). También sale de \( P=W/t=8000\,\text{J}/20\,\text{s} \).</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> P = 400 W</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u5"><small>← Anterior</small>Unidad 5 · Aplicaciones de las leyes de Newton</a>
+        <a class="next" href="#u8"><small>Siguiente →</small>Unidad 8 · Cantidad de movimiento, impulso y choques</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u8" style="--k:var(--lin)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 8 · Cap. 8 S.Z.F.Y.</span>
+        <h2>Cantidad de movimiento, impulso y choques</h2>
+        <p class="lead">Cuando dos cuerpos chocan no sabemos cómo son las fuerzas durante el choque, pero sí sabemos que son internas e iguales y opuestas. Eso alcanza para predecir hacia dónde van los restos.</p>
+      </div>
+      <article class="topic" id="momento">
+        <h3>Segunda ley con cantidad de movimiento</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>La cantidad de movimiento mide <b>qué tan difícil es frenar algo</b>. Un camión a 10 km/h y una bicicleta a 10 km/h van igual de rápido, pero frenar el camión es mucho más difícil, porque tiene más masa. Por eso p = masa × velocidad. Además tiene dirección: no es lo mismo ir hacia el norte que hacia el este.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>p</dt><dd>cantidad de movimiento = m·v</dd><dd class="u">kg·m/s</dd></div><div><dt>m</dt><dd>masa</dd><dd class="u">kg</dd></div><div><dt>v</dt><dd>velocidad (con signo según el sentido)</dd><dd class="u">m/s</dd></div></dl></div>
+        <p>La cantidad de movimiento (o momento lineal) es un <strong>vector</strong> con la dirección de la velocidad. Dos autos iguales a 20 m/s, uno hacia el norte y otro hacia el este, tienen el mismo módulo de p pero vectores distintos.</p>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">Definición</span><div class="val">\[ \vec p=m\,\vec v \]</div><p>Unidad: kg·m/s. Componentes: p<sub>x</sub> = m·v<sub>x</sub>, p<sub>y</sub> = m·v<sub>y</sub>.</p></div>
+          <div class="eq boxed"><span class="cap">Newton, versión original</span><div class="val">\[ \sum\vec F=\frac{d\vec p}{dt} \]</div><p>Si m es constante vuelve a ser ΣF = m·a. Vale en marcos inerciales.</p></div>
+        </div>
+        <div class="cmp">
+          <div style="--k:var(--lin)"><h4>Cantidad de movimiento p = m·v</h4><ul><li>Vector</li><li>Proporcional a la rapidez</li><li>La cambia el <b>impulso</b> (fuerza × tiempo)</li><li>Se conserva en <b>todo</b> choque de un sistema aislado</li></ul></div>
+          <div style="--k:var(--en)"><h4>Energía cinética Ec = ½·m·v²</h4><ul><li>Escalar</li><li>Proporcional al cuadrado de la rapidez</li><li>La cambia el <b>trabajo</b> (fuerza × distancia)</li><li>Se conserva sólo en choques <b>elásticos</b></li></ul></div>
+        </div>
+      </article>
+
+      <article class="topic" id="impulso">
+        <h3>Teorema del impulso y la cantidad de movimiento</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Para cambiar cómo se mueve algo hace falta fuerza <b>y tiempo</b>. Atajar una pelota con las manos rígidas duele; si acompañás la pelota con los brazos, duele menos. La pelota se frena igual (mismo impulso), pero tardás más y la fuerza es menor. Es lo mismo que hacen el airbag, los guantes de arquero y las colchonetas.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>J</dt><dd>impulso = fuerza × tiempo</dd><dd class="u">N·s</dd></div><div><dt>Δt</dt><dd>duración de la fuerza</dd><dd class="u">s</dd></div><div><dt>F_med</dt><dd>fuerza promedio durante el contacto</dd><dd class="u">N</dd></div></dl></div>
+        <p>El impulso de la fuerza neta es el área bajo la curva F(t). Esa área es igual al cambio de p, sin importar la forma de la curva. Por eso un airbag ayuda: entrega el mismo impulso que el volante, pero repartido en más tiempo y con una fuerza menor.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">F constante</span><div class="val">\[ \vec J=\vec F\,(t_2-t_1)=\vec F\,\Delta t \]</div></div>
+          <div class="eq"><span class="cap">General</span><div class="val">\[ \vec J=\int_{t_1}^{t_2}\sum\vec F\,dt \]</div></div>
+          <div class="eq boxed"><span class="cap">Teorema</span><div class="val">\[ \vec J=\vec p_2-\vec p_1 \]</div></div>
+          <div class="eq"><span class="cap">Fuerza media</span><div class="val">\[ \vec J=\vec F_{med}\,\Delta t \]</div></div>
+        </div>
+        <figure class="sim" id="s-impulso" data-aspect=".58" data-aspect-m="1" style="--k:var(--lin)">
+          <div class="sim-stage"><canvas aria-label="Pelota que rebota contra una pared con almohadón y gráfico de fuerza en función del tiempo"></canvas></div>
+          <dl class="hud">
+            <div><dt>Δp = J</dt><dd data-o="J">—</dd></div>
+            <div><dt>F máx</dt><dd data-o="F">—</dd></div>
+            <div><dt>F media</dt><dd data-o="Fm">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Duración del contacto Δt</span><input id="imp-dt" type="range" data-k="dt" min="0.02" max="0.3" step="0.01" value="0.12" data-d="2" data-u="s"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Pelota de 0,5 kg a 10 m/s · cámara lenta</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+          <figcaption>La pelota llega a +10 m/s y sale a −10 m/s: Δp = 10 N·s siempre. Al alargar Δt el área se mantiene y el pico de fuerza baja. La curva punteada es la pared rígida (Δt = 0,02 s).</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="conservacion">
+        <h3>Conservación de la cantidad de movimiento</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Si dos patinadores se empujan en el hielo, salen para lados opuestos. Antes estaban quietos (p total = 0) y después la suma sigue dando cero: lo que gana uno hacia la derecha lo gana el otro hacia la izquierda. Las fuerzas entre ellos son internas y se cancelan. <b>Mientras nadie de afuera empuje, la cantidad de movimiento total no cambia.</b></p></div>
+        <p>Las fuerzas que las partículas del sistema se hacen entre sí son <strong>internas</strong>. Por la tercera ley vienen de a pares iguales y opuestos, así que sus impulsos se cancelan. Sólo las fuerzas <strong>externas</strong> pueden cambiar la cantidad de movimiento total.</p>
+        <div class="eq big-eq boxed"><span class="cap">Si ΣF<sub>ext</sub> = 0</span>\[ \vec P=\vec p_A+\vec p_B+\dots=m_A\vec v_A+m_B\vec v_B+\dots=\text{constante} \]</div>
+        <div class="ojo" data-l="OJO"><p>Durante un choque las fuerzas internas son enormes y duran muy poco, así que el peso o el rozamiento (externas, pero chicas) casi no llegan a cambiar P. Por eso aplicamos conservación justo antes y justo después del choque, aunque el sistema no esté estrictamente aislado.</p></div>
+      </article>
+
+      <article class="topic" id="choques">
+        <h3>Choques en una dimensión</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>En <b>todos</b> los choques se conserva la cantidad de movimiento. Lo que cambia es cuánta energía cinética se pierde en deformación, calor o ruido. Si rebotan perfecto (bolas de billar) no se pierde nada: elástico. Si quedan pegados (dos autos que se enganchan), se pierde lo máximo posible: totalmente inelástico. El coeficiente e mide qué tan "rebotador" es el choque, de 0 a 1.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>1, 2</dt><dd>antes y después del choque</dd><dd class="u"></dd></div><div><dt>A, B</dt><dd>los dos cuerpos</dd><dd class="u"></dd></div><div><dt>e</dt><dd>coeficiente de restitución: 1 rebota perfecto, 0 quedan pegados</dd><dd class="u">sin unidad</dd></div></dl></div>
+        <div class="tbl">
+          <table>
+            <thead><tr><th>Tipo</th><th class="c">¿Se conserva p?</th><th class="c">¿Se conserva Ec?</th><th class="c">e</th><th>Ejemplo</th></tr></thead>
+            <tbody>
+              <tr><td><b>Elástico</b></td><td class="c en">Sí</td><td class="c en">Sí</td><td class="c mono">1</td><td>Bolas de billar (aprox.)</td></tr>
+              <tr><td><b>Inelástico</b></td><td class="c en">Sí</td><td class="c frc">No, Ec₂ &lt; Ec₁</td><td class="c mono">0 &lt; e &lt; 1</td><td>Pelota contra la pared</td></tr>
+              <tr><td><b>Totalmente inelástico</b></td><td class="c en">Sí</td><td class="c frc">No, pérdida máxima</td><td class="c mono">0</td><td>Quedan pegados: meteorito, péndulo balístico</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">Siempre</span><div class="val">\[ m_Av_{A1}+m_Bv_{B1}=m_Av_{A2}+m_Bv_{B2} \]</div></div>
+          <div class="eq"><span class="cap">Coeficiente de restitución</span><div class="val">\[ e=\frac{-(v_{A2}-v_{B2})}{v_{A1}-v_{B1}} \]</div></div>
+          <div class="eq"><span class="cap">Totalmente inelástico</span><div class="val">\[ v_2=\frac{m_Av_{A1}+m_Bv_{B1}}{m_A+m_B} \]</div></div>
+        </div>
+        <figure class="sim" id="s-choque" data-aspect=".62" data-aspect-m="1.05" style="--k:var(--lin)">
+          <div class="sim-stage"><canvas aria-label="Dos carritos que chocan sobre un riel con barras de cantidad de movimiento y energía"></canvas></div>
+          <dl class="hud">
+            <div><dt>v_A2</dt><dd data-o="va" class="lin">—</dd></div>
+            <div><dt>v_B2</dt><dd data-o="vb" class="alt">—</dd></div>
+            <div><dt>v_cm</dt><dd data-o="vcm">—</dd></div>
+            <div><dt>Ec perdida</dt><dd data-o="loss" class="frc">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl" style="--k:var(--lin)"><span>Masa A</span><input id="ch-ma" type="range" data-k="ma" min="0.5" max="5" step="0.1" value="2" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl" style="--k:var(--alt)"><span>Masa B</span><input id="ch-mb" type="range" data-k="mb" min="0.5" max="5" step="0.1" value="1" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl" style="--k:var(--lin)"><span>v_A1</span><input id="ch-va" type="range" data-k="va" min="-3" max="4" step="0.1" value="2.5" data-d="1" data-u="m/s"><output></output></label>
+            <label class="ctl" style="--k:var(--alt)"><span>v_B1</span><input id="ch-vb" type="range" data-k="vb" min="-4" max="3" step="0.1" value="-1" data-d="1" data-u="m/s"><output></output></label>
+            <label class="ctl"><span>Coeficiente de restitución e</span><input id="ch-e" type="range" data-k="e" min="0" max="1" step="0.05" value="1" data-d="2"><output></output></label>
+            <div class="segrow">Ejemplos: <div class="btns"><button class="btn" data-act="el">Elástico</button><button class="btn" data-act="in">Inelástico</button><button class="btn" data-act="pl">Plástico</button><button class="btn" data-act="newton">Masas iguales</button></div></div>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Riel de aire sin rozamiento</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺ Repetir</button></div></div>
+          <figcaption>La barra de <b>P total</b> es igual antes y después en cualquier choque; la de <b>Ec</b> sólo con e = 1. El triángulo violeta es el <b>centro de masa</b>: avanza a velocidad constante y ni se entera del choque. Probá "Masas iguales" con e = 1: se intercambian las velocidades.</figcaption>
+        </figure>
+        <details class="proof">
+          <summary>Deducción: en un choque elástico las velocidades relativas se invierten</summary>
+          <div class="steps">
+            <div class="step"><div>Conservación de p, agrupando por cuerpo:\[ m_A(v_{A1}-v_{A2})=m_B(v_{B2}-v_{B1})\quad(*) \]</div></div>
+            <div class="step"><div>Conservación de Ec y diferencia de cuadrados:\[ m_A(v_{A1}-v_{A2})(v_{A1}+v_{A2})=m_B(v_{B2}-v_{B1})(v_{B2}+v_{B1})\quad(**) \]</div></div>
+            <div class="step"><div>Dividiendo (**) entre (*):\[ v_{A1}+v_{A2}=v_{B2}+v_{B1}\;\Rightarrow\; v_{A1}-v_{B1}=-(v_{A2}-v_{B2}) \]</div></div>
+            <div class="step"><div>Es decir, e = 1. Las velocidades relativas antes y después son iguales en módulo y de sentido contrario.</div></div>
+          </div>
+        </details>
+      </article>
+
+      <article class="topic" id="pendulo">
+        <h3>Péndulo balístico</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Sirve para medir la velocidad de una bala sin cronómetro. La bala se clava en un bloque colgado, y el bloque sube un poco. Midiendo cuánto subió (h) se averigua todo hacia atrás. Lo importante es que <b>son dos etapas distintas</b>: en el choque se usa cantidad de movimiento; en la subida, energía. Mezclarlas es el error más común.</p></div>
+        <p>Un problema en dos etapas, con <strong>dos sistemas distintos</strong>. Primero un choque totalmente inelástico (se conserva p, no Ec). Después una oscilación sin rozamiento (se conserva la energía mecánica, no p, porque la tensión y el peso son externas).</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">1 → 2 · choque</span><div class="val">\[ m\,v_{1}=(m+M)\,v_2 \]</div></div>
+          <div class="eq"><span class="cap">2 → 3 · subida</span><div class="val">\[ \tfrac12(m+M)v_2^2=(m+M)\,g\,h \]</div></div>
+          <div class="eq boxed"><span class="cap">Resultado</span><div class="val">\[ v_{1}=\frac{m+M}{m}\sqrt{2gh} \]</div></div>
+        </div>
+        <figure class="sim" id="s-pendulo" data-aspect=".56" data-aspect-m=".95" style="--k:var(--lin)">
+          <div class="sim-stage"><canvas aria-label="Bala que se incrusta en un bloque colgante que sube a una altura h"></canvas></div>
+          <dl class="hud">
+            <div><dt>v₂ (bloque+bala)</dt><dd data-o="v2">—</dd></div>
+            <div><dt>h</dt><dd data-o="h">—</dd></div>
+            <div><dt>θ máx</dt><dd data-o="th">—</dd></div>
+            <div><dt>Ec que se pierde</dt><dd data-o="loss" class="frc">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Masa de la bala m</span><input id="pb-m" type="range" data-k="m" min="5" max="50" step="1" value="10" data-d="0" data-u="g"><output></output></label>
+            <label class="ctl"><span>Masa del bloque M</span><input id="pb-M" type="range" data-k="M" min="0.5" max="5" step="0.1" value="2" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl"><span>Velocidad de la bala v₁</span><input id="pb-v" type="range" data-k="v" min="100" max="600" step="10" value="300" data-d="0" data-u="m/s"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Hilo de 1,5 m</span><div class="btns"><button class="btn pri" data-act="fire">● Disparar</button><button class="btn" data-act="play"></button></div></div>
+          <figcaption>Casi toda la energía de la bala se pierde en el choque: la fracción perdida es M/(m+M), más del 99 % con estos valores. Por eso no se puede plantear conservación de la energía desde la bala hasta la altura h.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="choque2d">
+        <h3>Choques en dos dimensiones</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Si el choque no es de frente, los cuerpos salen en ángulo. La regla es la misma, pero se aplica <b>por separado en x y en y</b>. Si antes no había movimiento en y, después las cantidades de movimiento en y tienen que sumar cero: una bola sale para arriba y la otra para abajo.</p></div>
+        <p>La cantidad de movimiento se conserva <strong>por componentes</strong>. Con dos bolas de igual masa, una quieta y choque elástico, las trayectorias de salida forman siempre 90°.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Eje x</span><div class="val">\[ m_Av_{A1}=m_Av_{A2}\cos\alpha+m_Bv_{B2}\cos\beta \]</div></div>
+          <div class="eq"><span class="cap">Eje y</span><div class="val">\[ 0=m_Av_{A2}\sin\alpha-m_Bv_{B2}\sin\beta \]</div></div>
+        </div>
+        <figure class="sim" id="s-billar" data-aspect=".55" data-aspect-m=".95" style="--k:var(--lin)">
+          <div class="sim-stage"><canvas aria-label="Choque oblicuo de dos bolas de billar con diagrama de vectores"></canvas></div>
+          <dl class="hud">
+            <div><dt>α (bola A)</dt><dd data-o="a" class="lin">—</dd></div>
+            <div><dt>β (bola B)</dt><dd data-o="b" class="alt">—</dd></div>
+            <div><dt>α + β</dt><dd data-o="s">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Parámetro de impacto (qué tan de costado pega)</span><input id="bi-b" type="range" data-k="b" min="0" max="0.95" step="0.01" value="0.5" data-d="2"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Choque elástico, masas iguales</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+          <figcaption>A la derecha, los vectores cantidad de movimiento: p<sub>A1</sub> = p<sub>A2</sub> + p<sub>B2</sub>. Como la Ec también se conserva, el triángulo es rectángulo (Pitágoras: v² = v<sub>A2</sub>² + v<sub>B2</sub>²).</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-u8">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Choque en el que quedan pegados</b></div>
+          <p class="ex-q">Un auto de 1000 kg a 20 m/s choca por detrás a una camioneta de 2000 kg detenida y quedan enganchados. ¿Con qué velocidad salen? ¿Cuánta energía cinética se pierde?</p>
+          <p class="ex-data"><span>Datos</span> m<sub>A</sub> = 1000 kg, v<sub>A1</sub> = 20 m/s, m<sub>B</sub> = 2000 kg, v<sub>B1</sub> = 0</p>
+          <ol class="ex-steps">
+            <li>Choque totalmente inelástico: se conserva p y al final tienen la misma velocidad. \( m_Av_{A1}+m_Bv_{B1}=(m_A+m_B)v_2 \)</li>
+            <li>\( 1000\cdot20+0=3000\,v_2\Rightarrow v_2=6{,}67\,\text{m/s} \)</li>
+            <li>Energía antes: \( \tfrac12\cdot1000\cdot20^2=200\,000\,\text{J} \)</li>
+            <li>Energía después: \( \tfrac12\cdot3000\cdot6{,}67^2=66\,667\,\text{J} \)</li>
+            <li>Se pierden 133 333 J, el 66,7 %. Se fueron en deformación, calor y ruido.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> v₂ ≈ 6,67 m/s · se pierde ≈ 133 kJ (2/3 de la Ec)</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>Choque elástico</b></div>
+          <p class="ex-q">Un carrito de 2 kg a 3 m/s choca elásticamente con otro de 1 kg en reposo. ¿Qué velocidades tienen después?</p>
+          <p class="ex-data"><span>Datos</span> m<sub>A</sub> = 2 kg, v<sub>A1</sub> = 3 m/s, m<sub>B</sub> = 1 kg, v<sub>B1</sub> = 0, e = 1</p>
+          <ol class="ex-steps">
+            <li>Conservación de p: \( 2\cdot3+0=2\,v_{A2}+1\,v_{B2}\Rightarrow 6=2v_{A2}+v_{B2} \)</li>
+            <li>Elástico (e = 1), las velocidades relativas se invierten: \( v_{A1}-v_{B1}=-(v_{A2}-v_{B2})\Rightarrow 3=v_{B2}-v_{A2} \)</li>
+            <li>Restando las dos ecuaciones: \( 3=3v_{A2}\Rightarrow v_{A2}=1\,\text{m/s} \), y entonces \( v_{B2}=4\,\text{m/s} \)</li>
+            <li>Verificamos la energía: antes \( \tfrac12\cdot2\cdot9=9\,\text{J} \); después \( \tfrac12\cdot2\cdot1+\tfrac12\cdot1\cdot16=1+8=9\,\text{J} \). ✓</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> v<sub>A2</sub> = 1 m/s · v<sub>B2</sub> = 4 m/s</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 3</span><b>Impulso y fuerza media</b></div>
+          <p class="ex-q">Una pelota de 0,5 kg llega a una pared a 10 m/s y rebota a 10 m/s. El contacto dura 0,02 s. ¿Qué impulso recibe y qué fuerza media le hace la pared?</p>
+          <p class="ex-data"><span>Datos</span> m = 0,5 kg, v₁ = +10 m/s, v₂ = −10 m/s, Δt = 0,02 s</p>
+          <ol class="ex-steps">
+            <li>Elegimos positivo hacia la pared. La velocidad de vuelta es negativa (cuidado con el signo).</li>
+            <li>\( J=p_2-p_1=0{,}5(-10)-0{,}5(10)=-10\,\text{N·s} \)</li>
+            <li>\( F_{med}=\dfrac{J}{\Delta t}=\dfrac{-10}{0{,}02}=-500\,\text{N} \). El signo menos indica que apunta hacia afuera de la pared.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> |J| = 10 N·s · |F<sub>med</sub>| = 500 N</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 4</span><b>Péndulo balístico</b></div>
+          <p class="ex-q">Una bala de 10 g se incrusta en un bloque de 2 kg colgado, que sube 11,3 cm. ¿A qué velocidad iba la bala?</p>
+          <p class="ex-data"><span>Datos</span> m = 0,01 kg, M = 2 kg, h = 0,113 m</p>
+          <ol class="ex-steps">
+            <li>Etapa 2 → 3 (subida), conservación de la energía: \( v_2=\sqrt{2gh}=\sqrt{2\cdot9{,}8\cdot0{,}113}=1{,}488\,\text{m/s} \)</li>
+            <li>Etapa 1 → 2 (choque), conservación de p: \( m\,v_1=(m+M)\,v_2 \)</li>
+            <li>\( v_1=\dfrac{m+M}{m}v_2=\dfrac{2{,}01}{0{,}01}\cdot1{,}488=299\,\text{m/s} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> v<sub>bala</sub> ≈ 300 m/s</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u6"><small>← Anterior</small>Unidad 6 · Trabajo y energía</a>
+        <a class="next" href="#cm"><small>Siguiente →</small>Unidad 8 · Centro de masa</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="cm" style="--k:var(--alt)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 8 · Cap. 8 S.Z.F.Y. (final)</span>
+        <h2>Centro de masa</h2>
+        <p class="lead">Un sistema complicado se traslada como si toda su masa estuviera concentrada en un único punto, sobre el que actúa la suma de las fuerzas externas.</p>
+      </div>
+      <article class="topic" id="cm-def">
+        <h3>Definición: promedio ponderado por la masa</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>El centro de masa es el <b>punto de equilibrio</b> del cuerpo. Si apoyás una regla sobre un dedo, se equilibra en el medio. Si le pegás una moneda en una punta, el punto de equilibrio se corre hacia la moneda. Es un promedio de posiciones donde las masas grandes "pesan más" en la cuenta.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>x_cm, y_cm</dt><dd>coordenadas del centro de masa</dd><dd class="u">m</dd></div><div><dt>m_i</dt><dd>masa de cada partícula</dd><dd class="u">kg</dd></div><div><dt>x_i, y_i</dt><dd>posición de cada partícula</dd><dd class="u">m</dd></div><div><dt>M</dt><dd>masa total</dd><dd class="u">kg</dd></div></dl></div>
+        <div class="eq big-eq boxed"><span class="cap">Posición del CM</span>\[ \vec r_{cm}=\frac{m_1\vec r_1+m_2\vec r_2+\dots}{m_1+m_2+\dots}=\frac{\sum m_i\vec r_i}{\sum m_i} \]</div>
+        <div class="eqs">
+          <div class="eq"><div class="val">\[ x_{cm}=\frac{\sum m_ix_i}{M} \]</div></div>
+          <div class="eq"><div class="val">\[ y_{cm}=\frac{\sum m_iy_i}{M} \]</div></div>
+          <div class="eq"><span class="cap">Cuerpo continuo</span><div class="val">\[ \vec r_{cm}=\frac1M\int\vec r\,dm \]</div></div>
+        </div>
+        <figure class="sim drag" id="s-cmdrag" data-aspect=".6" data-aspect-m="1" style="--k:var(--alt)">
+          <div class="sim-stage"><canvas aria-label="Tres masas arrastrables y su centro de masa"></canvas></div>
+          <div class="live" data-o="fx">—</div>
+          <div class="live" data-o="fy" style="border-top:0;padding-top:0">—</div>
+          <div class="ctls">
+            <label class="ctl" style="--k:var(--lin)"><span>m₁</span><input id="cm-m1" type="range" data-k="m1" min="1" max="10" step="0.5" value="6" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl" style="--k:var(--rot)"><span>m₂</span><input id="cm-m2" type="range" data-k="m2" min="1" max="10" step="0.5" value="2" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl" style="--k:var(--en)"><span>m₃</span><input id="cm-m3" type="range" data-k="m3" min="1" max="10" step="0.5" value="3" data-d="1" data-u="kg"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Arrastrá las masas</span><div class="btns"><button class="btn" data-act="reset">↺ Volver</button></div></div>
+          <figcaption>El CM siempre queda más cerca de la masa más grande. Si alineás las tres masas, el CM queda sobre esa recta.</figcaption>
+        </figure>
+        <div class="cmp">
+          <div style="--k:var(--alt)"><h4>Cuerpos homogéneos</h4><ul><li>Con centro geométrico (cubo, esfera, lata): el CM está en ese centro.</li><li>Con eje de simetría (rueda, polea): el CM está sobre el eje.</li><li>El CM puede estar <b>fuera</b> del cuerpo: un aro, una herradura, un boomerang.</li></ul></div>
+          <div style="--k:var(--alt)"><h4>Centro de gravedad</h4><ul><li>Es el punto donde se puede considerar aplicado el peso.</li><li>Si g es igual en todo el cuerpo coincide con el CM; es lo que se usa en equilibrio (Unidad 11).</li></ul></div>
+        </div>
+      </article>
+
+      <article class="topic" id="cm-figuras">
+        <h3>Centro de masa de figuras geométricas</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Si la figura es simple y pareja, el CM está en su centro: el cruce de las diagonales en un rectángulo, el centro en un círculo, a ⅓ de la altura en un triángulo. Si es una figura rara (una L, una T, una chapa con un agujero), <b>la partís en figuras simples</b>, cambiás cada pedazo por un punto en su centro con su masa (o su área, si la chapa es pareja) y hacés el promedio ponderado. Un agujero cuenta como un pedazo con masa <b>negativa</b>: se resta.</p></div>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">Figura compuesta (chapa homogénea: masa ∝ área)</span><div class="val">\[ x_{cm}=\frac{A_1x_1+A_2x_2-A_hx_h}{A_1+A_2-A_h} \]</div><p>Igual para y. A<sub>h</sub>, x<sub>h</sub>: área y centro del agujero.</p></div>
+          <div class="eq"><span class="cap">Figuras simples</span><div class="val">\[ \text{rectángulo: centro}\quad\text{triángulo: }\tfrac13h\text{ desde la base} \]</div></div>
+        </div>
+        <figure class="sim" id="s-figuras" data-aspect=".6" data-aspect-m="1.05" style="--k:var(--alt)">
+          <div class="sim-stage"><canvas aria-label="Figura compuesta dividida en rectángulos con el centro de cada pieza y el centro de masa total"></canvas></div>
+          <div class="live" data-o="fx">—</div>
+          <div class="live" data-o="fy" style="border-top:0;padding-top:0">—</div>
+          <div class="ctls">
+            <div class="segrow">Figura: <div class="seg" data-k="fig"><button data-v="L" aria-pressed="true">L</button><button data-v="T">T</button><button data-v="H">Chapa con agujero</button><button data-v="U">U</button></div></div>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Medidas en cm · cuadrícula de 1 cm</span><div class="btns"></div></div>
+          <figcaption>Cada pieza se reemplaza por un punto en su centro con un "peso" igual a su área. El ★ es el promedio ponderado. En la U, el CM queda <b>fuera del material</b>.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="cm-mov">
+        <h3>Movimiento del centro de masa</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Aunque un cuerpo se mueva de forma rara (gire, se deforme o explote), su centro de masa se mueve de forma simple, como si fuera una sola partícula. Si nadie de afuera empuja, el centro de masa sigue derecho a velocidad constante.</p></div>
+        <p>Derivando la posición del CM respecto del tiempo aparecen la velocidad del CM y una relación clave con la cantidad de movimiento total.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Velocidad del CM</span><div class="val">\[ \vec v_{cm}=\frac{\sum m_i\vec v_i}{M} \]</div></div>
+          <div class="eq boxed"><span class="cap">Cantidad de movimiento total</span><div class="val">\[ \vec P=M\,\vec v_{cm} \]</div></div>
+          <div class="eq"><span class="cap">Si ΣF<sub>ext</sub> = 0</span><div class="val">\[ \vec v_{cm}=\frac{\vec P}{M}=\text{cte} \]</div></div>
+        </div>
+        <figure class="sim" id="s-explosion" data-aspect=".55" data-aspect-m=".9" style="--k:var(--alt)">
+          <div class="sim-stage"><canvas aria-label="Proyectil que explota en el aire; el centro de masa de los fragmentos sigue la parábola original"></canvas></div>
+          <dl class="hud">
+            <div><dt>Estado</dt><dd data-o="st">—</dd></div>
+            <div><dt>Σ m·Δv en la explosión</dt><dd data-o="sum">—</dd></div>
+          </dl>
+          <div class="sim-bar"><span class="sim-title">Proyectil de 5 kg · v₀ = 18 m/s a 60°</span><div class="btns"><button class="btn pri" data-act="go">🚀 Lanzar otra vez</button><button class="btn" data-act="play"></button></div></div>
+          <figcaption>La explosión sólo tiene fuerzas <b>internas</b>, así que el CM de los fragmentos (★) sigue exactamente la parábola punteada. Cuando el primer fragmento toca el suelo aparece una fuerza externa (la normal) y desde ahí el CM se desvía.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="cm-explosion">
+        <h3>Explosión en el tiro oblicuo: ¿dónde cae el otro pedazo?</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Las fuerzas de la explosión son <b>internas</b>: los pedazos se empujan entre sí y esas fuerzas se cancelan. La única fuerza externa sigue siendo el peso, igual que antes. Entonces el centro de masa de los pedazos sigue <b>exactamente la misma parábola</b> que traía el proyectil y cae donde hubiera caído sin explotar, en el alcance R. Si los dos pedazos caen al mismo tiempo, R es el promedio ponderado de los dos puntos de caída. Con masas iguales, R queda justo en el medio.</p></div>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">El CM cae en el alcance R</span><div class="val">\[ m_1x_1+m_2x_2=(m_1+m_2)\,R \]</div></div>
+          <div class="eq boxed"><span class="cap">Masas iguales</span><div class="val">\[ x_2=2R-x_1 \]</div></div>
+          <div class="eq"><span class="cap">En la explosión (eje x)</span><div class="val">\[ M\,v_x=m_1v_1+m_2v_2 \]</div></div>
+        </div>
+        <figure class="sim" id="s-explo2" data-aspect=".56" data-aspect-m=".95" style="--k:var(--alt)">
+          <div class="sim-stage"><canvas aria-label="Proyectil que explota en el punto más alto en dos pedazos; se ve dónde cae cada uno y que el centro de masa cae en el alcance"></canvas></div>
+          <dl class="hud">
+            <div><dt>Cae el pedazo 1</dt><dd data-o="x1" class="lin">—</dd></div>
+            <div><dt>Cae el pedazo 2</dt><dd data-o="x2" class="rot">—</dd></div>
+            <div><dt>Cae el CM</dt><dd data-o="xc" class="alt">—</dd></div>
+            <div><dt>v₂ después</dt><dd data-o="v2">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl" style="--k:var(--lin)"><span>Velocidad horizontal del pedazo 1 después de explotar</span><input id="e2-v1" type="range" data-k="v1" min="-15" max="10" step="0.5" value="-10" data-d="1" data-u="m/s"><output></output></label>
+            <label class="ctl"><span>Masa del pedazo 1 (fracción del total)</span><input id="e2-f" type="range" data-k="f" min="0.2" max="0.8" step="0.05" value="0.5" data-d="2"><output></output></label>
+            <div class="segrow">Casos típicos: <div class="btns"><button class="btn" data-act="back">Vuelve al cañón</button><button class="btn" data-act="vert">Cae vertical</button><button class="btn" data-act="same">No se separan</button></div></div>
+          </div>
+          <div class="sim-bar"><span class="sim-title">v₀ₓ = 10 m/s · v₀ᵧ = 19,6 m/s · R = 40 m · explota en el punto más alto</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺ Lanzar</button></div></div>
+          <figcaption>Pedazo 1 en azul, pedazo 2 en naranja, ★ CM en violeta. Elegí hacia dónde sale el pedazo 1 y mirá dónde cae el otro: el CM siempre cae en 40 m. Con masas iguales, 40 m queda justo en el medio de los dos puntos de caída.</figcaption>
+        </figure>
+        <div class="ojo" data-l="OJO" style="--k:var(--alt)"><p>El atajo "el CM cae en R" sirve si los dos pedazos tocan el suelo <b>al mismo tiempo</b>, lo que pasa cuando la explosión los lanza horizontalmente (por ejemplo, en el punto más alto). Si uno llega antes, el piso le hace una fuerza externa y desde ese momento el CM deja de seguir la parábola.</p></div>
+      </article>
+
+      <article class="topic" id="cm-ext">
+        <h3>Fuerzas externas y movimiento del centro de masa</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Tirá una llave inglesa girando por el aire: los extremos hacen curvas locas, pero hay un punto que dibuja una parábola perfecta, como una piedra. Ese punto es el centro de masa. Las únicas fuerzas que le importan son las de afuera (acá, el peso).</p></div>
+        <p>Si sumamos m·a de todas las partículas, las fuerzas internas se cancelan de a pares (tercera ley) y queda sólo la fuerza externa.</p>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">Traslación del CM</span><div class="val">\[ \sum\vec F_{ext}=M\,\vec a_{cm} \]</div></div>
+          <div class="eq"><span class="cap">Equivalente</span><div class="val">\[ \sum\vec F_{ext}=\frac{d\vec P}{dt} \]</div></div>
+        </div>
+        <figure class="sim" id="s-baton" data-aspect=".52" data-aspect-m=".9" style="--k:var(--alt)">
+          <div class="sim-stage"><canvas aria-label="Bastón con masas distintas lanzado girando; su centro de masa describe una parábola"></canvas></div>
+          <div class="ctls">
+            <label class="ctl" style="--k:var(--rot)"><span>Giro ω alrededor del CM</span><input id="bt-w" type="range" data-k="w" min="0" max="14" step="0.5" value="8" data-d="1" data-u="rad/s"><output></output></label>
+            <label class="ctl" style="--k:var(--alt)"><span>Masa del extremo pesado</span><input id="bt-m" type="range" data-k="m" min="1" max="6" step="0.5" value="3" data-d="1" data-u="kg"><output></output></label>
+            <label class="chk"><input id="bt-tr" type="checkbox" data-k="tr" checked> Mostrar la trayectoria de los extremos</label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Traslación + rotación</span><div class="btns"><button class="btn pri" data-act="go">↗ Lanzar</button><button class="btn" data-act="play"></button></div></div>
+          <figcaption>Los extremos dibujan curvas complicadas, pero el CM hace una parábola perfecta, como una piedra. La única fuerza externa es el peso, M·g, y actúa como si estuviera aplicada en el CM, por eso tampoco frena el giro. Así se separa cualquier movimiento: <b>traslación del CM + rotación alrededor del CM</b>.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="cm-colgar">
+        <h3>Encontrar el CM colgando el cuerpo</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Un método práctico de taller: colgá la pieza de un clavo y dejala quieta. El centro de masa queda justo debajo del clavo. Trazá la vertical con una plomada, colgala de otro punto y trazá otra vertical. Donde se cruzan está el centro de masa.</p></div>
+        <p>Un cuerpo colgado de un punto queda en reposo con su CM justo debajo del punto de suspensión. Si lo colgás de dos puntos distintos y trazás la vertical cada vez, las rectas se cruzan en el CM. Funciona aunque el CM esté fuera del material.</p>
+        <figure class="sim" id="s-colgar" data-aspect=".62" data-aspect-m="1" style="--k:var(--alt)">
+          <div class="sim-stage"><canvas aria-label="Figura que se cuelga de un punto y oscila hasta que el centro de masa queda bajo el clavo"></canvas></div>
+          <div class="ctls">
+            <div class="segrow">Figura: <div class="seg" data-k="shape"><button data-v="L" aria-pressed="true">Escuadra</button><button data-v="ring">Herradura</button><button data-v="tri">Triángulo</button><button data-v="boom">Boomerang</button></div></div>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Tocá un punto de la figura para colgarla de ahí</span><div class="btns"><button class="btn" data-act="clear">Borrar verticales</button><button class="btn" data-act="reveal">Mostrar CM</button></div></div>
+          <figcaption>Cada vertical queda dibujada sobre la figura. Colgala de dos o tres puntos distintos: todas las verticales pasan por el mismo punto. Ese es el CM, y en la herradura y el boomerang queda en el aire.</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-cm">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Centro de masa de tres partículas</b></div>
+          <p class="ex-q">Hay tres masas: 2 kg en (0; 0), 3 kg en (4 m; 0) y 5 kg en (0; 3 m). ¿Dónde está el centro de masa?</p>
+          <p class="ex-data"><span>Datos</span> m₁ = 2 kg (0; 0), m₂ = 3 kg (4; 0), m₃ = 5 kg (0; 3)</p>
+          <ol class="ex-steps">
+            <li>Masa total: M = 2 + 3 + 5 = 10 kg.</li>
+            <li>\( x_{cm}=\dfrac{2\cdot0+3\cdot4+5\cdot0}{10}=\dfrac{12}{10}=1{,}2\,\text{m} \)</li>
+            <li>\( y_{cm}=\dfrac{2\cdot0+3\cdot0+5\cdot3}{10}=\dfrac{15}{10}=1{,}5\,\text{m} \)</li>
+            <li>Control: el CM queda más cerca de la masa de 5 kg, que es la más grande. ✓</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> CM = (1,2 m; 1,5 m)</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>Persona caminando en un bote</b></div>
+          <p class="ex-q">Una persona de 60 kg camina 3 m, de proa a popa, sobre un bote de 120 kg que flota quieto (sin rozamiento con el agua). ¿Cuánto se mueve el bote?</p>
+          <p class="ex-data"><span>Datos</span> m = 60 kg, M = 120 kg, recorrido sobre el bote = 3 m</p>
+          <ol class="ex-steps">
+            <li>No hay fuerzas externas horizontales, así que el CM del sistema persona + bote <b>no se mueve</b>.</li>
+            <li>Si el bote retrocede d, la persona avanza respecto del agua sólo 3 − d.</li>
+            <li>Para que el CM no cambie, los desplazamientos pesados por la masa se compensan: \( 60\,(3-d)=120\,d \)</li>
+            <li>\( 180=180\,d\Rightarrow d=1\,\text{m} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> el bote se mueve 1 m hacia atrás</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 3</span><b>Velocidad del centro de masa</b></div>
+          <p class="ex-q">Dos carritos: uno de 2 kg a 3 m/s y otro de 1 kg a −1 m/s. ¿Cuánto valen la velocidad del CM y la cantidad de movimiento total?</p>
+          <p class="ex-data"><span>Datos</span> m₁ = 2 kg, v₁ = 3 m/s, m₂ = 1 kg, v₂ = −1 m/s</p>
+          <ol class="ex-steps">
+            <li>\( P=m_1v_1+m_2v_2=6-1=5\,\text{kg·m/s} \)</li>
+            <li>\( v_{cm}=\dfrac{P}{M}=\dfrac{5}{3}=1{,}67\,\text{m/s} \)</li>
+            <li>Choquen como choquen, si no hay fuerzas externas v<sub>cm</sub> sigue valiendo 1,67 m/s.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> P = 5 kg·m/s · v<sub>cm</sub> ≈ 1,67 m/s</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 4</span><b>Explosión: un pedazo vuelve al cañón</b></div>
+          <p class="ex-q">Un proyectil sale con v₀ₓ = 10 m/s y v₀ᵧ = 19,6 m/s. En el punto más alto explota en dos pedazos de igual masa y uno vuelve exactamente al cañón. ¿Dónde cae el otro?</p>
+          <p class="ex-data"><span>Datos</span> v₀ₓ = 10 m/s, v₀ᵧ = 19,6 m/s, m₁ = m₂, x₁ = 0</p>
+          <ol class="ex-steps">
+            <li>Tiempo de subida: \( t=\dfrac{v_{0y}}{g}=\dfrac{19{,}6}{9{,}8}=2\,\text{s} \). El vuelo completo dura 4 s.</li>
+            <li>Alcance sin explosión: \( R=v_{0x}\cdot4=40\,\text{m} \). El punto más alto está en x = 20 m.</li>
+            <li>La explosión es interna: el CM de los pedazos sigue la parábola y cae en R. Los dos caen juntos (salen horizontales desde la misma altura).</li>
+            <li>Masas iguales: \( \dfrac{x_1+x_2}{2}=R\Rightarrow x_2=2\cdot40-0=80\,\text{m} \)</li>
+            <li>Control con cantidad de movimiento en x: \( 2m\cdot10=m(-10)+m\,v_2\Rightarrow v_2=30\,\text{m/s} \). Cae 2 s desde x = 20 m: \( 20+30\cdot2=80\,\text{m} \). ✓</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> el otro pedazo cae a 80 m del cañón</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 5</span><b>Explosión: un pedazo cae vertical</b></div>
+          <p class="ex-q">Mismo proyectil, pero ahora uno de los pedazos (igual masa) queda sin velocidad horizontal y cae vertical. ¿Dónde cae el otro?</p>
+          <p class="ex-data"><span>Datos</span> R = 40 m, x₁ = 20 m (debajo del punto más alto)</p>
+          <ol class="ex-steps">
+            <li>El pedazo 1 cae justo debajo del punto más alto: x₁ = 20 m.</li>
+            <li>Masas iguales: \( x_2=2R-x_1=80-20=60\,\text{m} \)</li>
+            <li>Control: \( 2m\cdot10=m\cdot0+m\,v_2\Rightarrow v_2=20\,\text{m/s} \); \( 20+20\cdot2=60\,\text{m} \). ✓</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> cae a 60 m</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 6</span><b>Explosión con masas distintas</b></div>
+          <p class="ex-q">Mismo proyectil (R = 40 m), de 5 kg. En el punto más alto se parte en un pedazo de 2 kg, que vuelve al cañón, y otro de 3 kg. ¿Dónde cae el de 3 kg?</p>
+          <p class="ex-data"><span>Datos</span> m₁ = 2 kg, x₁ = 0, m₂ = 3 kg, R = 40 m</p>
+          <ol class="ex-steps">
+            <li>El CM cae en R: \( m_1x_1+m_2x_2=(m_1+m_2)R \)</li>
+            <li>\( 2\cdot0+3\,x_2=5\cdot40\Rightarrow x_2=\dfrac{200}{3}=66{,}7\,\text{m} \)</li>
+            <li>Tiene sentido: el pedazo pesado "tira" más del promedio, así que se aleja menos que en el caso de masas iguales (80 m).</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> x₂ ≈ 66,7 m</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 7</span><b>Figura en L</b></div>
+          <p class="ex-q">Una chapa homogénea en forma de L está formada por un rectángulo vertical de 2 cm × 6 cm (esquina inferior izquierda en el origen) y uno horizontal de 4 cm × 2 cm pegado a su derecha, abajo (de x = 2 a x = 6). ¿Dónde está el CM?</p>
+          <p class="ex-data"><span>Datos</span> R₁: 2 × 6, centro (1; 3), A₁ = 12 cm² · R₂: 4 × 2, centro (4; 1), A₂ = 8 cm²</p>
+          <ol class="ex-steps">
+            <li>Partimos la L en dos rectángulos y ubicamos el centro de cada uno: (1; 3) y (4; 1).</li>
+            <li>Como la chapa es pareja, la masa es proporcional al área: A₁ = 12, A₂ = 8, total 20.</li>
+            <li>\( x_{cm}=\dfrac{12\cdot1+8\cdot4}{20}=\dfrac{44}{20}=2{,}2\,\text{cm} \)</li>
+            <li>\( y_{cm}=\dfrac{12\cdot3+8\cdot1}{20}=\dfrac{44}{20}=2{,}2\,\text{cm} \)</li>
+            <li>El punto (2,2; 2,2) cae en el hueco de la L, fuera del material. Puede pasar.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> CM = (2,2 cm; 2,2 cm)</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 8</span><b>Chapa cuadrada con un agujero</b></div>
+          <p class="ex-q">Una chapa cuadrada de 6 cm de lado (esquina en el origen) tiene un agujero cuadrado de 2 cm de lado, con su centro en (4,5; 4,5). ¿Dónde está el CM?</p>
+          <p class="ex-data"><span>Datos</span> cuadrado: A = 36, centro (3; 3) · agujero: A = 4, centro (4,5; 4,5)</p>
+          <ol class="ex-steps">
+            <li>Pensalo como el cuadrado entero menos el agujero: el agujero entra con área negativa.</li>
+            <li>\( x_{cm}=\dfrac{36\cdot3-4\cdot4{,}5}{36-4}=\dfrac{108-18}{32}=2{,}81\,\text{cm} \)</li>
+            <li>Por simetría, y<sub>cm</sub> da lo mismo: 2,81 cm.</li>
+            <li>El CM se corrió desde (3; 3) hacia el lado opuesto al agujero. Tiene sentido: ahí quedó más masa.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> CM ≈ (2,81 cm; 2,81 cm)</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u8"><small>← Anterior</small>Unidad 8 · Cantidad de movimiento, impulso y choques</a>
+        <a class="next" href="#u9"><small>Siguiente →</small>Unidad 9 · Rotación de cuerpos rígidos</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u9" style="--k:var(--rot)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 9 · Cap. 9 S.Z.F.Y.</span>
+        <h2>Rotación de cuerpos rígidos</h2>
+        <p class="lead">En un cuerpo rígido todas las partículas giran con la misma ω, pero cada una tiene una rapidez distinta según su distancia al eje. De ahí sale todo: la energía de rotación, el momento de inercia y el teorema de Steiner.</p>
+      </div>
+      <article class="topic" id="cinrot">
+        <h3>Cinemática rotacional: la misma película, otras letras</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Girar es como avanzar, pero en ángulo. En vez de metros contás radianes, en vez de m/s contás rad/s y en vez de m/s² contás rad/s². <b>Las fórmulas son idénticas a las del MRUV</b>, sólo cambian las letras. Y para pasar de "girar" a "avanzar" (el borde de una rueda, por ejemplo) se multiplica por el radio: v = ω·r.</p></div>
+        <p>Las ecuaciones del MRUV valen tal cual para la rotación con α constante: se cambia x por θ, v por ω y a por α. El ángulo siempre en <strong>radianes</strong>.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Definiciones</span><div class="val">\[ \omega=\frac{d\theta}{dt}\qquad\alpha=\frac{d\omega}{dt} \]</div></div>
+          <div class="eq"><span class="cap">α constante</span><div class="val">\[ \theta=\theta_0+\omega_0t+\tfrac12\alpha t^2 \]</div></div>
+          <div class="eq"><div class="val">\[ \omega=\omega_0+\alpha t \]</div></div>
+          <div class="eq"><div class="val">\[ \omega^2=\omega_0^2+2\alpha\,\Delta\theta \]</div></div>
+        </div>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">Vínculo para un punto a distancia r del eje</span><div class="val">\[ s=r\theta\quad v=r\omega\quad a_t=r\alpha\quad a_c=\omega^2r \]</div></div>
+        </div>
+        <figure class="sim" id="s-disco" data-aspect=".66" data-aspect-m="1.15" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Disco girando con tres puntos a distintos radios y un carrito gemelo con los mismos números en versión lineal"></canvas></div>
+          <dl class="hud">
+            <div><dt>θ ↔ x</dt><dd data-o="th">—</dd></div>
+            <div><dt>ω ↔ v</dt><dd data-o="w">—</dd></div>
+            <div><dt>α ↔ a</dt><dd data-o="al">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>ω₀</span><input id="dc-w0" type="range" data-k="w0" min="0" max="3" step="0.1" value="0.5" data-d="1" data-u="rad/s"><output></output></label>
+            <label class="ctl"><span>α</span><input id="dc-al" type="range" data-k="al" min="-0.6" max="0.6" step="0.05" value="0.3" data-d="2" data-u="rad/s²"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Gemelos: rotación y traslación con los mismos números</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+          <figcaption>Arriba, los tres puntos tienen la misma ω y rapideces proporcionales a r: el gráfico v(r) es una recta que pasa por el origen con pendiente ω. Abajo, un carrito recorre x metros con v y a iguales a los θ, ω y α del disco.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="ecrot">
+        <h3>Energía en el movimiento rotacional</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Una rueda girando en el lugar no avanza, pero tiene energía: si la tocás, te empuja la mano. Esa energía es la suma de las energías de todos sus pedacitos, y los de afuera van más rápido que los de adentro. Por eso aparece el momento de inercia: resume cómo está repartida la masa respecto del eje.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>I</dt><dd>momento de inercia</dd><dd class="u">kg·m²</dd></div><div><dt>ω</dt><dd>velocidad angular</dd><dd class="u">rad/s (¡no rpm!)</dd></div><div><dt>r_i</dt><dd>distancia de cada partícula al eje</dd><dd class="u">m</dd></div></dl></div>
+        <p>La energía cinética de rotación <strong>no es una energía nueva</strong>: es la suma de las ½mv² de todas las partículas del cuerpo. Al reemplazar v<sub>i</sub> = r<sub>i</sub>ω aparece una cantidad que sólo depende de cómo está repartida la masa.</p>
+        <details class="proof" open>
+          <summary>Deducción paso a paso</summary>
+          <div class="steps">
+            <div class="step"><div>Partícula i, a distancia r<sub>i</sub> del eje: \( v_i=r_i\,\omega \), con la misma ω para todas.</div></div>
+            <div class="step"><div>\[ E_{c,i}=\tfrac12m_iv_i^2=\tfrac12m_ir_i^2\,\omega^2 \]</div></div>
+            <div class="step"><div>Sumamos todas y sacamos factor común ½ω²:\[ E_c=\tfrac12\Big(\sum m_ir_i^2\Big)\omega^2 \]</div></div>
+            <div class="step"><div>El paréntesis es el <b>momento de inercia</b> respecto de ese eje: \( I=\sum m_ir_i^2 \)</div></div>
+          </div>
+        </details>
+        <div class="eq big-eq boxed"><span class="cap">Energía cinética rotacional de un cuerpo rígido</span>\[ E_c=\tfrac12\,I\,\omega^2 \]</div>
+        <div class="ojo" data-l="OJO" style="--k:var(--rot)"><p>ω tiene que estar en <b>rad/s</b> (no rpm ni °/s), porque la deducción usa v = rω. Para pasar de rpm: ω = rpm · 2π / 60.</p></div>
+      </article>
+
+      <article class="topic" id="inercia">
+        <h3>Momento de inercia: la masa de la rotación</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>La masa dice cuánto cuesta empujar algo en línea recta. El momento de inercia dice <b>cuánto cuesta hacerlo girar</b>. Y no depende sólo de cuánta masa hay, sino de <b>dónde</b> está: una puerta es fácil de girar desde la manija y muy difícil desde al lado de la bisagra. Masa lejos del eje = mucho más difícil de girar (el radio va al cuadrado).</p></div>
+        <div class="eq big-eq boxed"><span class="cap">Definición (r<sub>i</sub> = distancia perpendicular al eje)</span>\[ I=\sum m_i\,r_i^2=m_1r_1^2+m_2r_2^2+\dots\qquad[\text{kg·m}^2] \]</div>
+        <p>Cuanto más lejos del eje está la masa, mayor es I, más energía guarda el cuerpo a igual ω y más cuesta ponerlo a girar o frenarlo. Por eso también se lo llama <strong>inercia rotacional</strong>. Es la idea del rotor del principio.</p>
+        <p>Ejemplos 1 y 2 del apunte: cuatro esferas chicas en un marco liviano sobre el plano xy, dos de masa M a distancia a sobre el eje x y dos de masa m a distancia b sobre el eje y. Elegí el eje de giro.</p>
+        <figure class="sim" id="s-marco" data-aspect=".6" data-aspect-m="1" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Marco con cuatro esferas girando en tres dimensiones alrededor del eje elegido"></canvas></div>
+          <dl class="hud">
+            <div><dt>Fórmula</dt><dd data-o="f">—</dd></div>
+            <div><dt>I</dt><dd data-o="I">—</dd></div>
+            <div><dt>Ec = ½Iω²</dt><dd data-o="E">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <div class="segrow">Eje de rotación: <div class="seg" data-k="ax"><button data-v="y" aria-pressed="true">Eje y (Ej. 1)</button><button data-v="z">Eje z (Ej. 2)</button><button data-v="x">Eje x</button></div></div>
+            <label class="ctl"><span>M (esferas sobre x)</span><input id="mc-M" type="range" data-k="M" min="0.5" max="4" step="0.1" value="2" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl"><span>m (esferas sobre y)</span><input id="mc-m" type="range" data-k="m" min="0.5" max="4" step="0.1" value="1" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl"><span>a</span><input id="mc-a" type="range" data-k="a" min="0.3" max="1" step="0.05" value="0.8" data-d="2" data-u="m"><output></output></label>
+            <label class="ctl"><span>b</span><input id="mc-b" type="range" data-k="b" min="0.3" max="1" step="0.05" value="0.5" data-d="2" data-u="m"><output></output></label>
+            <label class="ctl"><span>ω</span><input id="mc-w" type="range" data-k="w" min="0.5" max="4" step="0.1" value="1.5" data-d="1" data-u="rad/s"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Las esferas sobre el eje no aportan nada</span><div class="btns"><button class="btn" data-act="play"></button></div></div>
+          <figcaption>Girando en torno al eje y, las dos esferas m están <b>sobre</b> el eje: r = 0, no se mueven, no tienen energía cinética y no suman a I. Con el eje z (perpendicular al plano) las cuatro giran: I<sub>z</sub> = 2Ma² + 2mb² = I<sub>x</sub> + I<sub>y</sub>.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="continuo">
+        <h3>Cuerpos continuos: de la suma a la integral</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Para un cuerpo "liso" (un disco, una varilla) no hay partículas separadas para sumar. Lo cortamos en muchísimos pedacitos chiquitos, sumamos masa × distancia² de cada uno y, cuando los pedacitos son infinitamente chicos, la suma se vuelve una integral. En la práctica casi siempre usás la tabla de abajo.</p></div>
+        <p>Para un cuerpo continuo se lo divide en elementos de masa Δm<sub>i</sub>, se suman los Δm<sub>i</sub>·r<sub>i</sub>² y se toma el límite cuando Δm<sub>i</sub> → 0. La suma se convierte en integral. Si el cuerpo es homogéneo, ρ = dm/dV es constante y sale de la integral.</p>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">Integral</span><div class="val">\[ I=\lim_{\Delta m_i\to0}\sum r_i^2\,\Delta m_i=\int r^2\,dm=\int r^2\rho\,dV \]</div></div>
+          <div class="eq"><span class="cap">Disco: anillos de radio r y ancho dr</span><div class="val">\[ dm=\frac{M}{\pi R^2}\,2\pi r\,dr\;\Rightarrow\; I=\int_0^R\frac{2M}{R^2}r^3dr=\tfrac12MR^2 \]</div></div>
+        </div>
+        <figure class="sim" id="s-anillos" data-aspect=".52" data-aspect-m="1.05" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Disco dividido en N anillos y gráfico de la suma de sus aportes al momento de inercia"></canvas></div>
+          <dl class="hud">
+            <div><dt>Σ mᵢ rᵢ² / MR²</dt><dd data-o="s">—</dd></div>
+            <div><dt>Exacto (integral)</dt><dd>0,5000</dd></div>
+            <div><dt>Error</dt><dd data-o="err">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Cantidad de anillos N</span><input id="an-n" type="range" data-k="n" min="1" max="40" step="1" value="4" data-d="0"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Suma de Riemann → integral</span><div class="btns"><button class="btn" data-act="play"></button></div></div>
+          <figcaption>Cada anillo se aproxima ubicando toda su masa en el borde exterior, así que la suma da de más. Al aumentar N tiende a ½MR². Los anillos de afuera tienen más masa y además r² grande: dominan el resultado.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="tabla-i">
+        <h3>Momentos de inercia de cuerpos comunes</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Todos son masa × tamaño² × un número. Ese número dice qué tan lejos del eje está la masa en promedio: 1 si está toda en el borde (aro), ½ si está repartida (disco), ⅖ si está más concentrada al centro (esfera maciza).</p></div>
+        <p>Todos tienen la forma I = c·M·(tamaño)². El número c dice qué tan lejos del eje está la masa en promedio.</p>
+        <div class="inertia-grid">
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="75" y1="4" x2="75" y2="106" stroke="var(--muted)" stroke-dasharray="4 4"/><g class="spin"><circle cx="75" cy="55" r="40" fill="none" stroke="var(--rot)" stroke-width="7"/><circle cx="115" cy="55" r="4" fill="var(--ink)"/></g><circle cx="75" cy="55" r="3" fill="var(--ink)"/></svg><b>Aro (eje central ⊥)</b><div>\( I=MR^2 \)</div></div>
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><g class="spin"><circle cx="75" cy="55" r="40" fill="color-mix(in srgb, var(--rot) 30%, transparent)" stroke="var(--rot)" stroke-width="2.5"/><line x1="75" y1="55" x2="115" y2="55" stroke="var(--ink)" stroke-width="2"/></g><circle cx="75" cy="55" r="3" fill="var(--ink)"/></svg><b>Disco / cilindro macizo</b><div>\( I=\tfrac12MR^2 \)</div></div>
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><g class="spin"><circle cx="75" cy="55" r="32" fill="none" stroke="color-mix(in srgb, var(--rot) 40%, transparent)" stroke-width="16"/><line x1="99" y1="55" x2="115" y2="55" stroke="var(--ink)" stroke-width="2"/></g><circle cx="75" cy="55" r="3" fill="var(--ink)"/></svg><b>Cilindro hueco grueso</b><div>\( I=\tfrac12M(R_1^2+R_2^2) \)</div></div>
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><g class="spin"><rect x="20" y="51" width="110" height="8" rx="4" fill="var(--rot)"/></g><circle cx="75" cy="55" r="4" fill="var(--ink)"/></svg><b>Varilla, eje por el centro</b><div>\( I=\tfrac1{12}ML^2 \)</div></div>
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><g class="spin" style="animation-duration:4.4s"><rect x="71" y="51" width="54" height="8" rx="4" fill="var(--rot)"/></g><circle cx="75" cy="55" r="4" fill="var(--ink)"/></svg><b>Varilla, eje por un extremo</b><div>\( I=\tfrac13ML^2 \)</div></div>
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="75" y1="4" x2="75" y2="106" stroke="var(--muted)" stroke-dasharray="4 4"/><circle cx="75" cy="55" r="40" fill="color-mix(in srgb, var(--rot) 35%, transparent)" stroke="var(--rot)" stroke-width="2.5"/><ellipse class="spinY" cx="75" cy="55" rx="40" ry="40" fill="none" stroke="var(--rot)" stroke-width="1.5"/><ellipse cx="75" cy="55" rx="40" ry="10" fill="none" stroke="var(--rot)" stroke-width="1.2" opacity=".6"/></svg><b>Esfera maciza</b><div>\( I=\tfrac25MR^2 \)</div></div>
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><line x1="75" y1="4" x2="75" y2="106" stroke="var(--muted)" stroke-dasharray="4 4"/><circle cx="75" cy="55" r="40" fill="none" stroke="var(--rot)" stroke-width="4"/><ellipse class="spinY" cx="75" cy="55" rx="40" ry="40" fill="none" stroke="var(--rot)" stroke-width="1.5"/><ellipse cx="75" cy="55" rx="40" ry="10" fill="none" stroke="var(--rot)" stroke-width="1.2" opacity=".6"/></svg><b>Esfera hueca (delgada)</b><div>\( I=\tfrac23MR^2 \)</div></div>
+          <div class="icard"><svg viewBox="0 0 150 110" aria-hidden="true"><g class="spin"><rect x="40" y="30" width="70" height="50" fill="color-mix(in srgb, var(--rot) 30%, transparent)" stroke="var(--rot)" stroke-width="2.5"/></g><circle cx="75" cy="55" r="3" fill="var(--ink)"/></svg><b>Placa a×b, eje ⊥ central</b><div>\( I=\tfrac1{12}M(a^2+b^2) \)</div></div>
+        </div>
+      </article>
+
+      <article class="topic" id="steiner">
+        <h3>Teorema de Steiner (ejes paralelos)</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Si sabés cuánto cuesta girar un cuerpo alrededor de su centro, Steiner te dice cuánto cuesta girarlo alrededor de <b>cualquier otro eje paralelo</b>: le sumás la masa por la distancia al cuadrado. Por eso girar una varilla desde la punta cuesta 4 veces más que desde el medio.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>I_cm</dt><dd>momento de inercia respecto del eje que pasa por el CM</dd><dd class="u">kg·m²</dd></div><div><dt>I_P</dt><dd>momento de inercia respecto del otro eje (paralelo)</dd><dd class="u">kg·m²</dd></div><div><dt>d</dt><dd>distancia entre los dos ejes</dd><dd class="u">m</dd></div><div><dt>M</dt><dd>masa total</dd><dd class="u">kg</dd></div></dl></div>
+        <p>Si conocés el momento de inercia respecto de un eje que pasa por el centro de masa, podés obtenerlo para cualquier otro eje <strong>paralelo</strong> a distancia d sumando M·d².</p>
+        <div class="eq big-eq boxed"><span class="cap">Steiner</span>\[ I_P=I_{cm}+M\,d^2 \]</div>
+        <figure class="sim" id="s-steiner" data-aspect=".56" data-aspect-m="1.1" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Cuerpo girando alrededor de un eje desplazado una distancia d del centro de masa y parábola de I en función de d"></canvas></div>
+          <dl class="hud">
+            <div><dt>I_cm</dt><dd data-o="icm">—</dd></div>
+            <div><dt>M·d²</dt><dd data-o="md">—</dd></div>
+            <div><dt>I_P</dt><dd data-o="ip">—</dd></div>
+            <div><dt>α = τ/I (τ = 0,5 N·m)</dt><dd data-o="al">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <div class="segrow">Cuerpo: <div class="seg" data-k="sh"><button data-v="rod" aria-pressed="true">Varilla (L = 1 m)</button><button data-v="disk">Disco (R = 0,5 m)</button></div></div>
+            <label class="ctl"><span>Distancia del eje al CM, d</span><input id="st-d" type="range" data-k="d" min="0" max="0.8" step="0.01" value="0.5" data-d="2" data-u="m"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">M = 2 kg · mismo torque, distinto eje</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺ Arrancar de nuevo</button></div></div>
+          <figcaption>Cada 3 segundos el cuerpo arranca del reposo con el mismo torque. El mínimo de la parábola está en d = 0: <b>el eje por el CM es el de menor momento de inercia</b> entre todos los paralelos. Con la varilla y d = L/2 (extremo) I es 4 veces mayor que por el centro.</figcaption>
+        </figure>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Ejemplo 3 · varilla por un extremo</span><div class="val">\[ I=\tfrac1{12}mL^2+m\left(\tfrac L2\right)^2=\tfrac13mL^2 \]</div></div>
+          <div class="eq"><span class="cap">Ejemplo 4 · cilindro, eje en el borde</span><div class="val">\[ I=\tfrac12mR^2+mR^2=\tfrac32mR^2 \]</div></div>
+        </div>
+        <details class="proof">
+          <summary>Demostración del teorema de Steiner</summary>
+          <div class="steps">
+            <div class="step"><div>Origen en el CM, cuerpo en el plano xy, eje z por el CM. El eje paralelo pasa por P = (a, b), con d² = a² + b².</div></div>
+            <div class="step"><div>\[ I_P=\sum m_i\big[(x_i-a)^2+(y_i-b)^2\big] \]</div></div>
+            <div class="step"><div>Desarrollando los cuadrados:\[ I_P=\sum m_i(x_i^2+y_i^2)-2a\sum m_ix_i-2b\sum m_iy_i+(a^2+b^2)\sum m_i \]</div></div>
+            <div class="step"><div>La primera suma es I<sub>cm</sub>. La segunda y la tercera valen M·x<sub>cm</sub> y M·y<sub>cm</sub>, que son <b>cero</b> porque el origen está en el CM. La última es M·d².</div></div>
+            <div class="step"><div>\[ I_P=I_{cm}+M\,d^2\quad\blacksquare \]</div></div>
+          </div>
+        </details>
+        <div class="ojo" data-l="OJO" style="--k:var(--rot)"><p>Steiner se aplica <b>sólo desde el eje que pasa por el CM</b>. Si querés ir de un eje P a otro Q, ninguno por el CM, primero bajás a I<sub>cm</sub> = I<sub>P</sub> − M·d<sub>P</sub>² y después subís: I<sub>Q</sub> = I<sub>cm</sub> + M·d<sub>Q</sub>².</p></div>
+      </article>
+
+      <article class="topic" id="masa-vs-i">
+        <h3>Masa vs. momento de inercia</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Resumen en una línea: la masa es una sola para cada objeto; el momento de inercia cambia según el eje que elijas.</p></div>
+        <div class="tbl">
+          <table class="analogy">
+            <thead><tr><th></th><th>Masa m</th><th>Momento de inercia I</th></tr></thead>
+            <tbody>
+              <tr><td>Analogía</td><td>Mide la resistencia a cambiar el estado de movimiento <b>lineal</b></td><td>Mide la resistencia a cambiar el estado de movimiento <b>rotacional</b></td></tr>
+              <tr><td>Diferencia</td><td>Propiedad intrínseca del objeto (velocidades no relativistas)</td><td>Depende del <b>eje</b> elegido: no hay un único valor para un objeto</td></tr>
+              <tr><td>Depende de</td><td>Sólo de la cantidad de materia</td><td>De la masa <b>y</b> de cómo está distribuida alrededor del eje</td></tr>
+              <tr><td>Energía</td><td>\( E_c=\tfrac12mv^2 \)</td><td>\( E_c=\tfrac12I\omega^2 \)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="topic" id="rodadura">
+        <h3>Rodadura: traslación + rotación</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Una pelota que rueda hace dos cosas a la vez: avanza y gira. La energía que gana al bajar se reparte entre las dos cosas. Si gasta mucha en girar (porque tiene la masa lejos del centro, como un aro), le queda poca para avanzar y llega más lento. Por eso, en una carrera por una rampa, la esfera maciza le gana al aro.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>v_cm</dt><dd>velocidad con que avanza el centro</dd><dd class="u">m/s</dd></div><div><dt>c</dt><dd>el número de la tabla: I = c·M·R²</dd><dd class="u">sin unidad</dd></div><div><dt>h</dt><dd>altura que baja</dd><dd class="u">m</dd></div></dl></div>
+        <p>Una rueda que rueda sin deslizar combina las dos cosas: su CM se traslada con v<sub>cm</sub> y además gira alrededor del CM con ω = v<sub>cm</sub>/R. Su energía cinética total es la suma de las dos partes.</p>
+        <div class="eqs">
+          <div class="eq boxed"><span class="cap">Energía de un cuerpo que rueda</span><div class="val">\[ E_c=\tfrac12Mv_{cm}^2+\tfrac12I_{cm}\omega^2 \]</div></div>
+          <div class="eq"><span class="cap">Sin deslizar</span><div class="val">\[ v_{cm}=R\,\omega \]</div></div>
+          <div class="eq"><span class="cap">Bajando una altura h (I = cMR²)</span><div class="val">\[ Mgh=\tfrac12Mv^2(1+c)\Rightarrow v=\sqrt{\frac{2gh}{1+c}} \]</div></div>
+        </div>
+        <figure class="sim" id="s-carrera" data-aspect=".62" data-aspect-m="1" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Carrera de cuerpos que ruedan por un plano inclinado"></canvas></div>
+          <div class="ctls">
+            <label class="ctl"><span>Inclinación</span><input id="cr-th" type="range" data-k="th" min="5" max="30" step="1" value="15" data-d="0" data-u="°"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Carrera en rampa de 3 m</span><div class="btns"><button class="btn pri" data-act="go">⚑ Largar</button><button class="btn" data-act="play"></button></div></div>
+          <figcaption>Gana el que tiene <b>menor c</b>: menos energía se va a girar y más queda para trasladarse. No importan ni la masa ni el radio, sólo la forma. El bloque sin rozamiento (c = 0) no gira y le gana a todos.</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-u9">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>El marco con cuatro esferas (Ejemplos 1 y 2)</b></div>
+          <p class="ex-q">Dos esferas de M = 2 kg a a = 0,8 m sobre el eje x y dos de m = 1 kg a b = 0,5 m sobre el eje y. Calculá I respecto del eje y y del eje z, y la energía cinética con ω = 2 rad/s.</p>
+          <p class="ex-data"><span>Datos</span> M = 2 kg, a = 0,8 m, m = 1 kg, b = 0,5 m, ω = 2 rad/s</p>
+          <ol class="ex-steps">
+            <li>Eje y: las esferas m están sobre el eje (r = 0) y no cuentan. \( I_y=Ma^2+Ma^2=2\cdot2\cdot0{,}64=2{,}56\,\text{kg·m}^2 \)</li>
+            <li>Eje z (perpendicular al plano): cuentan las cuatro. \( I_z=2Ma^2+2mb^2=2{,}56+2\cdot1\cdot0{,}25=3{,}06\,\text{kg·m}^2 \)</li>
+            <li>Energías: \( E_y=\tfrac12\cdot2{,}56\cdot2^2=5{,}12\,\text{J} \) y \( E_z=\tfrac12\cdot3{,}06\cdot4=6{,}12\,\text{J} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> I<sub>y</sub> = 2,56 kg·m² · I<sub>z</sub> = 3,06 kg·m² · E<sub>y</sub> = 5,12 J · E<sub>z</sub> = 6,12 J</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>Varilla girando por un extremo (Ejemplo 3, Steiner)</b></div>
+          <p class="ex-q">Una varilla uniforme de 1,2 kg y 0,9 m gira alrededor de un eje perpendicular que pasa por un extremo. Calculá su momento de inercia.</p>
+          <p class="ex-data"><span>Datos</span> m = 1,2 kg, L = 0,9 m, d = L/2 = 0,45 m</p>
+          <ol class="ex-steps">
+            <li>De la tabla, por el centro: \( I_{cm}=\tfrac1{12}mL^2=\tfrac1{12}\cdot1{,}2\cdot0{,}81=0{,}081\,\text{kg·m}^2 \)</li>
+            <li>El extremo está a d = L/2 del centro. Steiner: \( I=I_{cm}+m\,d^2=0{,}081+1{,}2\cdot0{,}45^2 \)</li>
+            <li>\( I=0{,}081+0{,}243=0{,}324\,\text{kg·m}^2 \)</li>
+            <li>Control con la fórmula directa: \( \tfrac13mL^2=\tfrac13\cdot1{,}2\cdot0{,}81=0{,}324 \). ✓</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> I = 0,324 kg·m²</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 3</span><b>Volante a 600 rpm</b></div>
+          <p class="ex-q">Un volante es un disco de 10 kg y 0,3 m de radio que gira a 600 rpm. ¿Cuánta energía cinética tiene?</p>
+          <p class="ex-data"><span>Datos</span> M = 10 kg, R = 0,3 m, 600 rpm</p>
+          <ol class="ex-steps">
+            <li>Momento de inercia del disco: \( I=\tfrac12MR^2=\tfrac12\cdot10\cdot0{,}09=0{,}45\,\text{kg·m}^2 \)</li>
+            <li>Pasamos a rad/s (obligatorio): \( \omega=600\cdot\dfrac{2\pi}{60}=62{,}83\,\text{rad/s} \)</li>
+            <li>\( E_c=\tfrac12I\omega^2=\tfrac12\cdot0{,}45\cdot62{,}83^2=888\,\text{J} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> E<sub>c</sub> ≈ 888 J</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 4</span><b>Carrera por la rampa</b></div>
+          <p class="ex-q">Una esfera maciza y un aro bajan rodando sin deslizar desde 2 m de altura. ¿Con qué velocidad llega cada uno abajo?</p>
+          <p class="ex-data"><span>Datos</span> h = 2 m, c<sub>esfera</sub> = 2/5, c<sub>aro</sub> = 1</p>
+          <ol class="ex-steps">
+            <li>Energía: \( Mgh=\tfrac12Mv^2+\tfrac12I\omega^2 \), con \( I=cMR^2 \) y \( \omega=v/R \).</li>
+            <li>Reemplazando: \( Mgh=\tfrac12Mv^2(1+c)\Rightarrow v=\sqrt{\dfrac{2gh}{1+c}} \). M y R se cancelan.</li>
+            <li>Esfera: \( v=\sqrt{\dfrac{2\cdot9{,}8\cdot2}{1{,}4}}=5{,}29\,\text{m/s} \)</li>
+            <li>Aro: \( v=\sqrt{\dfrac{39{,}2}{2}}=4{,}43\,\text{m/s} \). Gana la esfera.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> esfera ≈ 5,29 m/s · aro ≈ 4,43 m/s</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#cm"><small>← Anterior</small>Unidad 8 · Centro de masa</a>
+        <a class="next" href="#u10"><small>Siguiente →</small>Unidad 10 · Dinámica del movimiento rotacional</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u10" style="--k:var(--force)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 10 · Cap. 10 S.Z.F.Y. · complemento</span>
+        <h2>Dinámica del movimiento rotacional</h2>
+        <p class="lead">El apunte de la Unidad 9 cierra con energía e inercia. Para entender del todo la rotación (y para la Unidad 11) hacen falta el torque, la segunda ley rotacional y el momento angular.</p>
+      </div>
+      <article class="topic" id="torque">
+        <h3>Torque o momento de una fuerza</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>El torque es "la fuerza de girar". Depende de cuánta fuerza hacés y de <b>qué tan lejos del eje</b> la aplicás. Por eso una llave más larga afloja mejor una tuerca, y empujar una puerta al lado de la bisagra no sirve. Además tenés que empujar de costado: si tirás para afuera, a lo largo de la puerta, no gira.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>τ</dt><dd>torque o momento de la fuerza</dd><dd class="u">N·m</dd></div><div><dt>r</dt><dd>distancia del eje al punto donde se aplica la fuerza</dd><dd class="u">m</dd></div><div><dt>φ</dt><dd>ángulo entre r y F</dd><dd class="u">°</dd></div><div><dt>ℓ</dt><dd>brazo de palanca = r·senφ</dd><dd class="u">m</dd></div><div><dt>α</dt><dd>aceleración angular</dd><dd class="u">rad/s²</dd></div></dl></div>
+        <p>Lo que hace girar no es la fuerza sola sino la fuerza por su <strong>brazo de palanca</strong>: la distancia perpendicular del eje a la recta de acción de la fuerza. Por eso las manijas están lejos de las bisagras.</p>
+        <div class="eqs">
+          <div class="eq boxed" style="--k:var(--rot)"><span class="cap">Torque</span><div class="val">\[ \tau=r\,F\sin\phi=F\cdot\ell \]</div><p>Vector: τ = r × F. Unidad N·m. ℓ = r·senφ es el brazo.</p></div>
+          <div class="eq boxed" style="--k:var(--rot)"><span class="cap">2.ª ley rotacional (eje fijo)</span><div class="val">\[ \sum\tau=I\,\alpha \]</div><p>El par de ΣF = m·a.</p></div>
+        </div>
+        <figure class="sim" id="s-torque" data-aspect=".6" data-aspect-m="1" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Puerta vista desde arriba empujada con una fuerza de ángulo y posición variables"></canvas></div>
+          <dl class="hud">
+            <div><dt>Brazo ℓ = r·senφ</dt><dd data-o="l">—</dd></div>
+            <div><dt>τ</dt><dd data-o="tau" class="rot">—</dd></div>
+            <div><dt>α = τ/I</dt><dd data-o="al">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Distancia a la bisagra r</span><input id="tq-r" type="range" data-k="r" min="0.05" max="0.9" step="0.01" value="0.8" data-d="2" data-u="m"><output></output></label>
+            <label class="ctl"><span>Ángulo φ entre r y F</span><input id="tq-phi" type="range" data-k="phi" min="0" max="180" step="1" value="90" data-d="0" data-u="°"><output></output></label>
+            <label class="ctl"><span>Fuerza F</span><input id="tq-F" type="range" data-k="F" min="5" max="40" step="1" value="20" data-d="0" data-u="N"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Puerta de 15 kg y 0,9 m (I = ⅓ML²)</span><div class="btns"><button class="btn pri" data-act="push">Empujar</button><button class="btn" data-act="play"></button></div></div>
+          <figcaption>Empujar paralelo a la puerta (φ = 0° o 180°) no la mueve: el brazo es cero. Empujar cerca de la bisagra tampoco sirve mucho. La línea punteada es la recta de acción y el segmento naranja, el brazo.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="polea">
+        <h3>Energía y τ = I·α en una polea con masa</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Si colgás un balde de una cuerda enrollada en una polea pesada, el balde baja más lento que en caída libre: parte de la energía se usa para hacer girar la polea. Es la segunda ley de Newton aplicada dos veces, una al balde (que avanza) y otra a la polea (que gira).</p></div>
+        <p>Un bloque cuelga de una cuerda enrollada en una polea con masa. Al bajar, la energía potencial que pierde se reparte entre la traslación del bloque y la <strong>rotación</strong> de la polea.</p>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Bloque (lineal)</span><div class="val">\[ mg-T=ma \]</div></div>
+          <div class="eq"><span class="cap">Polea (rotación)</span><div class="val">\[ T\,R=I\,\alpha,\quad a=\alpha R \]</div></div>
+          <div class="eq boxed"><span class="cap">Resultado</span><div class="val">\[ a=\frac{mg}{m+I/R^2} \]</div></div>
+          <div class="eq"><span class="cap">Energía</span><div class="val">\[ mgh=\tfrac12mv^2+\tfrac12I\omega^2 \]</div></div>
+        </div>
+        <figure class="sim" id="s-polea" data-aspect=".6" data-aspect-m="1.05" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Bloque que cae desenrollando una cuerda de una polea con masa, con barras de energía"></canvas></div>
+          <dl class="hud">
+            <div><dt>a</dt><dd data-o="a">—</dd></div>
+            <div><dt>Tensión T</dt><dd data-o="T">—</dd></div>
+            <div><dt>Ec rot / Ec total</dt><dd data-o="fr" class="rot">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl" style="--k:var(--lin)"><span>Masa del bloque m</span><input id="po-m" type="range" data-k="m" min="0.5" max="5" step="0.1" value="1" data-d="1" data-u="kg"><output></output></label>
+            <label class="ctl"><span>Masa de la polea M</span><input id="po-M" type="range" data-k="M" min="0" max="10" step="0.5" value="4" data-d="1" data-u="kg"><output></output></label>
+            <div class="segrow">Polea: <div class="seg" data-k="sh"><button data-v="disk" aria-pressed="true">Disco (½MR²)</button><button data-v="ring">Aro (MR²)</button></div></div>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Caída de 1,6 m</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺ Soltar de nuevo</button></div></div>
+          <figcaption>Con M = 0 el bloque cae libre (a = g, T = 0). Cuanto más pesada la polea, o con la masa más afuera (aro), más energía se lleva la rotación y más lento cae el bloque.</figcaption>
+        </figure>
+      </article>
+
+      <article class="topic" id="angular">
+        <h3>Momento angular y su conservación</h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>El momento angular es la "cantidad de movimiento del giro". Si nadie le aplica torque desde afuera, se mantiene. Por eso una patinadora que cierra los brazos gira más rápido: su masa queda más cerca del eje, I baja, y para que I·ω quede igual, ω tiene que subir.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>L</dt><dd>momento angular = I·ω</dd><dd class="u">kg·m²/s</dd></div><div><dt>1, 2</dt><dd>antes y después del cambio</dd><dd class="u"></dd></div></dl></div>
+        <p>El par rotacional de p = m·v. Si el torque externo neto es cero, L se conserva aunque I cambie. Si I baja, ω sube: la patinadora que cierra los brazos, el clavadista que se hace bolita.</p>
+        <div class="eqs">
+          <div class="eq boxed" style="--k:var(--rot)"><span class="cap">Momento angular (eje fijo)</span><div class="val">\[ L=I\,\omega \]</div></div>
+          <div class="eq"><span class="cap">Segunda ley</span><div class="val">\[ \sum\tau_{ext}=\frac{dL}{dt} \]</div></div>
+          <div class="eq boxed" style="--k:var(--rot)"><span class="cap">Si Στ<sub>ext</sub> = 0</span><div class="val">\[ I_1\omega_1=I_2\omega_2 \]</div></div>
+        </div>
+        <figure class="sim drag" id="s-rotor2" data-aspect=".55" data-aspect-m="1.1" style="--k:var(--rot)">
+          <div class="sim-stage"><canvas aria-label="Rotor con masas móviles y gráficos de omega y energía en función del radio"></canvas></div>
+          <dl class="hud">
+            <div><dt>I</dt><dd data-o="I">—</dd></div>
+            <div><dt>ω</dt><dd data-o="w">—</dd></div>
+            <div><dt>L = Iω</dt><dd data-o="L">—</dd></div>
+            <div><dt>Ec rot</dt><dd data-o="E">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Radio de las masas r (o arrastrá una masa)</span><input id="rotor2-r" type="range" data-k="r" min="0.2" max="1.2" step="0.01" value="1" data-d="2" data-u="m"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Dos masas de 1 kg en una barra (I_barra = 0,2 kg·m²)</span><div class="btns"><button class="btn" data-act="play"></button><button class="btn" data-act="reset">↺</button></div></div>
+          <figcaption>Al acercar las masas, L queda fija y ω sube. La energía cinética <b>aumenta</b>: ese extra sale del trabajo que hacés al tirar de las masas hacia el centro, contra su tendencia a seguir derecho.</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-u10">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Aflojar una tuerca</b></div>
+          <p class="ex-q">Con una llave de 25 cm se aplican 80 N en el extremo. ¿Qué torque se hace si la fuerza es perpendicular a la llave? ¿Y si forma 30° con ella?</p>
+          <p class="ex-data"><span>Datos</span> r = 0,25 m, F = 80 N</p>
+          <ol class="ex-steps">
+            <li>\( \tau=r\,F\sin\phi \)</li>
+            <li>Perpendicular (φ = 90°): \( \tau=0{,}25\cdot80\cdot1=20\,\text{N·m} \)</li>
+            <li>A 30°: \( \tau=0{,}25\cdot80\cdot0{,}5=10\,\text{N·m} \). La mitad: empujar torcido desperdicia fuerza.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> 20 N·m y 10 N·m</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>Bloque colgado de una polea con masa</b></div>
+          <p class="ex-q">Un bloque de 1 kg cuelga de una cuerda enrollada en una polea maciza (disco) de 4 kg y 0,2 m de radio. Calculá la aceleración del bloque, la tensión y la aceleración angular de la polea.</p>
+          <p class="ex-data"><span>Datos</span> m = 1 kg, M = 4 kg, R = 0,2 m, I = ½MR²</p>
+          <ol class="ex-steps">
+            <li>Bloque (traslación): \( m\,g-T=m\,a \)</li>
+            <li>Polea (rotación): \( T\,R=I\,\alpha=\tfrac12MR^2\cdot\dfrac aR\Rightarrow T=\tfrac12M\,a \)</li>
+            <li>Sumando: \( m\,g=(m+\tfrac12M)\,a\Rightarrow a=\dfrac{9{,}8}{1+2}=3{,}27\,\text{m/s}^2 \)</li>
+            <li>\( T=\tfrac12\cdot4\cdot3{,}27=6{,}53\,\text{N} \) y \( \alpha=\dfrac aR=\dfrac{3{,}27}{0{,}2}=16{,}3\,\text{rad/s}^2 \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> a ≈ 3,27 m/s² · T ≈ 6,53 N · α ≈ 16,3 rad/s²</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 3</span><b>La patinadora</b></div>
+          <p class="ex-q">Una patinadora gira a 2 rad/s con los brazos abiertos (I = 4 kg·m²). Cierra los brazos y su momento de inercia baja a 1,6 kg·m². ¿A qué velocidad gira ahora? ¿Qué pasa con su energía?</p>
+          <p class="ex-data"><span>Datos</span> I₁ = 4 kg·m², ω₁ = 2 rad/s, I₂ = 1,6 kg·m²</p>
+          <ol class="ex-steps">
+            <li>No hay torque externo, se conserva L: \( I_1\omega_1=I_2\omega_2 \)</li>
+            <li>\( \omega_2=\dfrac{4\cdot2}{1{,}6}=5\,\text{rad/s} \)</li>
+            <li>Energías: \( E_1=\tfrac12\cdot4\cdot2^2=8\,\text{J} \) y \( E_2=\tfrac12\cdot1{,}6\cdot5^2=20\,\text{J} \)</li>
+            <li>La energía aumentó 12 J: es el trabajo que hicieron sus brazos al tirar hacia adentro.</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> ω₂ = 5 rad/s · Ec pasa de 8 J a 20 J</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u9"><small>← Anterior</small>Unidad 9 · Rotación de cuerpos rígidos</a>
+        <a class="next" href="#u11"><small>Siguiente →</small>Unidad 11 · Equilibrio y elasticidad</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="u11" style="--k:var(--en)" hidden>
+      <div class="part-head">
+        <span class="tag">Unidad 11 · Cap. 11 S.Z.F.Y.</span>
+        <h2>Equilibrio y elasticidad</h2>
+        <p class="lead">Un cuerpo rígido en reposo no tiene que tender a trasladarse ni a girar. Y los cuerpos reales se deforman: hasta el límite elástico, en forma proporcional al esfuerzo.</p>
+      </div>
+      <article class="topic" id="equilibrio">
+        <h3>Equilibrio del cuerpo rígido <span class="src">Cap. 11</span></h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Para que algo quede quieto hacen falta dos cosas: que las fuerzas se cancelen (no sale disparado) y que los torques se cancelen (no empieza a girar). Un sube y baja con dos chicos de distinto peso se equilibra si el más pesado se sienta más cerca del centro. El truco: <b>tomar momentos respecto de un apoyo</b>, así su fuerza desaparece de la cuenta.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>ΣF</dt><dd>suma de todas las fuerzas</dd><dd class="u">N</dd></div><div><dt>Στ</dt><dd>suma de todos los torques respecto de un punto</dd><dd class="u">N·m</dd></div><div><dt>R_A, R_B</dt><dd>reacciones de los apoyos</dd><dd class="u">N</dd></div></dl></div>
+        <p>Para que un cuerpo rígido en reposo siga en reposo hacen falta <strong>dos</strong> condiciones: que no tienda a trasladarse y que no tienda a girar alrededor de ningún punto.</p>
+        <div class="eqs">
+          <div class="eq boxed" style="--k:var(--lin)"><span class="cap">1.ª condición</span><div class="val">\[ \sum F_x=0\qquad\sum F_y=0 \]</div></div>
+          <div class="eq boxed" style="--k:var(--rot)"><span class="cap">2.ª condición (respecto de cualquier punto)</span><div class="val">\[ \sum\tau=0 \]</div></div>
+        </div>
+        <figure class="sim drag" id="s-viga" data-aspect=".5" data-aspect-m=".9" style="--k:var(--force)">
+          <div class="sim-stage"><canvas aria-label="Tablón apoyado en dos soportes con un peso móvil y las reacciones en cada apoyo"></canvas></div>
+          <dl class="hud">
+            <div><dt>R_A</dt><dd data-o="ra">—</dd></div>
+            <div><dt>R_B</dt><dd data-o="rb">—</dd></div>
+            <div><dt>ΣF_y</dt><dd data-o="sf">—</dd></div>
+            <div><dt>Estado</dt><dd data-o="st">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <div class="segrow">Problema: <div class="seg" data-k="ex"><button data-v="2" aria-pressed="true">Ej. 2 · albañil</button><button data-v="1">Ej. 1 · tablero</button></div></div>
+            <label class="ctl"><span>Posición de la carga (desde el extremo izquierdo)</span><input id="vg-x" type="range" data-k="x" min="0" max="1" step="0.005" value="0.8667" data-d="3"><output></output></label>
+            <label class="ctl"><span>Peso de la carga</span><input id="vg-w" type="range" data-k="w" min="100" max="1200" step="5" value="700" data-d="0" data-u="N"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Arrastrá la carga sobre el tablón</span><div class="btns"><button class="btn" data-act="lim">Caso límite del apunte</button></div></div>
+          <figcaption>Tomando momentos respecto de un apoyo se despeja la reacción del otro sin conocer la primera. En el Ejemplo 2 el caso límite es R<sub>A</sub> = 0: si el albañil supera 75 kg (≈ 735 N) a 0,80 m del extremo, el tablón vuelca alrededor del apoyo B.</figcaption>
+        </figure>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Ej. 1 · momentos respecto de A</span><div class="val">\[ 80\,\text{N}\cdot5\,\text{m}+300\,\text{N}\cdot8\,\text{m}-R_B\cdot10\,\text{m}=0\Rightarrow R_B=280\,\text{N} \]</div></div>
+          <div class="eq"><span class="cap">Ej. 2 · límite R<sub>A</sub> = 0, momentos respecto de B</span><div class="val">\[ m_{al}\,g\cdot1{,}2\,\text{m}=M\,g\cdot1{,}0\,\text{m}\Rightarrow m_{al}=75\,\text{kg} \]</div></div>
+        </div>
+      </article>
+
+      <article class="topic" id="elasticidad">
+        <h3>Elasticidad <span class="src">Cap. 11</span></h3>
+        <div class="idea"><span class="idea-t">La idea, fácil</span><p>Si tirás de un elástico, se estira; si soltás, vuelve. Mientras no te pases, el estiramiento es proporcional a la fuerza (el doble de fuerza, el doble de estiramiento). Si te pasás del límite elástico queda deformado para siempre, y si seguís, se rompe. El módulo de Young dice qué tan "duro" es el material: el acero mucho más que la goma.</p></div>
+        <div class="vars"><span class="vars-t">Qué significa cada letra</span><dl><div><dt>F/A</dt><dd>esfuerzo: fuerza por unidad de área</dd><dd class="u">Pa = N/m²</dd></div><div><dt>ΔL/L₀</dt><dd>deformación: cuánto se estiró por cada metro</dd><dd class="u">sin unidad</dd></div><div><dt>Y</dt><dd>módulo de Young (rigidez del material)</dd><dd class="u">Pa</dd></div><div><dt>B</dt><dd>módulo volumétrico</dd><dd class="u">Pa</dd></div></dl></div>
+        <div class="eqs">
+          <div class="eq"><span class="cap">Ley de Hooke</span><div class="val">\[ F=-k\,x \]</div></div>
+          <div class="eq"><span class="cap">Esfuerzo y deformación</span><div class="val">\[ \sigma=\frac FA\qquad\varepsilon=\frac{\Delta L}{L_0} \]</div></div>
+          <div class="eq boxed" style="--k:var(--en)"><span class="cap">Módulo de Young</span><div class="val">\[ Y=\frac{F/A}{\Delta L/L_0}\Rightarrow\Delta L=\frac{F\,L_0}{A\,Y} \]</div></div>
+          <div class="eq"><span class="cap">Módulo volumétrico</span><div class="val">\[ B=-\frac{\Delta p}{\Delta V/V_0} \]</div></div>
+        </div>
+        <figure class="sim" id="s-hooke" data-aspect=".5" data-aspect-m=".95" style="--k:var(--en)">
+          <div class="sim-stage"><canvas aria-label="Alambre de acero estirado por una carga y su curva esfuerzo deformación"></canvas></div>
+          <dl class="hud">
+            <div><dt>Esfuerzo F/A</dt><dd data-o="s">—</dd></div>
+            <div><dt>ΔL</dt><dd data-o="dl">—</dd></div>
+            <div><dt>Zona</dt><dd data-o="z">—</dd></div>
+          </dl>
+          <div class="ctls">
+            <label class="ctl"><span>Carga F</span><input id="hk-F" type="range" data-k="F" min="0" max="1600" step="10" value="200" data-d="0" data-u="N"><output></output></label>
+          </div>
+          <div class="sim-bar"><span class="sim-title">Alambre de acero · 10 m · Ø 2 mm (Ejemplos 4 a 8)</span><div class="btns"><button class="btn" data-act="play"></button></div></div>
+          <figcaption>Hasta el límite elástico (≈ 780 N, 2,48·10⁸ Pa) la deformación es proporcional y reversible: la pendiente de la recta es Y ≈ 2·10¹¹ Pa. Más allá, la deformación queda permanente y cerca de 1,54 kN el alambre se rompe.</figcaption>
+        </figure>
+      </article>
+            <article class="topic" id="ej-u11">
+        <h3>Ejercicios resueltos</h3>
+        <p>Primero intentá resolverlo solo. Después abrí los pasos de a uno y compará.</p>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 1</span><b>Tablero sobre dos soportes (Ejemplo 1 del apunte)</b></div>
+          <p class="ex-q">Un tablero de 80 N y 12 m está apoyado en dos soportes, cada uno a 1 m de un extremo. Un bloque de 300 N está a 3 m de un extremo. Hallá la fuerza de cada soporte.</p>
+          <p class="ex-data"><span>Datos</span> P<sub>tablero</sub> = 80 N (en el medio), P<sub>bloque</sub> = 300 N, apoyos A y B separados 10 m</p>
+          <ol class="ex-steps">
+            <li>Tomamos momentos respecto de A, así R<sub>A</sub> no aparece. El peso del tablero está a 5 m de A y el bloque a 8 m.</li>
+            <li>\( \sum\tau_A=0:\;80\cdot5+300\cdot8-R_B\cdot10=0\Rightarrow R_B=\dfrac{2800}{10}=280\,\text{N} \)</li>
+            <li>Con ΣF<sub>y</sub> = 0: \( R_A+R_B=80+300\Rightarrow R_A=100\,\text{N} \)</li>
+            <li>Verificación con momentos respecto de B: \( R_A\cdot10=80\cdot5+300\cdot2=1000\Rightarrow R_A=100\,\text{N} \). ✓</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> R<sub>A</sub> = 100 N · R<sub>B</sub> = 280 N</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 2</span><b>El albañil (Ejemplo 2 del apunte)</b></div>
+          <p class="ex-q">Una tabla de 6 m y 90 kg está sobre dos caballetes separados 2 m y centrados. Un albañil se para a 0,80 m del extremo derecho. ¿Qué masa máxima puede tener sin que la tabla gire?</p>
+          <p class="ex-data"><span>Datos</span> L = 6 m, M = 90 kg, caballetes en 2 m y 4 m, albañil a 5,2 m</p>
+          <ol class="ex-steps">
+            <li>Caso límite: la tabla está por levantarse del caballete izquierdo, así que R<sub>A</sub> = 0.</li>
+            <li>Momentos respecto de B (en x = 4 m): el peso de la tabla está a 1,0 m a la izquierda y el albañil a 1,2 m a la derecha.</li>
+            <li>\( m_{al}\,g\cdot1{,}2=M\,g\cdot1{,}0\Rightarrow m_{al}=\dfrac{90\cdot1{,}0}{1{,}2}=75\,\text{kg} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> m<sub>máx</sub> = 75 kg</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+        <div class="ex">
+          <div class="ex-head"><span class="ex-n">Ejercicio 3</span><b>Alambre de acero (Ejemplos 4, 5 y 8 del apunte)</b></div>
+          <p class="ex-q">Un alambre de acero de 10 m y 2 mm de diámetro sostiene 200 N y se estira 3,08 mm. Calculá el esfuerzo, la deformación y el módulo de Young.</p>
+          <p class="ex-data"><span>Datos</span> L₀ = 10 m, d = 2 mm, F = 200 N, ΔL = 3,08 mm</p>
+          <ol class="ex-steps">
+            <li>Área: \( A=\dfrac{\pi d^2}{4}=\dfrac{\pi(0{,}002)^2}{4}=3{,}14\cdot10^{-6}\,\text{m}^2 \)</li>
+            <li>Esfuerzo: \( \dfrac FA=\dfrac{200}{3{,}14\cdot10^{-6}}=6{,}37\cdot10^7\,\text{Pa} \)</li>
+            <li>Deformación: \( \dfrac{\Delta L}{L_0}=\dfrac{0{,}00308}{10}=3{,}08\cdot10^{-4} \)</li>
+            <li>\( Y=\dfrac{6{,}37\cdot10^7}{3{,}08\cdot10^{-4}}=2{,}07\cdot10^{11}\,\text{Pa} \)</li>
+          </ol>
+          <div class="ex-res"><span>Resultado</span> σ = 6,37·10⁷ Pa · ε = 3,08·10⁻⁴ · Y = 2,07·10¹¹ Pa</div>
+          <div class="btns ex-btns"><button class="btn pri" type="button" data-ex="next">Ver el siguiente paso</button><button class="btn" type="button" data-ex="all">Ver toda la resolución</button></div>
+        </div>
+      </article>
+
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u10"><small>← Anterior</small>Unidad 10 · Dinámica del movimiento rotacional</a>
+        <a class="next" href="#analogia"><small>Siguiente →</small>Lineal ↔ Rotación</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="analogia" style="--k:var(--en)" hidden>
+      <div class="part-head">
+        <span class="tag">Repaso final</span>
+        <h2>Lineal ↔ rotación: el diccionario completo</h2>
+        <p class="lead">Si sabés la columna de la izquierda, ya sabés la de la derecha. El "traductor" es siempre el radio: s = rθ, v = rω, a<sub>t</sub> = rα, τ = rF.</p>
+      </div>
+      <div class="tbl">
+        <table class="analogy">
+          <thead><tr><th>Concepto</th><th>Traslación</th><th>Rotación (eje fijo)</th></tr></thead>
+          <tbody>
+            <tr><td>Posición</td><td>\( x \) [m]</td><td>\( \theta \) [rad]</td></tr>
+            <tr><td>Velocidad</td><td>\( v=dx/dt \)</td><td>\( \omega=d\theta/dt \)</td></tr>
+            <tr><td>Aceleración</td><td>\( a=dv/dt \)</td><td>\( \alpha=d\omega/dt \)</td></tr>
+            <tr><td>MRUV / MCUV</td><td>\( x=x_0+v_0t+\tfrac12at^2 \)</td><td>\( \theta=\theta_0+\omega_0t+\tfrac12\alpha t^2 \)</td></tr>
+            <tr><td>Inercia</td><td>\( m \)</td><td>\( I=\sum m_ir_i^2 \)</td></tr>
+            <tr><td>Causa del cambio</td><td>\( F \)</td><td>\( \tau=rF\sin\phi \)</td></tr>
+            <tr><td>Segunda ley</td><td>\( \sum F=ma \)</td><td>\( \sum\tau=I\alpha \)</td></tr>
+            <tr><td>Energía cinética</td><td>\( \tfrac12mv^2 \)</td><td>\( \tfrac12I\omega^2 \)</td></tr>
+            <tr><td>Trabajo</td><td>\( W=\int F\,dx \)</td><td>\( W=\int\tau\,d\theta \)</td></tr>
+            <tr><td>Potencia</td><td>\( P=Fv \)</td><td>\( P=\tau\omega \)</td></tr>
+            <tr><td>Cantidad de movimiento</td><td>\( p=mv \)</td><td>\( L=I\omega \)</td></tr>
+            <tr><td>Ley general</td><td>\( \sum F=dp/dt \)</td><td>\( \sum\tau=dL/dt \)</td></tr>
+            <tr><td>Conservación</td><td>\( \sum F_{ext}=0\Rightarrow p=\text{cte} \)</td><td>\( \sum\tau_{ext}=0\Rightarrow L=\text{cte} \)</td></tr>
+            <tr><td>Impulso</td><td>\( J=\int F\,dt=\Delta p \)</td><td>\( \int\tau\,dt=\Delta L \)</td></tr>
+            <tr><td>Equilibrio</td><td>\( \sum F=0 \)</td><td>\( \sum\tau=0 \)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#u11"><small>← Anterior</small>Unidad 11 · Equilibrio y elasticidad</a>
+        <a class="next" href="#formulario"><small>Siguiente →</small>Formulario</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="formulario" style="--k:var(--ink)" hidden>
+      <div class="part-head">
+        <span class="tag">Para el parcial</span>
+        <h2>Formulario</h2>
+        <p class="lead">Todas las unidades en una sola pantalla.</p>
+      </div>
+      <div class="sheet">
+        <section style="--k:var(--muted)"><h4>Cinemática y circular</h4>
+          <div class="f">\( x=x_0+v_0t+\tfrac12at^2 \)</div>
+          <div class="f">\( v^2=v_0^2+2a\Delta x \)</div>
+          <div class="f">\( v=\omega R\quad a_c=\dfrac{v^2}{R}=\omega^2R \)</div>
+          <div class="f">\( T=2\pi/\omega\quad f=1/T \)</div>
+        </section>
+        <section style="--k:var(--en)"><h4>Trabajo y energía</h4>
+          <div class="f">\( W=F\,d\cos\theta \)</div>
+          <div class="f">\( W_{tot}=\Delta E_c \)</div>
+          <div class="f">\( E_m=E_c+E_p \)<small>se conserva sin fuerzas no conservativas</small></div>
+          <div class="f">\( W_{nc}=\Delta E_m\quad P=Fv \)</div>
+        </section>
+        <section style="--k:var(--lin)"><h4>Impulso y choques</h4>
+          <div class="f">\( \vec p=m\vec v\quad\vec J=\int\vec F\,dt=\Delta\vec p \)</div>
+          <div class="f">\( m_Av_{A1}+m_Bv_{B1}=m_Av_{A2}+m_Bv_{B2} \)</div>
+          <div class="f">\( e=-\dfrac{v_{A2}-v_{B2}}{v_{A1}-v_{B1}} \)<small>1 elástico · 0 plástico</small></div>
+          <div class="f">\( v_1=\dfrac{m+M}{m}\sqrt{2gh} \)<small>péndulo balístico</small></div>
+        </section>
+        <section style="--k:var(--alt)"><h4>Centro de masa</h4>
+          <div class="f">\( \vec r_{cm}=\dfrac{\sum m_i\vec r_i}{M} \)</div>
+          <div class="f">\( \vec P=M\vec v_{cm} \)</div>
+          <div class="f">\( \sum\vec F_{ext}=M\vec a_{cm} \)</div>
+        </section>
+        <section style="--k:var(--rot)"><h4>Rotación</h4>
+          <div class="f">\( I=\sum m_ir_i^2=\int r^2dm \)</div>
+          <div class="f">\( E_c=\tfrac12I\omega^2 \)</div>
+          <div class="f">\( I_P=I_{cm}+Md^2 \)<small>Steiner</small></div>
+          <div class="f">\( E_c=\tfrac12Mv_{cm}^2+\tfrac12I_{cm}\omega^2 \)<small>rodadura</small></div>
+        </section>
+        <section style="--k:var(--force)"><h4>Torque y equilibrio</h4>
+          <div class="f">\( \tau=rF\sin\phi\quad\sum\tau=I\alpha \)</div>
+          <div class="f">\( L=I\omega\quad I_1\omega_1=I_2\omega_2 \)</div>
+          <div class="f">\( \sum F=0\quad\sum\tau=0 \)</div>
+          <div class="f">\( Y=\dfrac{F/A}{\Delta L/L_0} \)</div>
+        </section>
+      </div>
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#analogia"><small>← Anterior</small>Lineal ↔ Rotación</a>
+        <a class="next" href="#quiz"><small>Siguiente →</small>Autoevaluación</a>
+      </nav>
+    </section>
+
+    <section class="view part wrap" id="quiz" style="--k:var(--en)" hidden>
+      <div class="part-head">
+        <span class="tag">Autoevaluación</span>
+        <h2>¿Lo entendiste?</h2>
+        <p class="lead">Preguntas conceptuales como las de parcial. Elegí una respuesta y mirá la explicación.</p>
+        <p class="score" id="score">0 de 0 correctas</p>
+      </div>
+
+      <div class="quiz" id="quiz-list"></div>
+      <nav class="pager" aria-label="Cambiar de unidad">
+        <a class="prev" href="#formulario"><small>← Anterior</small>Formulario</a>
+        <span></span>
+      </nav>
+    </section>
+
+    <footer class="wrap">
+      <p>Basado en los apuntes de la Cátedra Física I, UDB Física, UTN Facultad Regional Rosario (capítulos 2, 4, 5, 6, 8, 9 y 11, según Sears–Zemansky–Freedman–Young). Las secciones de torque y momento angular complementan el apunte de la Unidad 9.</p>
+    </footer>
+  </main>
+</div>
+
+<script charset="utf-8" src="js/core.js?v=7"></script>
+<script charset="utf-8" src="js/repaso.js?v=7"></script>
+<script charset="utf-8" src="js/momento.js?v=7"></script>
+<script charset="utf-8" src="js/cm.js?v=7"></script>
+<script charset="utf-8" src="js/cm2.js?v=7"></script>
+<script charset="utf-8" src="js/rotacion.js?v=7"></script>
+<script charset="utf-8" src="js/quiz.js?v=7"></script>
+<script charset="utf-8" src="js/ejercicios.js?v=7"></script>
